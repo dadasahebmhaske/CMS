@@ -1,0 +1,235 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true"
+          minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2>
+              <i class="fa fa-database"></i> Weeky Payout</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
+                ngNativeValidate>
+                <div class="row">
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label for="sel1">Site <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.SiteId" name="SiteId" required>
+                        <option value="" selected hidden> Select Site </option>
+                        <option value=""> Sanskruti </option>
+                        <option value=""> Nirmiti </option>
+                        <option value=""> Akruti </option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label for="sel1">Project <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.ProjectId" name="ProjectId" required>
+                        <option value="" selected hidden> Select Project </option>
+                        <option value=""> Samved </option>
+                        <option value=""> Yajurved </option>
+                        <option value=""> Rugved </option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label for="sel1">Select Labour<span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
+                        <option value="" selected hidden> Select Labour </option>
+                        <option value="">Makrand Puri</option>
+                        <option value="">Honey Singh</option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>Start Date <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Start Date "
+                        [(ngModel)]="transport.PayDate" name="PayDate" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>End Date <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter End Date "
+                        [(ngModel)]="transport.PayDate" name="PayDate" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-1 col-xs-4">
+                    <div class="form-group">
+                      <label>
+                      </label>
+                      <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
+                        {{loaderbtn==true? 'Get Details':'Loading'}}</button>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr align="center" class="text-center">
+                            <th class="text-center">#</th>
+                            <th class="text-center">Start Date</th>
+                            <th class="text-center">End Date</th>
+                            <th class="text-center">Days</th>
+                            <th class="text-center">Amount</th>
+                          </tr>
+
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>1</td>
+                            <td class="text-center">1/Sep/2020</td>
+                            <td class="text-center">1/Sep/2020</td>
+                            <td class="text-center">1</td>
+                            <td class="text-center">500</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td class="text-center">2/Sep/2020</td>
+                            <td class="text-center">2/Sep/2020</td>
+                            <td class="text-center">1</td>
+                            <td class="text-center">500</td>
+                          </tr>
+                          <tr>
+                            <td>3</td>
+                            <td class="text-center">3/Sep/2020</td>
+                            <td class="text-center">3/Sep/2020</td>
+                            <td class="text-center">1</td>
+                            <td class="text-center">500</td>
+                          </tr>
+                          <tr>
+                            <td>4</td>
+                            <td class="text-center">4/Sep/2020</td>
+                            <td class="text-center">4/Sep/2020</td>
+                            <td class="text-center">1</td>
+                            <td class="text-center">500</td>
+                          </tr>
+                          <tr>
+                            <td>5</td>
+                            <td class="text-center">5/Sep/2020</td>
+                            <td class="text-center">5/Sep/2020</td>
+                            <td class="text-center">1</td>
+                            <td class="text-center">500</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Total</strong></td>
+                            <td class="text-center"><strong>1/Sep/2020</strong></td>
+                            <td class="text-center"><strong>5/Sep/2020</strong></td>
+                            <td class="text-center"><strong>5</strong></td>
+                            <td class="text-center"><strong>2500</strong></td>
+                          </tr>
+
+
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="form-group  pull-right">
+                      <button class="btn btn-block btn-warning ">
+                          <i class="glyphicon glyphicon-plus"></i>
+                          Add For Weekly Payout
+                      </button>
+                  </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr align="center" class="text-center">
+                            <th class="text-center">#</th>
+                            <th class="text-center">Labour</th>
+                            <th class="text-center">Start Date</th>
+                            <th class="text-center">End Date</th>
+                            <th class="text-center">Days</th>
+                            <th class="text-center">Amount</th>
+                            <th class="text-center">Remove</th>
+                          </tr>
+
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>1</td>
+                            <td >Amir Fakri</td>
+                            <td class="text-center">1/Sep/2020</td>
+                            <td class="text-center">5/Sep/2020</td>
+                            <td class="text-center">5</td>
+                            <td class="text-center">500</td>
+                            <td class="text-center">
+                              <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td >Salman Khan</td>
+                            <td class="text-center">1/Sep/2020</td>
+                            <td class="text-center">5/Sep/2020</td>
+                            <td class="text-center">5</td>
+                            <td class="text-center">500</td>
+                            <td class="text-center">
+                              <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>3</td>
+                            <td >Honey Singh</td>
+                            <td class="text-center">1/Sep/2020</td>
+                            <td class="text-center">5/Sep/2020</td>
+                            <td class="text-center">5</td>
+                            <td class="text-center">500</td>
+                            <td class="text-center">
+                              <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="2"  class="text-center"><strong>Total</strong></td>
+                            <td class="text-center"><strong>1/Sep/2020</strong></td>
+                            <td class="text-center"><strong>5/Sep/2020</strong></td>
+                            <td class="text-center"><strong>15</strong></td>
+                            <td class="text-center"><strong>7500</strong></td><td></td>
+                          </tr>
+                       
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <footer>
+                  <div class="row">
+                    <div class="col-sm-12 ">
+                      <hr />
+                      <a class="pull-right btn btn-default" routerLink="/project/weekly-payout-list">
+                        <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
+                        {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                    </div>
+                  </div>
+                </footer> 
+              </form>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>

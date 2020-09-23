@@ -1,0 +1,218 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true"
+          minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2>
+              <i class="fa fa-database"></i> Labour Work Payment Details</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
+                ngNativeValidate>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="sel1">Site <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.SiteId" name="SiteId" required>
+                        <option value="" selected hidden> Select Site </option>
+                        <option value=""> Sanskruti </option>
+                        <option value=""> Nirmiti </option>
+                        <option value=""> Akruti </option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="sel1">Project <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.ProjectId" name="ProjectId" required>
+                        <option value="" selected hidden> Select Project </option>
+                        <option value=""> Samved </option>
+                        <option value=""> Yajurved </option>
+                        <option value=""> Rugved </option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                   <div class="col-sm-4">
+                    <div class="form-group">
+                      <label for="sel1">Select Labour <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
+                        <option value="" selected hidden> Select Labour </option>
+                        <option value="">Kattapa</option>
+                        <option value="">Go reddy</option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+              
+             
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>Date of Work <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter  Date " [(ngModel)]="transport.INVDate"
+                        name="INVDate" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>Labour Work  <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
+                        <option value="" selected hidden> Select Work </option>
+                        <option value="">In House Painting</option>
+                        <option value="">In House Gardening</option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div> 
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>Work Done Description<span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Description " [(ngModel)]="transport.InvoiceNo"
+                        name="InvoiceNo" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>Satrt Date <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter  Date " [(ngModel)]="transport.INVDate"
+                        name="INVDate" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>End Date <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter  Date " [(ngModel)]="transport.INVDate"
+                        name="INVDate" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>In Time <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter  Time" [(ngModel)]="transport.Amount"
+                        name="Amount" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>Out Time <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter  Time" [(ngModel)]="transport.Amount"
+                        name="Amount" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>Payment Amount<span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="transport.ChequeNo"
+                        name="ChequeNo" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                      <div class="col-sm-1 col-xs-4">
+                    <div class="form-group">
+                      <label>
+                      </label>
+                      <button class="btn btn-block btn-warning ">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        Add 
+                    </button>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr align="center" class="text-center">
+                            <th class="text-center">#</th>
+                            <th class="text-center">Labour </th>
+                            <th class="text-center">Date of Work </th>
+                            <th class="text-center">Labour work </th>
+                            <th class="text-center">Work Description </th>
+                            <th class="text-center">Start Date</th>
+                            <th class="text-center">End Date</th>
+                            <th class="text-center">In Time</th>
+                            <th class="text-center">Out Time</th>
+                            <th class="text-center">Amount</th>
+                          </tr>
+
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>1</td>
+                            <td>Amir Khan</td>
+                            <td class="text-center">1/Sep/2020</td>
+                            <td>Plantation</td>
+                            <td >Around the wall compond</td>
+                            <td class="text-center">1/Sep/2020</td>
+                            <td class="text-center">1/Sep/2020</td>
+                            <td class="text-center">10 am</td>
+                            <td class="text-center">6 pm</td>
+                            <td class="text-center">500</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>Rocky Kumar</td>
+                            <td class="text-center">1/Sep/2020</td>
+                            <td>Plantation</td>
+                            <td >Around the wall compond</td>
+                            <td class="text-center">1/Sep/2020</td>
+                            <td class="text-center">1/Sep/2020</td>
+                            <td class="text-center">10 am</td>
+                            <td class="text-center">6 pm</td>
+                            <td class="text-center">500</td>
+                          </tr>
+
+
+                        </tbody>
+                      </table>
+                    </div>
+                   
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <label>
+                      <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive"
+                        [(ngModel)]='transport.IsActive' /> Is Active </label>
+                  </div>
+                </div>
+                <footer>
+                  <div class="row">
+                    <div class="col-sm-12 ">
+                      <hr />
+                      <a class="pull-right btn btn-default" routerLink="/project/labour-work-payment-details-list">
+                        <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
+                        {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                    </div>
+                  </div>
+                </footer>
+              </form>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>

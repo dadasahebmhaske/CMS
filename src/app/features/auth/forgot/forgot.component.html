@@ -1,0 +1,91 @@
+<header id="header" class="animated fadeInDown">
+  <div id="logo-group">
+    <a routerLink="/auth/login">
+    <span id="logo"> <img src="assets/img/cost.jpg" alt="Cost"> </span></a>
+  </div>
+  <!-- <div class="col-sm-4 col-md-5 col-lg-7  hidden-xs pull-right">
+    <div class="pull-right toll">
+      <div class="toll_number"><i class="fa fa-phone color-orange phone"></i> Toll Free Number <span class="toll_number num color-orange"> 7666555560 </span></div>
+    </div>
+  </div> -->
+  <!-- <div class="col-sm-4 col-md-5 col-lg-7  hidden-xs ">
+    <div  class="text-center toll">
+        <div class="toll_number"><i class="fa fa-phone color-orange phone"></i> Toll Free Number <span class="toll_number num login_toll"> 7666555560 </span></div>
+    </div>
+  </div>
+  <span id="extr-page-header-space">
+      <span class="hidden-mobile hiddex-xs">Already registered?</span>
+      <a routerLink="/auth/login" class="btn btn-danger">Sign In</a>
+  </span> -->
+</header>
+<div id="main" role="main" class="animated fadeInDown">
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
+        <div style="border:2px solid #CCC;">
+          <carousel [interval]="state.carousel.demo1.interval" [noWrap]="state.carousel.demo1.noWrap">
+            <slide *ngFor="let slide of state.carousel.demo1.slides; let i = index" [active]="slide.active" style="height:382px;">
+              <img [src]="slide.src" style="margin:auto;">
+              <!-- <div class="carousel-caption">
+                    <h4>Slide {{i}}</h4>
+
+                    <p>{{slide.text}}</p>
+                  </div> -->
+            </slide>
+          </carousel>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+        <div class="well no-padding">
+          <form id="login-form" class="smart-form client-form">
+            <header> Forgot Password </header>
+            <fieldset>
+              <section>
+                <label class="label">User Code</label>
+                <label class="input"> <i class="icon-append fa fa-user"></i>
+                  <input type="text" name="Dist Code">
+                </label>
+              </section>
+              <section>
+                <label class="label">Registered E-mail ID</label>
+                <label class="input"> <i class="icon-append fa fa-envelope"></i>
+                  <input type="email" name="email">
+                </label>
+                <div class="note">
+                  <a routerLink="/auth/login">I remembered my password!</a>
+                </div>
+              </section>
+              <!-- <section>
+										<span class="timeline-seperator text-center text-primary"> <span class="font-sm">OR</span>
+              </span></section> -->
+            </fieldset>
+            <footer>
+              <button (click)="submit($event)" class="btn btn-primary">
+                <i class="fa fa-refresh"></i> Send Password </button>
+            </footer>
+          </form>
+        </div>
+        <!-- <h5 class="text-center"> - Or sign in using -</h5>
+
+        <ul class="list-inline text-center">
+          <li>
+            <a (click)="(null)" class="btn btn-primary btn-circle"><i class="fa fa-facebook"></i></a>
+          </li>
+          <li>
+            <a (click)="(null)" class="btn btn-info btn-circle"><i class="fa fa-twitter"></i></a>
+          </li>
+          <li>
+            <a (click)="(null)" class="btn btn-warning btn-circle"><i class="fa fa-linkedin"></i></a>
+          </li>
+        </ul> -->
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-footer" style="background: #f4f4f4!important;color:#332c2c !important;border-top:none;">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 text-center">
+      <span class=" text-center">635/1B, New Gajara Society, Above Canara Bank, Bibvewadi, Pune, Maharashtra, India - 411037</span>
+    </div>
+  </div>
+</div>

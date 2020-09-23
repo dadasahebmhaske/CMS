@@ -1,0 +1,526 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true"
+          minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2>
+              <i class="fa fa-database"></i> Project Budget</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
+                ngNativeValidate>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="sel1">Site <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.SiteId" name="SiteId" required>
+                        <option value="" selected hidden> Select Site </option>
+                        <option value=""> Sanskruti </option>
+                        <option value=""> Nirmiti </option>
+                        <option value=""> Akruti </option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="sel1">Project <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.ProjectId" name="ProjectId" required>
+                        <option value="" selected hidden> Select Project </option>
+                        <option value=""> Samved </option>
+                        <option value=""> Yajurved </option>
+                        <option value=""> Rugved </option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="sel1">Project Manager <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
+                        <option value="" selected hidden> Select Manager </option>
+                        <option value=""> Mr.Koteeswaran S P </option>
+                        <option value=""> Mr.Ram Charan </option>
+                        <option value=""> Mr.Arjun Reddy </option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="sel1">Project Executive <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.RoleCode" name="RoleCode" required>
+                        <option value="" selected hidden> Select Executive </option>
+                        <option value=""> Mr.Alex Pandey </option>
+                        <option value=""> Mr.Laxman Prasad </option>
+                        <option value=""> Mr.Wangde Bhanuprasad </option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label for="sel1">Activity/Material Type<span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.MaterialTypeId" name="MaterialTypeId" required>
+                        <option value="" selected hidden> Select Type </option>
+                        <option value=""> Bricks Work </option>
+                        <option value=""> Stone Work </option>
+                        <option value=""> Painting </option>
+                        <option value=""> lighting </option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label for="sel1">Activity/Material <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.MaterialId" name="MaterialId" required>
+                        <option value="" selected hidden> Select Activity/Material </option>
+                        <option value=""> Soling (Dabar) </option>
+                        <option value=""> Back Filling Murum </option>
+                        <option value=""> Brickwork For Bench </option>
+                        <option value=""> Brick 6" </option>
+                        <option value=""> Crush Sand </option>
+                        <option value=""> Cement </option>
+                        <option value=""> Tera Cota </option>
+                        <option value=""> Brickwork For Bench </option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-1">
+                    <div class="form-group">
+                      <label>Qty <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Qty " [(ngModel)]="transport.Qty"
+                        name="Qty" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-1">
+                    <div class="form-group">
+                      <label>Unit <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Unit " [(ngModel)]="transport.Unit"
+                        name="Unit" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label for="sel1">Rate type <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.RateType" name="RateType" required>
+                        <option value="" selected hidden> Select Rate Type </option>
+                        <option value="CR"> Rate </option>
+                        <option value="MR"> Material Rate </option>
+                        <option value="LR"> Labour Rate </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-1" *ngIf="transport.RateType=='CR'">
+                    <div class="form-group">
+                      <label>Rate <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder=" Rate " [(ngModel)]="transport.Rate"
+                        name="Rate" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-1" *ngIf="transport.RateType=='MR'">
+                    <div class="form-group">
+                      <label>Material <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder=" Rate " [(ngModel)]="transport.MRate"
+                        name="Unit" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-1" *ngIf="transport.RateType=='LR'">
+                    <div class="form-group">
+                      <label>labour <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder=" Rate " [(ngModel)]="transport.LRate"
+                        name="LRate" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-1" *ngIf="transport.RateType=='CR'">
+                    <div class="form-group">
+                      <label>Amount<span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder=" Amount " [(ngModel)]="transport.RateAmt"
+                        name="Rate" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-2" *ngIf="transport.RateType=='MR'">
+                    <div class="form-group">
+                      <label>Material Amt<span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder=" Amount " [(ngModel)]="transport.MRateAmt"
+                        name="Unit" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-1" *ngIf="transport.RateType=='LR'">
+                    <div class="form-group">
+                      <label>labour Amt<span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder=" Amount " [(ngModel)]="transport.LRateAmt"
+                        name="LRate" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-2" >
+                    <div class="form-group">
+                      <label>Total Amt<span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder=" Amount " [(ngModel)]="transport.TotalAmt"
+                        name="TotalAmt" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-1">
+                    <div class="form-group">
+                        <label>&nbsp; </label>
+                        <button class="btn btn-block btn-warning ">
+                            <i class="glyphicon glyphicon-plus"></i> Add </button>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr align="center" class="text-center">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Activity</th>
+                                <th class="text-center">Quantity</th>
+                                <th  class="text-center">Unit</th>
+                                <th  class="text-center">Rate</th>
+                                <th  class="text-center">Total Amount </th>
+                                <th class="text-center">Remove</th>
+                            </tr>
+                            
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>1.</td>
+                            <td colspan="6"><strong>BrickWork</strong></td>
+                          </tr>
+                            <tr>
+                            <td></td>
+                            <td>Brickwork for bench</td>
+                            <td class="text-center">65</td>
+                            <td class="text-center">Sqft</td>
+                            <td  class="text-center">18</td>
+                             <td class="text-center">1170</td>
+                                 <td class="text-center">
+                                    <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                </td> 
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td>Cement</td>
+                              <td class="text-center">1</td>
+                              <td class="text-center">Bag</td>
+                              <td  class="text-center">340</td>
+                               <td class="text-center">340</td>
+                                   <td class="text-center">
+                                      <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                  </td> 
+                              </tr>
+                              <tr>
+                                <td></td>
+                                <td>Crush Sand</td>
+                                <td class="text-center">0.025</td>
+                                <td class="text-center">Brass</td>
+                                <td  class="text-center">3400</td>
+                                <td  class="text-center">340</td>
+                               
+                                     <td class="text-center">
+                                        <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                    </td> 
+                                </tr>
+                                <tr>
+                                  <td>2.</td>
+                                  <td colspan="6"><strong>Stone Work</strong></td>
+                                </tr>
+
+                                <tr>
+                                  <td></td>
+                                  <td>Top On Planter</td>
+                                  <td class="text-center">65</td>
+                                  <td class="text-center">Sqft</td>
+                                <td  class="text-center">25</td> 
+                                   <td class="text-center">1625</td>
+                                       <td class="text-center">
+                                          <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                      </td> 
+                                  </tr>
+                                  <tr>
+                                    <td></td>
+                                    <td>Shahabad Tile</td>
+                                    <td class="text-center">45</td>
+                                    <td class="text-center">Sqft</td>
+                                  <td  class="text-center">25</td> 
+                                
+                                     <td class="text-center">2250</td>
+                                         <td class="text-center">
+                                            <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                      <td></td>
+                                      <td>Cement</td>
+                                      <td class="text-center">1</td>
+                                      <td class="text-center">Bag</td>
+                                      <td  class="text-center">340</td>
+                                      <td class="text-center">340</td>
+                                           <td class="text-center">
+                                              <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                          </td> 
+                                      </tr>
+                                      <tr>
+                                        <td>3.</td>
+                                        <td colspan="6"><strong>Painting</strong></td>
+                                      </tr>
+                                      <tr>
+                                        <td></td>
+                                        <td>Tera Cota</td>
+                                        <td class="text-center">80</td>
+                                        <td class="text-center">Sqft</td>
+                                        <td  class="text-center">8</td>
+                                         <td class="text-center">640</td>
+                                             <td class="text-center">
+                                                <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                                                    <td>4.</td>
+                                        <td colspan="6"><strong>Electrical</strong></td>
+                                      </tr>
+                                      <tr>
+                                        <td></td>
+                                        <td>Light point of planter</td>
+                                        <td class="text-center">10</td>
+                                        <td class="text-center">Nos</td>
+                                        <td class="text-center">650</td>
+                                         <td class="text-center">6500</td>
+                                             <td class="text-center">
+                                                <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                          <td></td>
+                                          <td>40AMP RCB</td>
+                                          <td class="text-center">1</td>
+                                          <td class="text-center">Nos</td>
+                                          <td  class="text-center">2000</td>
+                                           <td class="text-center">2000</td>
+                                               <td class="text-center">
+                                                  <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                            <td colspan="5" class="text-right"><strong>TOTAL</strong></td>
+                                            <td colspan="2" class="text-center"><strong>340900</strong>  </td>
+                                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+                  <!-- <div class="table-responsive">
+                      <table class="table table-hover">
+                          <thead>
+                              <tr align="center" class="text-center">
+                                  <th rowspan="2" class="text-center">#</th>
+                                  <th rowspan="2" class="text-center">Activity</th>
+                                  <th rowspan="2" class="text-center">Quantity</th>
+                                  <th rowspan="2" class="text-center">Unit</th>
+                                  <th colspan="2" class="text-center">Rate</th>
+                                  <th colspan="2" class="text-center">Amount</th>
+                                  <th rowspan="2" class="text-center">Total Amount </th>
+                                  <th rowspan="2" class="text-center">Remove</th>
+                              </tr>
+                              <tr align="center">
+                                <th class="text-center">Material</th>
+                                <th class="text-center">Labour</th>
+                                <th class="text-center">Material</th>
+                                <th class="text-center">Labour</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>1.</td>
+                              <td colspan="9"><strong>BrickWork</strong></td>
+                            </tr>
+                              <tr>
+                              <td></td>
+                              <td>Brickwork for bench</td>
+                              <td class="text-center">65</td>
+                              <td class="text-center">Sqft</td>
+                              <td colspan="2" class="text-center">18</td>
+                              <td colspan="2" class="text-center">1170</td>
+                               <td class="text-center">1170</td>
+                                   <td class="text-center">
+                                      <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                  </td> 
+                              </tr>
+                              <tr>
+                                <td></td>
+                                <td>Cement</td>
+                                <td class="text-center">1</td>
+                                <td class="text-center">Bag</td>
+                                <td  class="text-center">340</td><td></td>
+                                <td class="text-center">340</td><td></td>
+                                 <td class="text-center">340</td>
+                                     <td class="text-center">
+                                        <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                    </td> 
+                                </tr>
+                                <tr>
+                                  <td></td>
+                                  <td>Crush Sand</td>
+                                  <td class="text-center">0.025</td>
+                                  <td class="text-center">Brass</td>
+                                  <td></td><td  class="text-center">3400</td>
+                                  <td></td><td class="text-center">85</td>
+                                   <td class="text-center">85</td>
+                                       <td class="text-center">
+                                          <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                      </td> 
+                                  </tr>
+                                  <tr>
+                                    <td>2.</td>
+                                    <td colspan="9"><strong>Stone Work</strong></td>
+                                  </tr>
+
+                                  <tr>
+                                    <td></td>
+                                    <td>Top On Planter</td>
+                                    <td class="text-center">65</td>
+                                    <td class="text-center">Sqft</td>
+                                  <td  class="text-center">25</td>  <td></td>
+                                  <td class="text-center">1625</td>  <td></td>
+                                     <td class="text-center">1625</td>
+                                         <td class="text-center">
+                                            <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                      <td></td>
+                                      <td>Shahabad Tile</td>
+                                      <td class="text-center">45</td>
+                                      <td class="text-center">Sqft</td>
+                                    <td  class="text-center">25</td> 
+                                    <td  class="text-center">25</td> 
+                                    <td class="text-center">1125</td>  
+                                    <td class="text-center">1125</td>  
+                                       <td class="text-center">2250</td>
+                                           <td class="text-center">
+                                              <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                          </td> 
+                                      </tr>
+                                      <tr>
+                                        <td></td>
+                                        <td>Cement</td>
+                                        <td class="text-center">1</td>
+                                        <td class="text-center">Bag</td>
+                                        <td  class="text-center">340</td><td></td>
+                                        <td class="text-center">340</td><td></td>
+                                         <td class="text-center">340</td>
+                                             <td class="text-center">
+                                                <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                            </td> 
+                                        </tr>
+                                        <tr>
+                                          <td>3.</td>
+                                          <td colspan="9"><strong>Painting</strong></td>
+                                        </tr>
+                                        <tr>
+                                          <td></td>
+                                          <td>Tera Cota</td>
+                                          <td class="text-center">80</td>
+                                          <td class="text-center">Sqft</td>
+                                          <td colspan="2" class="text-center">8</td>
+                                          <td colspan="2" class="text-center">640</td>
+                                           <td class="text-center">640</td>
+                                               <td class="text-center">
+                                                  <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                                                                      <td>4.</td>
+                                          <td colspan="9"><strong>Electrical</strong></td>
+                                        </tr>
+                                        <tr>
+                                          <td></td>
+                                          <td>Light point of planter</td>
+                                          <td class="text-center">10</td>
+                                          <td class="text-center">Nos</td>
+                                          <td colspan="2" class="text-center">650</td>
+                                          <td colspan="2" class="text-center">6500</td>
+                                           <td class="text-center">6500</td>
+                                               <td class="text-center">
+                                                  <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                            <td></td>
+                                            <td>40AMP RCB</td>
+                                            <td class="text-center">1</td>
+                                            <td class="text-center">Nos</td>
+                                            <td colspan="2" class="text-center">2000</td>
+                                            <td colspan="2" class="text-center">2000</td>
+                                             <td class="text-center">2000</td>
+                                                 <td class="text-center">
+                                                    <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                              <td colspan="8" class="text-right"><strong>TOTAL</strong></td>
+                                              <td colspan="2" class="text-center"><strong>340900</strong>  </td>
+                                            </tr>
+                          </tbody>
+                      </table>
+                  </div> -->
+              </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <label>
+                      <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive"
+                        [(ngModel)]='transport.IsActive' /> Is Active </label>
+                  </div>
+                </div>
+                <footer>
+                  <div class="row">
+                    <div class="col-sm-12 ">
+                      <hr />
+                      <a class="pull-right btn btn-default" routerLink="/project/project-budget-list">
+                        <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
+                        {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                    </div>
+                  </div>
+                </footer>
+              </form>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>

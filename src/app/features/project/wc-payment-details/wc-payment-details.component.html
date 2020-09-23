@@ -1,0 +1,148 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true"
+          minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2>
+              <i class="fa fa-database"></i> Payment Details</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
+                ngNativeValidate>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="sel1">Site <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.SiteId" name="SiteId" required>
+                        <option value="" selected hidden> Select Site </option>
+                        <option value=""> Sanskruti </option>
+                        <option value=""> Nirmiti </option>
+                        <option value=""> Akruti </option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="sel1">Project <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.ProjectId" name="ProjectId" required>
+                        <option value="" selected hidden> Select Project </option>
+                        <option value=""> Samved </option>
+                        <option value=""> Yajurved </option>
+                        <option value=""> Rugved </option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label for="sel1">Select Invoice <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
+                        <option value="" selected hidden> Select Invoice </option>
+                        <option value="">INV/109</option>
+                        <option value="">INV/107</option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>Invoice  No. <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Invoice No. " [(ngModel)]="transport.InvoiceNo"
+                        name="InvoiceNo" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+             
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>Invoice Date <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Invoice Date " [(ngModel)]="transport.INVDate"
+                        name="INVDate" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>Payment Date <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Payment Date " [(ngModel)]="transport.PayDate"
+                        name="PayDate" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>Payment Amount <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Payment Amount " [(ngModel)]="transport.Amount"
+                        name="Amount" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label for="sel1">Payment Mode <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
+                        <option value="" selected hidden> Select Mode </option>
+                        <option value="">Cheque</option>
+                        <option value="">RTGS  Number</option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>Cheque <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Cheque No. " [(ngModel)]="transport.ChequeNo"
+                        name="ChequeNo" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>RTGS  No. <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter RTGS  No." [(ngModel)]="transport.ChequeNo"
+                        name="ChequeNo" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                </div>
+           
+                <div class="row">
+                  <div class="col-sm-6">
+                    <label>
+                      <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive"
+                        [(ngModel)]='transport.IsActive' /> Is Active </label>
+                  </div>
+                </div>
+                <footer>
+                  <div class="row">
+                    <div class="col-sm-12 ">
+                      <hr />
+                      <a class="pull-right btn btn-default" routerLink="/project/wc-payment-details-list">
+                        <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
+                        {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                    </div>
+                  </div>
+                </footer>
+              </form>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>

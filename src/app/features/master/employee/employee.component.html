@@ -1,0 +1,225 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+      <div class="row">
+          <article class="col-sm-10 col-sm-offset-1">
+              <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+                  <header class="text-center">
+                      <h2>
+                          <i class="fa fa-database"></i> Employee Master</h2>
+                  </header>
+                  <div>
+                      <div class="widget-body">
+                          <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
+                              <div class="row">
+                                <div class="col-sm-2">
+                                  <div class="form-group">
+                                    <label for="sel1">Department <span class="errorMessage">*</span>
+                                    </label>
+                                    <select class="form-control" [(ngModel)]="employee.RoleCode" name="RoleCode" required>
+                                      <option value="" selected hidden> Select Department </option>
+                                      <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                                      </option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-2">
+                                  <div class="form-group">
+                                    <label for="sel1">Designation <span class="errorMessage">*</span>
+                                    </label>
+                                    <select class="form-control" [(ngModel)]="employee.RoleCode" name="RoleCode" required>
+                                      <option value="" selected hidden> Select Designation </option>
+                                      <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                                      </option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-2">
+                                  <div class="form-group">
+                                    <label for="sel1">First Name <span class="errorMessage">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" placeholder="Enter First Name"
+                                      [(ngModel)]="employee.FirstName" name="FirstName" saCommonDir dirType="alphaonly"
+                                      required />
+                                  </div>
+                                </div>
+                                <div class="col-sm-2">
+                                  <div class="form-group">
+                                    <label for="sel1">Last Name <span class="errorMessage">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" placeholder="Enter Last Name"
+                                      [(ngModel)]="employee.LastName" name="LastName" saCommonDir dirType="alphaonly"
+                                      required />
+                                  </div>
+                                </div>
+                                <div class="col-sm-2">
+                                  <div class="form-group">
+                                    <label for="sel1">Date of Birth <span class="errorMessage">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" placeholder="Enter Date of Birth"
+                                      [(ngModel)]="employee.DateOfBirth" name="DateOfBirth" bsDatepicker
+                                      [bsConfig]="datePickerConfig" onkeydown="return false" required />
+                                  </div>
+                                </div>
+                                <div class="col-sm-2">
+                                  <div class="form-group">
+                                    <label for="sel1">Gender <span class="errorMessage">*</span>
+                                    </label>
+                                    <select class="form-control" [(ngModel)]="employee.Gender" name="Gender" required>
+                                      <option value="" selected hidden> Select Gender </option>
+                                      <option value="M">Male</option>
+                                      <option value="F">Female</option>
+                                      <option value="T">Transgender</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-2">
+                                  <div class="form-group">
+                                    <label for="sel1">Mobile No. <span class="errorMessage">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" placeholder="Enter Mobile No."
+                                      [(ngModel)]="employee.MobileNo" name="MobileNo" minlength="10" maxlength="10"
+                                      saCommonDir dirType="number" required />
+                                  </div>
+                                </div>
+                                <div class="col-sm-2">
+                                  <div class="form-group">
+                                    <label for="sel1">Alternative Mobile No. </label>
+                                    <input type="text" class="form-control" placeholder="Enter Mobile No."
+                                      [(ngModel)]="employee.AltrMobileNo" name="AltrMobileNo" minlength="10" maxlength="10"
+                                      saCommonDir dirType="number" />
+                                  </div>
+                                </div>
+                                <div class="col-sm-2">
+                                  <div class="form-group">
+                                    <label for="sel1">Blood Group <span class="errorMessage">*</span>
+                                    </label>
+                                    <select class="form-control" [(ngModel)]="employee.BloodGrp" name="BloodGrp" required>
+                                      <option value="" selected hidden> Select Group </option>
+                                      <option value="A +ve">A +ve</option>
+                                      <option value="A -ve">A -ve</option>
+                                      <option value="B +ve">B +ve</option>
+                                      <option value="B -ve">B -ve</option>
+                                      <option value="AB +ve">AB +ve</option>
+                                      <option value="AB -ve">AB -ve</option>
+                                      <option value="O +ve">O +ve</option>
+                                      <option value="O -ve">O -ve</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-2">
+                                  <div class="form-group">
+                                    <label for="sel1">Marital Status <span class="errorMessage">*</span>
+                                    </label>
+                                    <select class="form-control" [(ngModel)]="employee.MaritalStatus"
+                                      (change)="checkMaritalStatus()" name="MaritalStatus" required>
+                                      <option value="" selected hidden> Select Status </option>
+                                      <option value="married">Married</option>
+                                      <option value="unmarried">UnMarried</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-2">
+                                  <div class="form-group">
+                                    <label for="sel1">Marriage Date <span class="errorMessage"
+                                        [hidden]="employee.MaritalStatus=='unmarried'">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" placeholder="Enter Anniversary Date"
+                                      [(ngModel)]="employee.MarriageAnniversaryDate" name="MarriageAnniversaryDate"
+                                      bsDatepicker [bsConfig]="datePickerConfig" onkeydown="return false"
+                                      [disabled]="employee.MaritalStatus=='unmarried'"
+                                      [required]="employee.MaritalStatus!='unmarried'" />
+                                  </div>
+                                </div>
+                                <div class="col-sm-2">
+                                  <div class="form-group">
+                                    <label for="sel1">Edu. Qualification <span class="errorMessage">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" placeholder="Enter Qualification"
+                                      [(ngModel)]="employee.Qualification" name="Qualification" saCommonDir
+                                      dirType="alphanumeric" required />
+                                  </div>
+                                </div>
+                                <div class="col-sm-2">
+                                  <div class="form-group">
+                                    <label for="sel1">Date of Joining <span class="errorMessage">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" placeholder="Enter Date of Joining"
+                                      [(ngModel)]="employee.DateOfJoining" name="DateOfJoining" bsDatepicker
+                                      [bsConfig]="datePickerConfig" onkeydown="return false" required />
+                                  </div>
+                                </div>
+    
+                                <div class="col-sm-4">
+                                  <div class="form-group">
+                                    <label for="sel1">Email ID <span class="errorMessage">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" placeholder="Enter Email ID "
+                                      [(ngModel)]="employee.EmailId" #EmailId="ngModel" name="EmailId"
+                                      pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required />
+                                  </div>
+                                </div>
+                                <div class="col-sm-3">
+                                  <div class="form-group">
+                                    <label for="sel1">Password <span class="errorMessage">*</span>
+                                    </label>
+                                    <input type="{{inputType1}}" class="form-control" placeholder="Enter Password"
+                                      [(ngModel)]="employee.Password" (change)="checkingPassword()" minlength="6"
+                                      name="Password" required />
+                                    <span class="showPass glyphicon {{className}} form-control-feedback "
+                                      (click)="HideShowPassword1()"
+                                      style="cursor: pointer; margin-top: 2px;pointer-events: all; color: rgb(80, 80, 80);">
+                                    </span>
+                                  </div>
+                                </div>
+                                <div class="col-sm-3">
+                                  <div class="form-group">
+                                    <label for="sel1">Re-enter Password <span class="errorMessage">*</span>
+                                    </label>
+                                    <input type="{{inputType1}}" class="form-control" placeholder="Enter Password"
+                                      [(ngModel)]="employee.ReTypePassword" (change)="checkingPassword()" minlength="6"
+                                      name="ReTypePassword" required />
+                                    <span class="showPass glyphicon {{className}} form-control-feedback "
+                                      (click)="HideShowPassword1()"
+                                      style="cursor: pointer; margin-top: 2px;pointer-events: all; color: rgb(80, 80, 80);">
+                                    </span>
+                                  </div>
+                                </div>
+                              
+                              </div>
+                              <div class="row">
+                                  <div class="col-sm-6">
+                                      <label>
+                                          <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='employee.IsActive' /> Is Active </label>
+                                  </div>
+                              </div>
+                              <footer>
+                                  <div class="row">
+                                      <div class="col-sm-12 ">
+                                          <hr />
+                                          <a class="pull-right btn btn-default" routerLink="/master/employee-master">
+                                              <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                                          <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                                              <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                                      </div>
+                                  </div>
+                              </footer>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </article>
+      </div>
+  </sa-widgets-grid>
+</div>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,363 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true"
+          minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2>
+              <i class="fa fa-database"></i> Create GRN</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
+                ngNativeValidate>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="sel1">Site <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.SiteId" name="SiteId" required>
+                        <option value="" selected hidden> Select Site </option>
+                        <option value=""> Sanskruti </option>
+                        <option value=""> Nirmiti </option>
+                        <option value=""> Akruti </option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="sel1">Project <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.ProjectId" name="ProjectId" required>
+                        <option value="" selected hidden> Select Project </option>
+                        <option value=""> Samved </option>
+                        <option value=""> Yajurved </option>
+                        <option value=""> Rugved </option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <!-- <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>GRN No. <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter GRN No. " [(ngModel)]="transport.GRNNo"
+                        name="Qty" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div> -->
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="sel1">Select Party / Vendor <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
+                        <option value="" selected hidden> Select Party </option>
+                        <option value="">S P Traders</option>
+                        <option value=""> Anand Suppliers</option>
+                        <option value=""> Mr.Arjun Reddy brickes work</option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="sel1">Select PO <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
+                        <option value="" selected hidden> Select PO </option>
+                        <option value=""></option>
+                        <option value=""> Anand Suppliers</option>
+                        <option value=""> Mr.Arjun Reddy brickes work</option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>Challan No./Invoice No. <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Challan No. " [(ngModel)]="transport.INVNo"
+                        name="Qty" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>Challan / Invoice  Date <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Invoice Date " [(ngModel)]="transport.INVDate"
+                        name="INVDate" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>Challan / Invoice  Amount <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Challan Amount " [(ngModel)]="transport.Amount"
+                        name="Amount" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>Challan GST Amount <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter GST Amount " [(ngModel)]="transport.GSTAmount"
+                        name="GSTAmount" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>PO No. <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter PO No. " [(ngModel)]="transport.PONo"
+                        name="PONo" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>PO Date <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter PO Date " [(ngModel)]="transport.PODate"
+                        name="PODate" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <!-- <div class="col-sm-2">
+                    <div class="form-group">
+                      <label for="sel1">Quality Ok <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.RateType" name="RateType" required>
+                        <option value="" selected hidden> Select </option>
+                        <option value="Y"> Yes </option>
+                        <option value="N"> No</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label for="sel1">Material Type<span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.MaterialTypeId" name="MaterialTypeId" required>
+                        <option value="" selected hidden> Select Type </option>
+                        <option value=""> Bricks Work </option>
+                        <option value=""> Stone Work </option>
+                        <option value=""> Painting </option>
+                        <option value=""> lighting </option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label for="sel1">Material <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="transport.MaterialId" name="MaterialId" required>
+                        <option value="" selected hidden> Select Material </option>
+                        <option value=""> Soling (Dabar) </option>
+                        <option value=""> Back Filling Murum </option>
+                        <option value=""> Brickwork For Bench </option>
+                        <option value=""> Brick 6" </option>
+                        <option value=""> Crush Sand </option>
+                        <option value=""> Cement </option>
+                        <option value=""> Tera Cota </option>
+                        <option value=""> Brickwork For Bench </option>
+                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>Received Qty <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Qty " [(ngModel)]="transport.Qty"
+                        name="Qty" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div> -->
+        
+                  <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr align="center" class="text-center">
+                                    <th  class="text-center">#</th>
+                                    <th  class="text-center">Activity</th>
+                                    <th  class="text-center">Quantity</th>
+                                    <th class="text-center">Unit</th>
+                                    <th  class="text-center">Rate</th>
+                                    <th class="text-center">Amount</th>
+                                    <th class="text-center">IGST %</th>
+                                    <th class="text-center">SGST %</th>
+                                    <th class="text-center">CGST %</th>
+                                    <th class="text-center">IGST Amount</th>
+                                    <th class="text-center">SGST Amount</th>
+                                    <th class="text-center">CGST Amount</th>
+                                    <th class="text-center">Total Amount </th>     
+                                    <th class="text-center">Received Qty </th>
+                                    <th class="text-center">Quality Ok </th>
+                                    <th class="text-center">Rejected Qty </th>
+                                    <th class="text-center">Remark</th>
+                                </tr>
+                           
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>1.</td>
+                                <td colspan="13"><strong>BrickWork</strong></td>
+                              </tr>
+                                <tr>
+                                <td></td>
+                                <td>Brickwork for bench</td>
+                                <td class="text-center">65</td>
+                                <td class="text-center">Sqft</td>
+                                <td  class="text-center">18</td>
+                                <td  class="text-center">1170</td>
+                                <td  class="text-center">0</td>
+                                <td  class="text-center">9</td>
+                                <td  class="text-center">9</td>
+                                <td  class="text-center">0</td>
+                                <td  class="text-center">19</td>
+                                <td  class="text-center">19</td>
+                                 <td class="text-center">1178</td>
+                                 <td>  <input type="text" class="form-control" style="width: 60px;" placeholder=" Qty " [(ngModel)]="transport.Qty"
+                                  name="Qty" saCommonDir dirType="alphanumeric" required /> </td>
+                                           <td>  <div class="form-group">
+                                      <select class="form-control" [(ngModel)]="transport.RateType" name="RateType" required>
+                                        <option value="" selected hidden> Select </option>
+                                        <option value="Y"> Yes </option>
+                                        <option value="N"> No</option>
+                                      </select>
+                                    </div></td>
+                                  <td>  <input type="text" class="form-control" style="width: 60px;" placeholder="Qty " [(ngModel)]="transport.Qty"
+                                    name="Qty" saCommonDir dirType="alphanumeric" required /> </td>
+                                    <td>  <input type="text" class="form-control" style="width: 100px;" placeholder="Remark " [(ngModel)]="transport.Qty"
+                                      name="Remark" saCommonDir dirType="alphanumeric" required /> </td>
+                              
+                                </tr>
+                                <tr>
+                                  <td></td>
+                                  <td>Cement</td>
+                                  <td class="text-center">1</td>
+                                  <td class="text-center">Bag</td>
+                                  <td  class="text-center">340</td>
+                                  <td class="text-center">340</td>
+                                  <td  class="text-center">9</td>
+                                  <td  class="text-center">0</td>
+                                  <td  class="text-center">0</td>
+                                  <td  class="text-center">19</td>
+                                  <td  class="text-center">0</td>
+                                  <td  class="text-center">0</td>
+                                
+                                   <td class="text-center">340</td>
+                                   <td>  <input type="text" class="form-control" style="width: 60px;" placeholder=" Qty " [(ngModel)]="transport.Qty"
+                                    name="Qty" saCommonDir dirType="alphanumeric" required /> </td>
+                                    <td>  <div class="form-group">
+                                      <select class="form-control" [(ngModel)]="transport.RateType" name="RateType" required>
+                                        <option value="" selected hidden> Select </option>
+                                        <option value="Y"> Yes </option>
+                                        <option value="N"> No</option>
+                                      </select>
+                                    </div></td>
+                                  <td>  <input type="text" class="form-control" style="width: 60px;" placeholder="Qty " [(ngModel)]="transport.Qty"
+                                    name="Qty" saCommonDir dirType="alphanumeric" required /> </td>
+                                    <td>  <input type="text" class="form-control" style="width: 100px;" placeholder="Remark " [(ngModel)]="transport.Qty"
+                                      name="Remark" saCommonDir dirType="alphanumeric" required /> </td>
+                                  </tr>
+                                  <tr>
+                                    <td></td>
+                                    <td>Crush Sand</td>
+                                    <td class="text-center">0.025</td>
+                                    <td class="text-center">Brass</td>
+                                    <td  class="text-center">3400</td>
+                                    <td class="text-center">85</td>
+                                    <td  class="text-center">0</td>
+                                    <td  class="text-center">9</td>
+                                    <td  class="text-center">9</td>
+                                    <td  class="text-center">0</td>
+                                    <td  class="text-center">19</td>
+                                    <td  class="text-center">19</td>
+                                     <td class="text-center">85</td>
+                                     <td>  <input type="text" class="form-control" style="width: 60px;" placeholder=" Qty " [(ngModel)]="transport.Qty"
+                                      name="Qty" saCommonDir dirType="alphanumeric" required /> </td>
+                                      <td>  <div class="form-group">
+                                        <select class="form-control" [(ngModel)]="transport.RateType" name="RateType" required>
+                                          <option value="" selected hidden> Select </option>
+                                          <option value="Y"> Yes </option>
+                                          <option value="N"> No</option>
+                                        </select>
+                                      </div></td>
+                                    <td>  <input type="text" class="form-control" style="width: 60px;" placeholder="Qty " [(ngModel)]="transport.Qty"
+                                      name="Qty" saCommonDir dirType="alphanumeric" required /> </td>
+                                      <td>  <input type="text" class="form-control" style="width: 100px;" placeholder="Remark " [(ngModel)]="transport.Qty"
+                                        name="Remark" saCommonDir dirType="alphanumeric" required /> </td>
+                                    </tr>
+                                              <tr>
+                                                <td colspan="5" class="text-right"><strong>TOTAL</strong></td>
+                                                <td class="text-center"><strong>23000</strong>  </td>
+                                                <td></td>    <td></td>    <td></td>
+                                                <td class="text-center"><strong>19</strong>  </td>
+                                                <td class="text-center"><strong>38</strong>  </td>
+                                                <td class="text-center"><strong>38</strong>  </td>
+                                                <td  class="text-center"><strong>340900</strong>  </td>
+                                                <td  class="text-center"><strong>0</strong>  </td>
+                                                <td  class="text-center"><strong>0</strong>  </td>
+                                                <td></td><td></td>
+                                              </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                  </div>
+                <!-- <div class="col-sm-2">
+                  <div class="form-group">
+                    <label>Rejected Qty <span class="errorMessage">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Qty " [(ngModel)]="transport.Qty"
+                      name="Qty" saCommonDir dirType="alphanumeric" required />
+                  </div>
+                </div> -->
+                <!-- <div class="col-sm-12">
+                  <div class="form-group">
+                    <label>Rejected Reason <span class="errorMessage">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Reason " [(ngModel)]="transport.Reason"
+                      name="Reason" saCommonDir dirType="alphanumeric" required />
+                  </div>
+                </div> -->
+                <div class="col-sm-2">
+                  <div class="form-group">
+                    <label> Vehicle No. <span class="errorMessage">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Vehicle No." [(ngModel)]="transport.PODate"
+                      name="PODate" saCommonDir dirType="alphanumeric" required />
+                  </div>
+                </div>
+
+                </div>
+           
+                <footer>
+                  <div class="row">
+                    <div class="col-sm-12 ">
+                      <hr />
+                      <a class="pull-right btn btn-default" routerLink="/project/grn-list">
+                        <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
+                        {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                    </div>
+                  </div>
+                </footer>
+              </form>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>
