@@ -4,6 +4,7 @@ import { AppComponent } from '../../../app.component';
 import { DatashareService } from '../../../core/custom-services/datashare.service';
 import { MasterService } from '../../../core/custom-services/master.service';
 import { AppService } from '@app/core/custom-services/app.service';
+import { AllmasterService } from '../allmaster.service';
 @Component({
   selector: 'sa-site-master',
   templateUrl: './site-master.component.html',
@@ -11,19 +12,19 @@ import { AppService } from '@app/core/custom-services/app.service';
 })
 export class SiteMasterComponent implements OnInit {
   
-        public cpInfo: any = {};
+        public empInfo: any = {};
         public gridOptions: IGridoption;
-        public transportData: any;
-        constructor(private appService: AppService, private datashare: DatashareService, private masters: MasterService) {
+        public siteData: any;
+        constructor(private appService: AppService, private datashare: DatashareService, private masters: MasterService, private allmasterService:AllmasterService) {
         }
         ngOnInit() {
-          this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+          this.appService.getAppData().subscribe(data => { this.empInfo = data });
           this.configureGrid();
         }
         configureGrid() {
           this.gridOptions = <IGridoption>{}
           this.gridOptions.exporterMenuPdf = false;
-          this.gridOptions.exporterExcelFilename = 'Transport Master list.xlsx';
+          this.gridOptions.exporterExcelFilename = 'Site Master list.xlsx';
           this.gridOptions.selectionRowHeaderWidth = 0;
           let columnDefs = [];
           columnDefs = [
@@ -32,8 +33,13 @@ export class SiteMasterComponent implements OnInit {
               , width: "48",
               headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
             },
-            { name: 'VehicleTypeId', displayName: 'Vehicle Type Id', width: "*", cellTooltip: true, filterCellFiltered: true },
-            { name: 'VehicleType', displayName: 'Transport', width: "*", cellTooltip: true, filterCellFiltered: true },
+         // { name: 'VehicleTypeId', displayName: 'Vehicle Type Id', width: "*", cellTooltip: true, filterCellFiltered: true },
+            { name: 'SiteName', displayName: 'Site', width: "*", cellTooltip: true, filterCellFiltered: true },
+            { name: 'Address', displayName: 'Address', width: "*", cellTooltip: true, filterCellFiltered: true },
+            { name: 'GeneralManagerName', displayName: 'General Manager', width: "*", cellTooltip: true, filterCellFiltered: true },
+            { name: 'FirstEngineerName', displayName: 'Site Engineer 1', width: "*", cellTooltip: true, filterCellFiltered: true },
+            { name: 'SecondEngineerName', displayName: 'Site Engineer 2', width: "*", cellTooltip: true, filterCellFiltered: true },
+            { name: 'IsMainSite', displayName: 'Is Main Site', width: "*", cellTooltip: true, filterCellFiltered: true },
             { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
           ]
           this.gridOptions.columnDefs = columnDefs;
@@ -44,12 +50,12 @@ export class SiteMasterComponent implements OnInit {
           AppComponent.Router.navigate(['/master/site']);
         }
         onLoad() {
-          this.masters.getTransport().subscribe((resData: any) => {
+          this.allmasterService.getSite().subscribe((resData: any) => {
             if (resData.StatusCode != 0) {
-              this.transportData = resData.Data;
+              this.siteData = resData.Data;
               AppComponent.SmartAlert.Success(resData.Message);
             }
-            else { this.transportData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
+            else { this.siteData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
           });
       
         }

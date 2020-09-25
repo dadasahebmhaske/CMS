@@ -10,15 +10,15 @@
                   </header>
                   <div>
                       <div class="widget-body">
-                          <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
+                          <form name="projectForm" #projectForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
                               <div class="row">
                                 <div class="col-sm-6">
                                   <div class="form-group">
                                     <label for="sel1">Site <span class="errorMessage">*</span>
                                     </label>
-                                    <select class="form-control" [(ngModel)]="transport.RoleCode" name="RoleCode" required>
+                                    <select class="form-control" [(ngModel)]="project.SiteId" name="SiteId" required>
                                       <option value="" selected hidden> Select Site </option>
-                                      <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                                      <option [value]="des.SiteId" *ngFor="let des of siteData">{{des.SiteName}}
                                       </option>
                                     </select>
                                   </div>
@@ -28,7 +28,7 @@
                                       <div class="form-group">
                                           <label>Project Name <span class="errorMessage">*</span>
                                           </label>
-                                          <input type="text" class="form-control" placeholder="Enter Site " [(ngModel)]="transport.VehicleType" name="VehicleType" saCommonDir
+                                          <input type="text" class="form-control" placeholder="Enter Site " [(ngModel)]="project.ProjectName" name="ProjectName" saCommonDir
                                               dirType="alphanumeric" required />
                                       </div>
                                   </div>
@@ -36,8 +36,8 @@
                                     <div class="form-group">
                                         <label>Number Of Units <span class="errorMessage">*</span>
                                         </label>
-                                        <input type="text" class="form-control" placeholder="Enter Number Of Units  " [(ngModel)]="transport.VehicleType" name="VehicleType" saCommonDir
-                                            dirType="alphanumeric" required />
+                                        <input type="text" class="form-control" placeholder="Enter Number Of Units  " [(ngModel)]="project.NoOfUnits" name="NoOfUnits" saCommonDir
+                                            dirType="number" required />
                                     </div>
                                 </div>
                             
@@ -45,25 +45,28 @@
                                   <div class="form-group">
                                     <label for="sel1">Start Date <span class="errorMessage">*</span>
                                     </label>
-                                    <input type="text" class="form-control" placeholder="Enter Start Date "
-                                      [(ngModel)]="transport.DateOfBirth" name="DateOfBirth" bsDatepicker
-                                      [bsConfig]="datePickerConfig" onkeydown="return false" required />
+                                    <label class="posticon">
+                                      <i class="icon-append fa fa-calendar"></i>
+                                      <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="project.StartDate" name="Startdate" id="startDate"
+                                        (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" required /></label>
                                   </div>
                                 </div>
                                 <div class="col-sm-4">
                                   <div class="form-group">
                                     <label for="sel1">End Date <span class="errorMessage">*</span>
                                     </label>
-                                    <input type="text" class="form-control" placeholder="Enter End Date "
-                                      [(ngModel)]="transport.DateOfBirth" name="DateOfBirth" bsDatepicker
-                                      [bsConfig]="datePickerConfig" onkeydown="return false" required />
+                                    <label class="posticon">
+                                      <i class="icon-append fa fa-calendar"></i>
+                                      <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="project.EndDate" name="EndDate" required onkeydown="return false" [minDate]="minDate"
+                                        bsDatepicker [bsConfig]="datePickerConfig" />
+                                    </label>
                                   </div>
                                 </div>
                               </div>
                               <div class="row">
                                   <div class="col-sm-6">
                                       <label>
-                                          <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='transport.IsActive' /> Is Active </label>
+                                          <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='project.IsActive' /> Is Active </label>
                                   </div>
                               </div>
                               <footer>

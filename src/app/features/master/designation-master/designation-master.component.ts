@@ -33,8 +33,8 @@ export class DesignationMasterComponent implements OnInit {
             , width: "48",
             headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
           },
-          { name: 'DesignationId', displayName: 'Designation Id', width: "*", cellTooltip: true, filterCellFiltered: true },
-          { name: 'DesignationName', displayName: 'Designation', width: "*", cellTooltip: true, filterCellFiltered: true },
+          { name: 'DesigId', displayName: 'Designation Id', width: "*", cellTooltip: true, filterCellFiltered: true },
+          { name: 'DesigName', displayName: 'Designation', width: "*", cellTooltip: true, filterCellFiltered: true },
           { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
         ]
         this.gridOptions.columnDefs = columnDefs;
@@ -47,7 +47,7 @@ export class DesignationMasterComponent implements OnInit {
       onLoad() {
         this.allmasterService.getDesignation().subscribe((resData: any) => {
           if (resData.StatusCode != 0) {
-            this.designationData = resData.Data;
+            this.designationData = resData.Data; console.log(resData.Data);
             AppComponent.SmartAlert.Success(resData.Message);
           }
           else { this.designationData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }

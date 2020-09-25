@@ -4,6 +4,7 @@ import { AppComponent } from '../../../app.component';
 import { DatashareService } from '../../../core/custom-services/datashare.service';
 import { MasterService } from '../../../core/custom-services/master.service';
 import { AppService } from '@app/core/custom-services/app.service';
+import { AllmasterService } from '../allmaster.service';
 @Component({
   selector: 'sa-material-type-master',
   templateUrl: './material-type-master.component.html',
@@ -13,17 +14,20 @@ export class MaterialTypeMasterComponent implements OnInit {
 
                 public cpInfo: any = {};
                 public gridOptions: IGridoption;
-                public transportData: any;
-                constructor(private appService: AppService, private datashare: DatashareService, private masters: MasterService) {
+                public matActData: any;
+                public MAID:any;
+                public mat:string;
+                constructor(private appService: AppService, private datashare: DatashareService, private masters: MasterService,private allmasterService:AllmasterService) {
                 }
                 ngOnInit() {
                   this.appService.getAppData().subscribe(data => { this.cpInfo = data });
-                  this.configureGrid();
+                  this.MAID=2;
+                  this.onLoad(this.MAID);
                 }
                 configureGrid() {
                   this.gridOptions = <IGridoption>{}
                   this.gridOptions.exporterMenuPdf = false;
-                  this.gridOptions.exporterExcelFilename = 'Transport Master list.xlsx';
+                  this.gridOptions.exporterExcelFilename = 'Material / Activity Type Master list.xlsx';
                   this.gridOptions.selectionRowHeaderWidth = 0;
                   let columnDefs = [];
                   columnDefs = [
@@ -32,24 +36,26 @@ export class MaterialTypeMasterComponent implements OnInit {
                       , width: "48",
                       headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
                     },
-                    { name: 'VehicleTypeId', displayName: 'Vehicle Type Id', width: "*", cellTooltip: true, filterCellFiltered: true },
-                    { name: 'VehicleType', displayName: 'Transport', width: "*", cellTooltip: true, filterCellFiltered: true },
-                    { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
+                    { name: 'MainTypeName', displayName: 'Main Type ', width: "*", cellTooltip: true, filterCellFiltered: true },
+                    { name: 'TypeName', displayName: this.mat, width: "*", cellTooltip: true, filterCellFiltered: true,},
+                   { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
                   ]
                   this.gridOptions.columnDefs = columnDefs;
-                  this.onLoad();
+                
                 }
                 onEditFunction = ($event) => {
                   this.datashare.updateShareData($event.row);
-                  AppComponent.Router.navigate(['/master/project']);
+                  AppComponent.Router.navigate(['/master/material-type']);
                 }
-                onLoad() {
-                  this.masters.getTransport().subscribe((resData: any) => {
+                onLoad(id) {
+                 this.mat= this.MAID==2?'Material Type':'Activity Type';
+                  this.configureGrid();
+                  this.allmasterService.getType(id).subscribe((resData: any) => {
                     if (resData.StatusCode != 0) {
-                      this.transportData = resData.Data;
+                      this.matActData = resData.Data; console.log(resData.Data);
                       AppComponent.SmartAlert.Success(resData.Message);
                     }
-                    else { this.transportData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
+                    else { this.matActData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
                   });
               
                 }

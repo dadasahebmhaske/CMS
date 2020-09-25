@@ -4,6 +4,7 @@ import { AppComponent } from '../../../app.component';
 import { DatashareService } from '../../../core/custom-services/datashare.service';
 import { MasterService } from '../../../core/custom-services/master.service';
 import { AppService } from '@app/core/custom-services/app.service';
+import { AllmasterService } from '../allmaster.service';
 @Component({
   selector: 'sa-employee-master',
   templateUrl: './employee-master.component.html',
@@ -17,7 +18,7 @@ export class EmployeeMasterComponent implements OnInit {
   public empData: any = {};
   public empDataStored: any;
   public  loaderbtn:boolean=true;
-  constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService) {
+  constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService,private allmasterService:AllmasterService) {
 
   }
   ngOnInit() {
@@ -40,15 +41,15 @@ export class EmployeeMasterComponent implements OnInit {
       { name: 'EmpId', displayName: 'Emp ID', cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true, visible: false },
       { name: 'FirstName', displayName: 'First Name', width: "180", cellTooltip: true, filterCellFiltered: true },
       { name: 'LastName', displayName: 'Last Name', width: "180", cellTooltip: true, filterCellFiltered: true },
-      { name: 'RoleCode', displayName: 'Designation', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'Salary', displayName: 'Salary', cellClass: 'cell-right', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'DesigName', displayName: 'Designation', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'DeptName', displayName: 'Department', cellClass: 'cell-right', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'Gender', displayName: 'Gender', width: "110", cellTooltip: true, filterCellFiltered: true, visible: false },
       { name: 'DateOfBirth', displayName: 'Date Of Birth', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'EmailId', displayName: 'Email Id', width: "200", cellTooltip: true, filterCellFiltered: true },
       { name: 'MobileNo', displayName: 'Mobile No.', cellClass: 'cell-center', width: "110", cellTooltip: true, filterCellFiltered: true },
       { name: 'AltrMobileNo', displayName: 'Altr Mobile No.', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true },
-      { name: 'BloodGrp', displayName: 'Blood Group', width: "120", cellTooltip: true, filterCellFiltered: true },
-      { name: 'Qualification', displayName: 'Qualification', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'BloodGroup', displayName: 'Blood Group', width: "120", cellTooltip: true, filterCellFiltered: true },
+      { name: 'Education', displayName: 'Qualification', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "90", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;
@@ -67,7 +68,7 @@ export class EmployeeMasterComponent implements OnInit {
   }
   onLoad() {
     this.loaderbtn=false;
-    this.masterService.getEmpoyees(this.cpInfo.CPCode).subscribe((resData: any) => {
+    this.allmasterService.getEmployees().subscribe((resData: any) => {
       this.loaderbtn=true;
       if (resData.StatusCode != 0) {
         this.empData = resData.Data;  console.log(resData.Data);

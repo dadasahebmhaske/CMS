@@ -10,27 +10,24 @@
                   </header>
                   <div>
                       <div class="widget-body">
-                          <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
+                          <form name="materialForm" #materialForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
                               <div class="row">
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                       <label for="sel1">Type <span class="errorMessage">*</span>
                                       </label>
-                                      <select class="form-control" [(ngModel)]="transport.RoleCode" name="RoleCode" required>
-                                        <option value="" selected hidden> Select GRN </option>
-                                        <option value=""> Material </option>
-                                        <option value=""> Activity </option>
-                                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                                        </option>
+                                      <select class="form-control" [(ngModel)]="material.MainTypeId" name="MainTypeId" required>
+                                        <option value="" selected hidden> Select Type </option>
+                                        <option value="2"> Material </option>
+                                        <option value="3"> Activity </option>
                                       </select>
                                     </div>
                                   </div>
                                   <div class="col-sm-9">
-                             
                                     <div class="form-group">
                                         <label>Activity /  Material Type Name <span class="errorMessage">*</span>
                                         </label>
-                                        <input type="text" class="form-control" placeholder="Enter Activity / Material Type" [(ngModel)]="transport.VehicleType" name="VehicleType" saCommonDir
+                                        <input type="text" class="form-control" placeholder="Enter Activity / Material Type" [(ngModel)]="material.TypeName" name="TypeName" saCommonDir
                                             dirType="alphanumeric" required />
                                     </div>
                                 </div>
@@ -38,7 +35,7 @@
                               <div class="row">
                                   <div class="col-sm-6">
                                       <label>
-                                          <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='transport.IsActive' /> Is Active </label>
+                                          <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='material.IsActive' /> Is Active </label>
                                   </div>
                               </div>
                               <footer>

@@ -10,15 +10,15 @@
                   </header>
                   <div>
                       <div class="widget-body">
-                          <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
+                          <form name="empoyeeForm" #empoyeeForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
                               <div class="row">
                                 <div class="col-sm-2">
                                   <div class="form-group">
                                     <label for="sel1">Department <span class="errorMessage">*</span>
                                     </label>
-                                    <select class="form-control" [(ngModel)]="employee.RoleCode" name="RoleCode" required>
+                                    <select class="form-control" [(ngModel)]="employee.DeptId" name="DeptId" required>
                                       <option value="" selected hidden> Select Department </option>
-                                      <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                                      <option [value]="des.DeptId" *ngFor="let des of DeptData">{{des.DeptName}}
                                       </option>
                                     </select>
                                   </div>
@@ -27,9 +27,9 @@
                                   <div class="form-group">
                                     <label for="sel1">Designation <span class="errorMessage">*</span>
                                     </label>
-                                    <select class="form-control" [(ngModel)]="employee.RoleCode" name="RoleCode" required>
+                                    <select class="form-control" [(ngModel)]="employee.DesigId" name="DesigId" required>
                                       <option value="" selected hidden> Select Designation </option>
-                                      <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                                      <option [value]="des.DesigId" *ngFor="let des of designationData">{{des.DesigName}}
                                       </option>
                                     </select>
                                   </div>
@@ -94,7 +94,7 @@
                                   <div class="form-group">
                                     <label for="sel1">Blood Group <span class="errorMessage">*</span>
                                     </label>
-                                    <select class="form-control" [(ngModel)]="employee.BloodGrp" name="BloodGrp" required>
+                                    <select class="form-control" [(ngModel)]="employee.BloodGroup" name="BloodGroup" required>
                                       <option value="" selected hidden> Select Group </option>
                                       <option value="A +ve">A +ve</option>
                                       <option value="A -ve">A -ve</option>
@@ -125,7 +125,7 @@
                                         [hidden]="employee.MaritalStatus=='unmarried'">*</span>
                                     </label>
                                     <input type="text" class="form-control" placeholder="Enter Anniversary Date"
-                                      [(ngModel)]="employee.MarriageAnniversaryDate" name="MarriageAnniversaryDate"
+                                      [(ngModel)]="employee.MarriageDate" name="MarriageDate"
                                       bsDatepicker [bsConfig]="datePickerConfig" onkeydown="return false"
                                       [disabled]="employee.MaritalStatus=='unmarried'"
                                       [required]="employee.MaritalStatus!='unmarried'" />
@@ -136,7 +136,7 @@
                                     <label for="sel1">Edu. Qualification <span class="errorMessage">*</span>
                                     </label>
                                     <input type="text" class="form-control" placeholder="Enter Qualification"
-                                      [(ngModel)]="employee.Qualification" name="Qualification" saCommonDir
+                                      [(ngModel)]="employee.Education" name="Education" saCommonDir
                                       dirType="alphanumeric" required />
                                   </div>
                                 </div>

@@ -10,25 +10,25 @@
                   </header>
                   <div>
                       <div class="widget-body">
-                          <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
+                          <form name="companytypeForm" #companytypeForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
                               <div class="row">
-                                <div class="col-sm-4">
+                                <!-- <div class="col-sm-4">
                                     <div class="form-group">
                                       <label for="sel1">Type <span class="errorMessage">*</span>
                                       </label>
-                                      <select class="form-control" [(ngModel)]="transport.RoleCode" name="RoleCode" required>
+                                      <select class="form-control" [(ngModel)]="company.RoleCode" name="RoleCode" required>
                                         <option value="" selected hidden> Select Type </option>
                                         <option value=""> Company </option>
                                         <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
                                         </option>
                                       </select>
                                     </div>
-                                  </div>
-                                  <div class="col-sm-8">
+                                  </div> -->
+                                  <div class="col-sm-12">
                                     <div class="form-group">
                                         <label> Company Type Name <span class="errorMessage">*</span>
                                         </label>
-                                        <input type="text" class="form-control" placeholder="Enter Company Type" [(ngModel)]="transport.VehicleType" name="VehicleType" saCommonDir
+                                        <input type="text" class="form-control" placeholder="Enter Company Type" [(ngModel)]="company.TypeName" name="TypeName" saCommonDir
                                             dirType="alphanumeric" required />
                                     </div>
                                 </div>
@@ -36,7 +36,7 @@
                               <div class="row">
                                   <div class="col-sm-6">
                                     <label>
-                                        <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='transport.IsActive' /> Is Active </label>
+                                        <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='company.IsActive' /> Is Active </label>
                                 </div>
                               </div>
                               <footer>
