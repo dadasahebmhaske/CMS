@@ -10,22 +10,23 @@
                   </header>
                   <div>
                       <div class="widget-body">
-                          <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
+                          <form name="deliverytermsForm" #deliverytermsForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
                               <div class="row">
                               
                                 <div class="col-sm-12">
                                   <div class="form-group">
                                       <label>Delivery Term  <span class="errorMessage">*</span>
                                       </label>
-                                      <input type="text" class="form-control" placeholder="Enter Term " [(ngModel)]="transport.VehicleType" name="VehicleType" saCommonDir
-                                          dirType="alphanumeric" required />
+                                      <textarea class="form-control" placeholder="Enter Term " [(ngModel)]="delivery.DeliveryTerm" name="DeliveryTerm" saCommonDir
+                                      dirType="alphanumeric" required></textarea>
+                                     
                                   </div>
                               </div>
                               </div>
                               <div class="row">
                                   <div class="col-sm-6">
                                       <label>
-                                          <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='transport.IsActive' /> Is Active </label>
+                                          <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='delivery.IsActive' /> Is Active </label>
                                   </div>
                               </div>
                               <footer>

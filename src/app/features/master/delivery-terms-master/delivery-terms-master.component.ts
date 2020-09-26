@@ -4,6 +4,7 @@ import { AppComponent } from '../../../app.component';
 import { DatashareService } from '../../../core/custom-services/datashare.service';
 import { MasterService } from '../../../core/custom-services/master.service';
 import { AppService } from '@app/core/custom-services/app.service';
+import { AllmasterService } from '../allmaster.service';
 @Component({
   selector: 'sa-delivery-terms-master',
   templateUrl: './delivery-terms-master.component.html',
@@ -12,19 +13,19 @@ import { AppService } from '@app/core/custom-services/app.service';
 export class DeliveryTermsMasterComponent implements OnInit {
 
   
-                    public cpInfo: any = {};
+                    public empInfo: any = {};
                     public gridOptions: IGridoption;
-                    public transportData: any;
-                    constructor(private appService: AppService, private datashare: DatashareService, private masters: MasterService) {
+                    public deliverytermData: any;
+                    constructor(private appService: AppService, private datashare: DatashareService, private masters: MasterService,private allmasterService:AllmasterService) {
                     }
                     ngOnInit() {
-                      this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+                      this.appService.getAppData().subscribe(data => { this.empInfo = data });
                       this.configureGrid();
                     }
                     configureGrid() {
                       this.gridOptions = <IGridoption>{}
                       this.gridOptions.exporterMenuPdf = false;
-                      this.gridOptions.exporterExcelFilename = 'Transport Master list.xlsx';
+                      this.gridOptions.exporterExcelFilename = 'Delivery Terms Master list.xlsx';
                       this.gridOptions.selectionRowHeaderWidth = 0;
                       let columnDefs = [];
                       columnDefs = [
@@ -33,24 +34,24 @@ export class DeliveryTermsMasterComponent implements OnInit {
                           , width: "48",
                           headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
                         },
-                        { name: 'VehicleTypeId', displayName: 'Vehicle Type Id', width: "*", cellTooltip: true, filterCellFiltered: true },
-                        { name: 'VehicleType', displayName: 'Transport', width: "*", cellTooltip: true, filterCellFiltered: true },
-                        { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
+                      //  { name: 'DeliveryTermId', displayName: 'Delivery Term Id', width: "*", cellTooltip: true, filterCellFiltered: true },
+                        { name: 'DeliveryTerm', displayName: 'Delivery Term', width: "*", cellTooltip: true, filterCellFiltered: true },
+                        { name: 'IsActive', displayName: 'Active',cellClass:'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
                       ]
                       this.gridOptions.columnDefs = columnDefs;
                       this.onLoad();
                     }
                     onEditFunction = ($event) => {
                       this.datashare.updateShareData($event.row);
-                      AppComponent.Router.navigate(['/master/project']);
+                      AppComponent.Router.navigate(['/master/delivery-terms']);
                     }
                     onLoad() {
-                      this.masters.getTransport().subscribe((resData: any) => {
+                      this.allmasterService.getDeliveryTerm().subscribe((resData: any) => {
                         if (resData.StatusCode != 0) {
-                          this.transportData = resData.Data;
+                          this.deliverytermData = resData.Data;
                           AppComponent.SmartAlert.Success(resData.Message);
                         }
-                        else { this.transportData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
+                        else { this.deliverytermData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
                       });
                   
                     }

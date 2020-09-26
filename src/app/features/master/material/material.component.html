@@ -10,13 +10,13 @@
                   </header>
                   <div>
                       <div class="widget-body">
-                          <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
+                          <form name="materialForm" #materialForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
                               <div class="row">
                                 <!-- <div class="col-sm-3">
                                     <div class="form-group">
                                       <label for="sel1">Material Type<span class="errorMessage">*</span>
                                       </label>
-                                      <select class="form-control" [(ngModel)]="transport.MaterialTypeId" name="MaterialTypeId" required>
+                                      <select class="form-control" [(ngModel)]="material.MaterialTypeId" name="MaterialTypeId" required>
                                         <option value="" selected hidden> Select Type </option>
                                         <option value=""> Bricks Work </option>
                                         <option value=""> Stone Work </option>
@@ -31,7 +31,7 @@
                                     <div class="form-group">
                                         <label>Material Name <span class="errorMessage">*</span>
                                         </label>
-                                        <input type="text" class="form-control" placeholder="Enter Material " [(ngModel)]="transport.VehicleType" name="VehicleType" saCommonDir
+                                        <input type="text" class="form-control" placeholder="Enter Material " [(ngModel)]="material.MatName" name="MatName" saCommonDir
                                             dirType="alphanumeric" required />
                                     </div>
                                 </div>
@@ -39,13 +39,9 @@
                                   <div class="form-group">
                                       <label>Unit of Measurement <span class="errorMessage">*</span>
                                       </label>
-                                      <select class="form-control" [(ngModel)]="transport.MaterialTypeId" name="MaterialTypeId" required>
+                                      <select class="form-control" [(ngModel)]="material.UOM" name="UOM" required>
                                         <option value="" selected hidden> Select Unit </option>
-                                        <option value=""> SqFt</option>
-                                        <option value=""> Brass </option>
-                                        <option value=""> Ltr </option>
-                                        <option value=""> Kg </option>
-                                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                                        <option [value]="des.UOMId" *ngFor="let des of unitData">{{des.UOM}}
                                         </option>
                                       </select>
                                   </div>
@@ -54,7 +50,7 @@
                               <div class="row">
                                   <div class="col-sm-6">
                                       <label>
-                                          <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='transport.IsActive' /> Is Active </label>
+                                          <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='material.IsActive' /> Is Active </label>
                                   </div>
                               </div>
                               <footer>

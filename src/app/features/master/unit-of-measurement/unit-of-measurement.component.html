@@ -10,21 +10,20 @@
                   </header>
                   <div>
                       <div class="widget-body">
-                          <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
+                          <form name="umoForm" #umoForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
                               <div class="row">
                                   <div class="col-sm-12">
                                       <div class="form-group">
                                           <label>Unit of Measurement <span class="errorMessage">*</span>
                                           </label>
-                                          <input type="text" class="form-control" placeholder="Enter Unit " [(ngModel)]="transport.VehicleType" name="VehicleType" saCommonDir
-                                              dirType="alphanumeric" required />
+                                          <input type="text" class="form-control" placeholder="Enter Unit" [(ngModel)]="unit.UOM" name="UOM" saCommonDir dirType="alphanumeric" required />
                                       </div>
                                   </div>
                               </div>
                               <div class="row">
                                   <div class="col-sm-6">
                                       <label>
-                                          <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='transport.IsActive' /> Is Active </label>
+                                          <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='unit.IsActive' /> Is Active </label>
                                   </div>
                               </div>
                               <footer>

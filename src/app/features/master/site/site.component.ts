@@ -35,6 +35,9 @@ export class SiteComponent implements OnInit, OnDestroy {
         });
       }
       public onSubmit() {
+        if(this.site.FirstEngineerId==this.site.SecondEngineerId){
+          AppComponent.SmartAlert.Errmsg('Site Engineer 1 & 2 should not be same');
+        }else{
         this.loaderbtn = false;
         this.site.Flag = this.site.SiteId == null ? 'IN' : 'UP';
         this.site.UserCode = this.empInfo.EmpId;
@@ -47,6 +50,7 @@ export class SiteComponent implements OnInit, OnDestroy {
           }
           else { AppComponent.SmartAlert.Errmsg(resData.Message); }
         });
+      }
       }
       ngOnDestroy() {
         this.datashare.updateShareData(null);

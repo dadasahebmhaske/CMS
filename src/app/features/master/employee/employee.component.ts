@@ -65,11 +65,6 @@ export class EmployeeComponent implements OnInit, OnDestroy {
       }
       else { this.designationData = []; AppComponent.SmartAlert.Errmsg(resD.Message); }
     });
-    // this.masterService.getDocumentType('EMP').subscribe(
-    //   (resData: any) => {
-    //     this.docTypeData = resData.Data;
-    //   });
- 
   }
   onSubmit() {
     this.loaderbtn = false;

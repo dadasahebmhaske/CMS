@@ -10,44 +10,43 @@
                   </header>
                   <div>
                       <div class="widget-body">
-                          <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
+                          <form name="labourForm" #labourForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
                               <div class="row">
                                 <div class="col-sm-3">
-                                  <div class="form-group">
-                                    <label for="sel1">Designation<span class="errorMessage">*</span>
-                                    </label>
-                                    <select class="form-control" [(ngModel)]="transport.MaterialTypeId" name="MaterialTypeId" required>
-                                      <option value="" selected hidden> Select Designation </option>
-                                      <option value=""> Bricks Work </option>
-                                      <option value=""> Stone Work </option>
-                                      <option value=""> Painting </option>
-                                      <option value=""> lighting </option>
-                                      <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                                      </option>
-                                    </select>
-                                  </div>
+                                    <div class="form-group">
+                                        <label for="sel1">Designation <span class="errorMessage">*</span>
+                                        </label>
+                                        <select class="form-control" [(ngModel)]="labour.DesigId" name="DesigId" required>
+                                          <option value="" selected hidden> Select Designation </option>
+                                          <option [value]="des.DesigId" *ngFor="let des of designationData">{{des.DesigName}}
+                                          </option>
+                                        </select>
+                                      </div>
                                 </div> 
                                   <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Labor  Name <span class="errorMessage">*</span>
+                                        <label>Labor Name <span class="errorMessage">*</span>
                                         </label>
-                                        <input type="text" class="form-control" placeholder="Enter Labour Name " [(ngModel)]="transport.VehicleType" name="VehicleType" saCommonDir
-                                            dirType="alphanumeric" required />
+                                        <input type="text" class="form-control" placeholder="Enter Labour Name"
+                                        [(ngModel)]="labour.LabourName" name="LabourName" saCommonDir dirType="alphaonly"
+                                        required />
+                                       
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                   <div class="form-group">
                                       <label>Mobile No. <span class="errorMessage">*</span>
                                       </label>
-                                      <input type="text" class="form-control" placeholder="Enter Mobile No." [(ngModel)]="transport.VehicleType" name="VehicleType" saCommonDir
-                                          dirType="alphanumeric" required />
+                                      <input type="text" class="form-control" placeholder="Enter Mobile No."
+                                      [(ngModel)]="labour.MobileNo" name="MobileNo" minlength="10" maxlength="10"
+                                      saCommonDir dirType="number" required />        
                                   </div>
                               </div>
                                 <div class="col-sm-9">
                                   <div class="form-group">
                                       <label>Address <span class="errorMessage">*</span>
                                       </label>
-                                      <input type="text" class="form-control" placeholder="Enter Address " [(ngModel)]="transport.VehicleType" name="VehicleType" saCommonDir
+                                      <input type="text" class="form-control" placeholder="Enter Address " [(ngModel)]="labour.Address" name="Address" saCommonDir
                                           dirType="alphanumeric" required />
                                   </div>
                               </div>
@@ -56,8 +55,8 @@
                                 <div class="form-group">
                                     <label>Per Day Rate<span class="errorMessage">*</span>
                                     </label>
-                                    <input type="text" class="form-control" placeholder="Enter Rate" [(ngModel)]="transport.VehicleType" name="VehicleType" saCommonDir
-                                        dirType="alphanumeric" required />
+                                    <input type="text" class="form-control" placeholder="Enter Rate" [(ngModel)]="labour.PerDayRate" name="PerDayRate" saCommonDir
+                                        dirType="decimal" required />
                                 </div>
                             </div>
                            
@@ -65,15 +64,15 @@
                               <div class="form-group">
                                   <label>Aadhar No.<span class="errorMessage">*</span>
                                   </label>
-                                  <input type="text" class="form-control" placeholder="Enter Adhar No." [(ngModel)]="transport.VehicleType" name="VehicleType" saCommonDir
-                                      dirType="alphanumeric" required />
+                                  <input type="text" class="form-control" placeholder="Enter Adhar No." [(ngModel)]="labour.AadhaarNo" name="AadhaarNo" saCommonDir
+                                      dirType="number"  minlength="12" maxlength="12" required />
                               </div>
                             </div>
                               <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Bank Name <span class="errorMessage">*</span>
                                     </label>
-                                    <input type="text" class="form-control" placeholder="Enter Bank Name" [(ngModel)]="transport.VehicleType" name="VehicleType" saCommonDir
+                                    <input type="text" class="form-control" placeholder="Enter Bank Name" [(ngModel)]="labour.BankName" name="BankName" saCommonDir
                                         dirType="alphanumeric" required />
                                 </div>
                             </div>
@@ -81,8 +80,8 @@
                               <div class="form-group">
                                   <label>Account No. <span class="errorMessage">*</span>
                                   </label>
-                                  <input type="text" class="form-control" placeholder="Enter Account No. " [(ngModel)]="transport.VehicleType" name="VehicleType" saCommonDir
-                                      dirType="alphanumeric" required />
+                                  <input type="text" class="form-control" placeholder="Enter Account No. " [(ngModel)]="labour.AccountNo" name="AccountNo" saCommonDir
+                                      dirType="number" required />
                               </div>
                         
                           </div>
@@ -91,8 +90,9 @@
                           <div class="form-group">
                               <label>IFSC <span class="errorMessage">*</span>
                               </label>
-                              <input type="text" class="form-control" placeholder="Enter IFSC" [(ngModel)]="transport.VehicleType" name="VehicleType" saCommonDir
-                                  dirType="alphanumeric" required />
+                              <input type="text" class="form-control" placeholder="Enter IFSC"
+                              pattern="[A-Z]{4}[0]{3}[0-9]{4}"   oninvalid="this.setCustomValidity('Enter valid IFSC Code ')" onchange=" setCustomValidity('')" oninput=" setCustomValidity(' ')" [(ngModel)]="labour.IFSCNo" name="IFSCNo" saCommonDir
+                                  dirType="alphanumericupper" required />
                           </div>
                     
                       </div>
@@ -100,7 +100,7 @@
                               <div class="row">
                                   <div class="col-sm-6">
                                       <label>
-                                          <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='transport.IsActive' /> Is Active </label>
+                                          <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='labour.IsActive' /> Is Active </label>
                                   </div>
                               </div>
                               <footer>

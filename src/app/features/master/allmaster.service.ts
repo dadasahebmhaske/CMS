@@ -26,6 +26,15 @@ public postcompany(data:any){
 public postProject(data:any){
   return this.httpClient.post<any>(`${AppComponent.BaseUrl}Master/ManageProject`,{data:data},AppComponent.httpOptions);            
 }
+public postUMO(data:any){
+  return this.httpClient.post<any>(`${AppComponent.BaseUrl}Master/ManageUOM`,{data:data},AppComponent.httpOptions);            
+}
+public postMaterial(data:any){
+  return this.httpClient.post<any>(`${AppComponent.BaseUrl}Master/ManageMaterial`,{data:data},AppComponent.httpOptions);            
+}
+public post(uri,data:any){
+  return this.httpClient.post<any>(`${AppComponent.BaseUrl}Master/${uri}`,{data:data},AppComponent.httpOptions);            
+}
 
 
 public getDesignation(){
@@ -55,10 +64,35 @@ public getProject(){
 public getType(id){
   return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=107&MainTypeId=${id}&StartDate=&EndDate=&UserCode=&IsActive=Y`);
 }
-  // public getGodownDetails(){
-  //   return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=GDWN&IsActive='Y'`);
-  // }
-  // public getGodownType(){
-  //   return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=GDWN&IsActive=Y`);
-  // }
+public getUOM(){
+  return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=114&StartDate=&EndDate=&UserCode=&IsActive=Y`);
+}
+public getMaterial(){
+  return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=108&StartDate=&EndDate=&UserCode=&IsActive=Y`);
+}
+public getlabourWork(){
+  return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=109&StartDate=&EndDate=&UserCode=&IsActive=Y`);
+}
+public getOtherExp()
+{
+  return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=110&StartDate=&EndDate=&UserCode=&IsActive=Y`);
+}
+public getPayTerm()
+{
+  return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=111&StartDate=&EndDate=&UserCode=&IsActive=Y`);
+}
+public getDeliveryTerm()
+{
+  return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=112&StartDate=&EndDate=&UserCode=&IsActive=Y`);
+}
+public gettatxation()
+{
+  return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=113&StartDate=&EndDate=&UserCode=&IsActive=Y`);
+}
+public getLabour()
+{
+  return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=115&StartDate=&EndDate=&UserCode=&IsActive=Y`);
+}
+
+
 }
