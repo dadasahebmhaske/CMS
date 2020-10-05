@@ -25,7 +25,8 @@ export class CompanyTypeComponent implements OnInit, OnDestroy {
                 this.company.MainTypeId=1;
                 this.company.TypeId = this.company.TypeId == null ? '' : this.company.TypeId;
                                 let ciphertext = this.appService.getEncrypted(this.company);
-                this.allmasterService.postCompanyType(ciphertext).subscribe((resData: any) => {
+                this.allmasterService.post('ManageTypes',ciphertext).subscribe((resData: any) => {
+                  this.loaderbtn = true;
                   if (resData.StatusCode != 0) {
                     AppComponent.SmartAlert.Success(resData.Message);
                     AppComponent.Router.navigate(['/master/company-type-master']);

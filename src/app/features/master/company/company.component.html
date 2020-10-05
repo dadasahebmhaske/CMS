@@ -69,10 +69,10 @@
                           </div>
                                 <div class="col-sm-4">
                                   <div class="form-group">
-                                    <label for="sel1">GSTN <span class="errorMessage">*</span>
+                                    <label for="sel1">GSTN 
                                     </label>
-                                    <input type="text" class="form-control" placeholder="Enter GSTN "  [(ngModel)]="company.GSTNo" name="GSTNo"
-                                    pattern="([0-9]{1}[1-9]{1})|([1-9]{1}[0-9]{1})[a-zA-Z]{5}\d{4}[a-zA-Z]{1}\d{1}[a-zA-Z]{1}[a-zA-Z0-9]{1}"   required />
+                                    <input type="text" class="form-control" placeholder="Enter GSTN "  title="Example: 27AABCU9603R1Z2" [(ngModel)]="company.GSTNo" name="GSTNo"
+                                    pattern="([0-9]{1}[1-9]{1})|([1-9]{1}[0-9]{1})[a-zA-Z]{5}\d{4}[a-zA-Z]{1}\d{1}[a-zA-Z]{1}[a-zA-Z0-9]{1}"    />
                                   </div>
                                 </div>
                                 <div class="col-sm-4">
@@ -80,7 +80,7 @@
                                     <label for="sel1">PAN <span class="errorMessage">*</span>
                                     </label>
                                     <input type="text" class="form-control" placeholder="Enter PAN " [(ngModel)]="company.PANNo" name="PANNo"
-                                    pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" saCommonDir dirType="alphanumericupper"  required />
+                                    title="Example: COZXM8987B"  pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" saCommonDir dirType="alphanumericupper"  required />
                                   </div>
                                 </div>
                               </div>

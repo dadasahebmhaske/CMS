@@ -43,7 +43,8 @@ export class SiteComponent implements OnInit, OnDestroy {
         this.site.UserCode = this.empInfo.EmpId;
         this.site.SiteId = this.site.SiteId == null ? '' : this.site.SiteId;
          let ciphertext = this.appService.getEncrypted(this.site);
-        this.allmasterService.postsite(ciphertext).subscribe((resData: any) => {
+        this.allmasterService.post('ManageSite',ciphertext).subscribe((resData: any) => {
+          this.loaderbtn = true;
           if (resData.StatusCode != 0) {
             AppComponent.SmartAlert.Success(resData.Message);
             AppComponent.Router.navigate(['/master/site-master']);

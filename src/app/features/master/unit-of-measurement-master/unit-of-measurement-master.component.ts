@@ -32,9 +32,9 @@ export class UnitOfMeasurementMasterComponent implements OnInit {
           , width: "48",
           headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
         },
-        { name: 'UOMId', displayName: 'Unit of Measurement Id', width: "*", cellTooltip: true, filterCellFiltered: true },
+       // { name: 'UOMId', displayName: 'Unit of Measurement Id', width: "*", cellTooltip: true, filterCellFiltered: true },
         { name: 'UOM', displayName: 'Unit of Measurement', width: "*", cellTooltip: true, filterCellFiltered: true },
-        { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
+        { name: 'IsActive', displayName: 'Active',cellClass:'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
       ]
       this.gridOptions.columnDefs = columnDefs;
       this.onLoad();
@@ -44,7 +44,7 @@ export class UnitOfMeasurementMasterComponent implements OnInit {
       AppComponent.Router.navigate(['/master/unit-of-measurement']);
     }
     onLoad() {
-      this.allmasterService.getUOM().subscribe((resData: any) => {
+      this.allmasterService.getUOM('').subscribe((resData: any) => {
         if (resData.StatusCode != 0) {
           this.transportData = resData.Data;
           AppComponent.SmartAlert.Success(resData.Message);

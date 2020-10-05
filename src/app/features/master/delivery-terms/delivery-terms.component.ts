@@ -24,6 +24,7 @@ export class DeliveryTermsComponent implements OnInit, OnDestroy {
                     this.delivery.DeliveryTermId = this.delivery.DeliveryTermId == null ? '' : this.delivery.DeliveryTermId;
                     let ciphertext = this.appService.getEncrypted(this.delivery);
                     this.allmasterService.post('ManageDeliveryTerm',ciphertext).subscribe((resData: any) => {
+                      this.loaderbtn = true;
                       if (resData.StatusCode != 0) {
                         AppComponent.SmartAlert.Success(resData.Message);
                         AppComponent.Router.navigate(['/master/delivery-terms-master']);

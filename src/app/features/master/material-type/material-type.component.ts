@@ -23,7 +23,8 @@ export class MaterialTypeComponent implements OnInit, OnDestroy {
               this.material.UserCode = this.empInfo.EmpId;
               this.material.TypeId = this.material.TypeId == null ? '' : this.material.TypeId;
               let ciphertext = this.appService.getEncrypted(this.material);
-              this.allmasterService.postCompanyType(ciphertext).subscribe((resData: any) => {
+              this.allmasterService.post('ManageTypes',ciphertext).subscribe((resData: any) => {
+                this.loaderbtn = true;
                 if (resData.StatusCode != 0) {
                   AppComponent.SmartAlert.Success(resData.Message);
                   AppComponent.Router.navigate(['/master/material-type-master']);

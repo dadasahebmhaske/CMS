@@ -24,6 +24,7 @@ export class TaxationComponent implements OnInit, OnDestroy {
                 this.tax.TaxId = this.tax.TaxId == null ? '' : this.tax.TaxId;
                 let ciphertext = this.appService.getEncrypted(this.tax);
                 this.allmasterService.post('ManageTaxation',ciphertext).subscribe((resData: any) => {
+                  this.loaderbtn = true;
                   if (resData.StatusCode != 0) {
                     AppComponent.SmartAlert.Success(resData.Message);
                     AppComponent.Router.navigate(['/master/taxation-master']);

@@ -42,7 +42,7 @@ export class CompanyMasterComponent implements OnInit {
                 { name: 'PANNo', displayName: 'PAN',cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
                 { name: 'ContactPersonPhoneNo', displayName: 'Contact Person Phone No.',cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
                
-                 { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
+                 { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
               ] 
               this.gridOptions.columnDefs = columnDefs;
               this.onLoad();
@@ -52,7 +52,7 @@ export class CompanyMasterComponent implements OnInit {
               AppComponent.Router.navigate(['/master/company']);
             }
             onLoad() {
-              this.allmasterService.getCompany().subscribe((resData: any) => {
+              this.allmasterService.getCompany('').subscribe((resData: any) => {
                 if (resData.StatusCode != 0) {
                   this.companyTypeData = resData.Data;
                   AppComponent.SmartAlert.Success(resData.Message);

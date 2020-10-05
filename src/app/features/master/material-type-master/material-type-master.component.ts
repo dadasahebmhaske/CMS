@@ -38,7 +38,7 @@ export class MaterialTypeMasterComponent implements OnInit {
                     },
                     { name: 'MainTypeName', displayName: 'Main Type ', width: "*", cellTooltip: true, filterCellFiltered: true },
                     { name: 'TypeName', displayName: this.mat, width: "*", cellTooltip: true, filterCellFiltered: true,},
-                   { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
+                   { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
                   ]
                   this.gridOptions.columnDefs = columnDefs;
                 
@@ -48,7 +48,7 @@ export class MaterialTypeMasterComponent implements OnInit {
                   AppComponent.Router.navigate(['/master/material-type']);
                 }
                 onLoad(id) {
-                 this.mat= this.MAID==2?'Material Type':'Activity Type';
+                 this.mat= this.MAID==4?'Other Type':( this.MAID==2?'Material Type':'Activity Type');
                   this.configureGrid();
                   this.allmasterService.getType(id).subscribe((resData: any) => {
                     if (resData.StatusCode != 0) {

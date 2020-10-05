@@ -23,7 +23,8 @@ export class UnitOfMeasurementComponent implements OnInit, OnDestroy {
         this.unit.UserCode = this.empInfo.EmpId;
         this.unit.UOMId = this.unit.UOMId == null ? '' : this.unit.UOMId;
         let ciphertext = this.appService.getEncrypted(this.unit);
-        this.allmasterService.postUMO(ciphertext).subscribe((resData: any) => {
+        this.allmasterService.post('ManageUOM',ciphertext).subscribe((resData: any) => {
+          this.loaderbtn = true;
           if (resData.StatusCode != 0) {
             AppComponent.SmartAlert.Success(resData.Message);
             AppComponent.Router.navigate(['/master/unit-of-measurement-master']);

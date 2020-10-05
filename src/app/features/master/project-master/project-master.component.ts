@@ -39,7 +39,7 @@ export class ProjectMasterComponent implements OnInit {
               { name: 'StartDate', displayName: 'Start Date',cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
               
               { name: 'EndDate', displayName: 'End Date',cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
-              { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
+              { name: 'IsActive', displayName: 'Active',cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
             ]
             this.gridOptions.columnDefs = columnDefs;
             this.onLoad();
@@ -49,7 +49,7 @@ export class ProjectMasterComponent implements OnInit {
             AppComponent.Router.navigate(['/master/project']);
           }
           onLoad() {
-            this.allmasterService.getProject().subscribe((resData: any) => {
+            this.allmasterService.getProject('').subscribe((resData: any) => {
               if (resData.StatusCode != 0) {
                 this.projectData = resData.Data;
                 AppComponent.SmartAlert.Success(resData.Message);

@@ -4,6 +4,7 @@ import { AppComponent } from '../../../app.component';
 import { DatashareService } from '../../../core/custom-services/datashare.service';
 import { MasterService } from '../../../core/custom-services/master.service';
 import { AppService } from '@app/core/custom-services/app.service';
+import { ProjectService } from '../project.service';
 @Component({
   selector: 'sa-project-budget-list',
   templateUrl: './project-budget-list.component.html',
@@ -12,8 +13,8 @@ import { AppService } from '@app/core/custom-services/app.service';
 export class ProjectBudgetListComponent implements OnInit {
           public cpInfo: any = {};
           public gridOptions: IGridoption;
-          public transportData: any;
-          constructor(private appService: AppService, private datashare: DatashareService, private masters: MasterService) {
+          public projectBudgetData: any;
+          constructor(private appService: AppService, private datashare: DatashareService, private masters: MasterService,private projectService:ProjectService) {
           }
           ngOnInit() {
             this.appService.getAppData().subscribe(data => { this.cpInfo = data });
@@ -22,7 +23,7 @@ export class ProjectBudgetListComponent implements OnInit {
           configureGrid() {
             this.gridOptions = <IGridoption>{}
             this.gridOptions.exporterMenuPdf = false;
-            this.gridOptions.exporterExcelFilename = 'Transport Master list.xlsx';
+            this.gridOptions.exporterExcelFilename = 'Project Budget list.xlsx';
             this.gridOptions.selectionRowHeaderWidth = 0;
             let columnDefs = [];
             columnDefs = [
@@ -31,24 +32,29 @@ export class ProjectBudgetListComponent implements OnInit {
                 , width: "48",
                 headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
               },
-              { name: 'VehicleTypeId', displayName: 'Vehicle Type Id', width: "*", cellTooltip: true, filterCellFiltered: true },
-              { name: 'VehicleType', displayName: 'Transport', width: "*", cellTooltip: true, filterCellFiltered: true },
-              { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
+              { name: 'SiteName', displayName: 'Site Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+              { name: 'ProjectName', displayName: 'Project Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+              { name: 'ManagerName', displayName: 'Manager Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+              { name: 'ExecutiveName', displayName: 'Executive Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+              { name: 'TotProjectCost', displayName: 'Project Cost',cellClass:'text-right', width: "*", cellTooltip: true, filterCellFiltered: true },
+              { name: 'DispTranNo', displayName: 'Trans No.',cellClass:'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
+              { name: 'TranDate', displayName: 'Tran Date',cellClass:'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
+              //{ name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
             ]
             this.gridOptions.columnDefs = columnDefs;
             this.onLoad();
           }
           onEditFunction = ($event) => {
             this.datashare.updateShareData($event.row);
-            AppComponent.Router.navigate(['/master/site']);
+            AppComponent.Router.navigate(['/project/project-budget']);
           }
           onLoad() {
-            this.masters.getTransport().subscribe((resData: any) => {
+            this.projectService.getProjectBudgetlist().subscribe((resData: any) => {
               if (resData.StatusCode != 0) {
-                this.transportData = resData.Data;
+                this.projectBudgetData = resData.Data.Table; console.log( resData.Data);
                 AppComponent.SmartAlert.Success(resData.Message);
               }
-              else { this.transportData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
+              else { this.projectBudgetData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
             });
         
           }

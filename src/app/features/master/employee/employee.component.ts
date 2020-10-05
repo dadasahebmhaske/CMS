@@ -38,9 +38,9 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   public selectedFile: File = null;
   public designationData: any = [];DeptData:any=[];
   public datePickerConfig: Partial<BsDatepickerConfig>;
-
+public maxDate:Date=new Date();
   constructor(private appService: AppService, private datashare: DatashareService, private employeeService: EmployeeService, private masterService: MasterService,private  allmasterService:AllmasterService) {
-    this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
+    this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange',maxDate:this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.empInfo = data; this.employee.CPCode=this.empInfo.CPCode; });
@@ -53,13 +53,13 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   }
 
   allOnloadMethods() {
-    this.allmasterService.getDepartment().subscribe((resDat: any) => {
+    this.allmasterService.getDepartment('Y').subscribe((resDat: any) => {
       if (resDat.StatusCode != 0) {
         this.DeptData = resDat.Data;console.log(resDat.Data);
       }
       else { this.DeptData = []; AppComponent.SmartAlert.Errmsg(resDat.Message); }
     });
-    this.allmasterService.getDesignation().subscribe((resD: any) => {
+    this.allmasterService.getDesignation('Y').subscribe((resD: any) => {
       if (resD.StatusCode != 0) {
         this.designationData = resD.Data;
       }
@@ -72,7 +72,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     this.employee.EmpId = this.employee.EmpId == null ? '' : this.employee.EmpId;
       this.employee.UserCode = this.empInfo.EmpId;
     let ciphertext = this.appService.getEncrypted(this.employee);
-    this.allmasterService.postEmployeeDetails(ciphertext).subscribe((resData: any) => {
+    this.allmasterService.post('ManageEmployee',ciphertext).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         AppComponent.SmartAlert.Success(resData.Message);

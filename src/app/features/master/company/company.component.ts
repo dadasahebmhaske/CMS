@@ -32,7 +32,8 @@ export class CompanyComponent implements OnInit, OnDestroy {
             this.company.UserCode = this.empInfo.EmpId;
             this.company.CompanyId = this.company.CompanyId == null ? '' : this.company.CompanyId;
             let ciphertext = this.appService.getEncrypted(this.company);
-            this.allmasterService.postcompany(ciphertext).subscribe((resData: any) => {
+            this.allmasterService.post('ManageCompany',ciphertext).subscribe((resData: any) => {
+              this.loaderbtn = true;
               if (resData.StatusCode != 0) {
                 AppComponent.SmartAlert.Success(resData.Message);
                 AppComponent.Router.navigate(['/master/company-master']);

@@ -33,7 +33,7 @@ export class OtherExpensesMasterComponent implements OnInit {
             , width: "48",
             headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
           },
-          { name: 'OtherExpId', displayName: 'Other Expenses Id', width: "*", cellTooltip: true, filterCellFiltered: true },
+         // { name: 'OtherExpId', displayName: 'Other Expenses Id', width: "*", cellTooltip: true, filterCellFiltered: true },
           { name: 'OtherExpName', displayName: 'Other Expenses', width: "*", cellTooltip: true, filterCellFiltered: true },
           { name: 'IsActive', displayName: 'Active',cellClass:'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
         ]
@@ -45,7 +45,7 @@ export class OtherExpensesMasterComponent implements OnInit {
         AppComponent.Router.navigate(['/master/other-expenses']);
       }
       onLoad() {
-        this.allmasterService.getOtherExp().subscribe((resData: any) => {
+        this.allmasterService.getOtherExp('').subscribe((resData: any) => {
           if (resData.StatusCode != 0) {
             this.otherExpData = resData.Data;
             AppComponent.SmartAlert.Success(resData.Message);

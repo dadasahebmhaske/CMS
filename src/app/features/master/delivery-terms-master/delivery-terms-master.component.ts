@@ -46,7 +46,7 @@ export class DeliveryTermsMasterComponent implements OnInit {
                       AppComponent.Router.navigate(['/master/delivery-terms']);
                     }
                     onLoad() {
-                      this.allmasterService.getDeliveryTerm().subscribe((resData: any) => {
+                      this.allmasterService.getDeliveryTerm('').subscribe((resData: any) => {
                         if (resData.StatusCode != 0) {
                           this.deliverytermData = resData.Data;
                           AppComponent.SmartAlert.Success(resData.Message);

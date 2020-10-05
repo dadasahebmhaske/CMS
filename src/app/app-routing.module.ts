@@ -44,7 +44,7 @@ const routes: Routes = [
       {
         path: "dashboard",
         loadChildren: "./features/dashboard/dashboard.module#DashboardModule",
-        //canActivate: [AuthenticationGuard],
+        canActivate: [AuthenticationGuard],
         data: { pageTitle: "Dashboard" }
       },
 
@@ -114,7 +114,7 @@ const routes: Routes = [
       {
         path: "master",
         loadChildren: "./features/master/master.module#MasterModule",
-       // canActivate: [AuthenticationGuard],
+       canActivate: [AuthenticationGuard],
         data: { pageTitle: "Master" }
       },
       {

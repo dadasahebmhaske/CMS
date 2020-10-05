@@ -26,7 +26,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
           this.allOnloadMethods();
         }
         allOnloadMethods() {
-          this.allmasterService.getSite().subscribe((resD: any) => {
+          this.allmasterService.getSite('Y').subscribe((resD: any) => {
             if (resD.StatusCode != 0) {
               this.siteData = resD.Data; 
             }
@@ -38,7 +38,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
           this.project.UserCode = this.empInfo.EmpId;
           this.project.ProjectId = this.project.ProjectId == null ? '' : this.project.ProjectId;
           let ciphertext = this.appService.getEncrypted(this.project);
-          this.allmasterService.postProject(ciphertext).subscribe((resData: any) => {
+          this.allmasterService.post('ManageProject',ciphertext).subscribe((resData: any) => {
+            this.loaderbtn = true;
             if (resData.StatusCode != 0) {
               AppComponent.SmartAlert.Success(resData.Message);
               AppComponent.Router.navigate(['/master/project-master']);

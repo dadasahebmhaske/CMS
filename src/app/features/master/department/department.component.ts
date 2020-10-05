@@ -24,7 +24,8 @@ export class DepartmentComponent implements OnInit, OnDestroy {
       this.dept.UserCode = this.empInfo.EmpId;
       this.dept.DeptId = this.dept.DeptId == null ? '' : this.dept.DeptId;
       let ciphertext = this.appService.getEncrypted(this.dept);
-      this.almasterService.postdept(ciphertext).subscribe((resData: any) => {
+      this.almasterService.post('ManageDepartment',ciphertext).subscribe((resData: any) => {
+        this.loaderbtn = true;
         if (resData.StatusCode != 0) {
           AppComponent.SmartAlert.Success(resData.Message);
           AppComponent.Router.navigate(['/master/department-master']);

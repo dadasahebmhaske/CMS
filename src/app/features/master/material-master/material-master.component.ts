@@ -34,7 +34,7 @@ export class MaterialMasterComponent implements OnInit {
                   },
                   { name: 'MatName', displayName: 'Material Name', width: "*", cellTooltip: true, filterCellFiltered: true },
                   { name: 'UOM', displayName: 'Unit Of Measurement', width: "*", cellTooltip: true, filterCellFiltered: true },
-                  { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
+                  { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
                 ]
                 this.gridOptions.columnDefs = columnDefs;
                 this.onLoad();
@@ -45,7 +45,7 @@ export class MaterialMasterComponent implements OnInit {
                 AppComponent.Router.navigate(['/master/material']);
               }
               onLoad() {
-                this.allmasterService.getMaterial().subscribe((resData: any) => {
+                this.allmasterService.getMaterial('').subscribe((resData: any) => {
                   if (resData.StatusCode != 0) {
                     this.materialData = resData.Data;
                     AppComponent.SmartAlert.Success(resData.Message);

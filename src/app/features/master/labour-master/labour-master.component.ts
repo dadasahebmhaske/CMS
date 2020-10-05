@@ -41,17 +41,17 @@ export class LabourMasterComponent implements OnInit {
                     { name: 'BankName', displayName: 'Bank Name', width: "180", cellTooltip: true, filterCellFiltered: true },
                     { name: 'AccountNo', displayName: 'Account No.',cellClass:'text-center', width: "150", cellTooltip: true, filterCellFiltered: true },
                      { name: 'IFSCNo', displayName: 'IFSC',cellClass:'text-center', width: "120", cellTooltip: true, filterCellFiltered: true },
-                    { name: 'IsActive', displayName: 'Active', width: "80", cellTooltip: true, filterCellFiltered: true },
+                    { name: 'IsActive', displayName: 'Active',cellClass:'text-center', width: "80", cellTooltip: true, filterCellFiltered: true },
                   ]
                   this.gridOptions.columnDefs = columnDefs;
                   this.onLoad();
                 }
                 onEditFunction = ($event) => {
                   this.datashare.updateShareData($event.row);
-                  AppComponent.Router.navigate(['/master/labour-master']);
+                  AppComponent.Router.navigate(['/master/labour']);
                 }
                 onLoad() {
-                  this.allmasterService.getLabour().subscribe((resData: any) => {
+                  this.allmasterService.getLabour('').subscribe((resData: any) => {
                     if (resData.StatusCode != 0) {
                       this.labourData = resData.Data;
                       AppComponent.SmartAlert.Success(resData.Message);

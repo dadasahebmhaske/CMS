@@ -24,6 +24,7 @@ export class PaymentTermsComponent implements OnInit, OnDestroy {
                     this.payment.PayTermId = this.payment.PayTermId == null ? '' : this.payment.PayTermId;
                    let ciphertext = this.appService.getEncrypted(this.payment);
                   this.allmasterService.post('ManagePayTerm',ciphertext).subscribe((resData: any) => {
+                    this.loaderbtn = true;
                     if (resData.StatusCode != 0) {
                       AppComponent.SmartAlert.Success(resData.Message);
                       AppComponent.Router.navigate(['/master/payment-terms-master']);

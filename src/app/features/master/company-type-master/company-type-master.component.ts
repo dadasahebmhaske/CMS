@@ -32,9 +32,9 @@ export class CompanyTypeMasterComponent implements OnInit {
                     , width: "48",
                     headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
                   },
-                  { name: 'TypeId', displayName: 'Company Type Id', width: "*", cellTooltip: true, filterCellFiltered: true },
+                //  { name: 'TypeId', displayName: 'Company Type Id', width: "*", cellTooltip: true, filterCellFiltered: true },
                   { name: 'TypeName', displayName: 'Company Type', width: "*", cellTooltip: true, filterCellFiltered: true },
-                  { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
+                  { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
                 ]
                 this.gridOptions.columnDefs = columnDefs;
                 this.onLoad();

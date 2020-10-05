@@ -49,7 +49,7 @@ export class LaborRateMasterComponent implements OnInit {
                   AppComponent.Router.navigate(['/master/labor-rate']);
                 }
                 onLoad() {
-                  this.allmasterService.getlabourWork().subscribe((resData: any) => {
+                  this.allmasterService.getlabourWork('').subscribe((resData: any) => {
                     if (resData.StatusCode != 0) {
                       this.labourWorkData = resData.Data;
                       AppComponent.SmartAlert.Success(resData.Message);

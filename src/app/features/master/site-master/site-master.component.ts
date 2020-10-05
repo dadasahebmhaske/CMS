@@ -39,8 +39,8 @@ export class SiteMasterComponent implements OnInit {
             { name: 'GeneralManagerName', displayName: 'General Manager', width: "*", cellTooltip: true, filterCellFiltered: true },
             { name: 'FirstEngineerName', displayName: 'Site Engineer 1', width: "*", cellTooltip: true, filterCellFiltered: true },
             { name: 'SecondEngineerName', displayName: 'Site Engineer 2', width: "*", cellTooltip: true, filterCellFiltered: true },
-            { name: 'IsMainSite', displayName: 'Is Main Site', width: "*", cellTooltip: true, filterCellFiltered: true },
-            { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
+            { name: 'IsMainSite', displayName: 'Is Main Site',cellClass:'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
+            { name: 'IsActive', displayName: 'Active',cellClass:'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
           ]
           this.gridOptions.columnDefs = columnDefs;
           this.onLoad();
@@ -50,7 +50,7 @@ export class SiteMasterComponent implements OnInit {
           AppComponent.Router.navigate(['/master/site']);
         }
         onLoad() {
-          this.allmasterService.getSite().subscribe((resData: any) => {
+          this.allmasterService.getSite('').subscribe((resData: any) => {
             if (resData.StatusCode != 0) {
               this.siteData = resData.Data;
               AppComponent.SmartAlert.Success(resData.Message);

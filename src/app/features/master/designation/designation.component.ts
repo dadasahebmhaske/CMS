@@ -24,7 +24,8 @@ export class DesignationComponent implements OnInit, OnDestroy {
         this.desig.UserCode = this.empInfo.EmpId;
         this.desig.DesigId = this.desig.DesigId == null ? '' : this.desig.DesigId;
         let ciphertext = this.appService.getEncrypted(this.desig);
-        this.allmasterService.postdesig(ciphertext).subscribe((resData: any) => {
+        this.allmasterService.post('ManageDesignation',ciphertext).subscribe((resData: any) => {
+          this.loaderbtn = true;
           if (resData.StatusCode != 0) {
             AppComponent.SmartAlert.Success(resData.Message);
             AppComponent.Router.navigate(['/master/designation-master']);

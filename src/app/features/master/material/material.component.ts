@@ -20,7 +20,7 @@ export class MaterialComponent implements OnInit, OnDestroy {
             this.allOnloadMethods();
           }
           allOnloadMethods() {
-            this.allmasterService.getUOM().subscribe((resD: any) => {
+            this.allmasterService.getUOM('Y').subscribe((resD: any) => {
               if (resD.StatusCode != 0) {
                 this.unitData = resD.Data; 
               }
@@ -33,7 +33,8 @@ export class MaterialComponent implements OnInit, OnDestroy {
             this.material.UserCode = this.cpInfo.EmpId;
             this.material.MatId = this.material.MatId == null ? '' : this.material.MatId;
             let ciphertext = this.appService.getEncrypted(this.material);
-            this.allmasterService.postMaterial(ciphertext).subscribe((resData: any) => {
+            this.allmasterService.post('ManageMaterial',ciphertext).subscribe((resData: any) => {
+              this.loaderbtn = true;
               if (resData.StatusCode != 0) {
                 AppComponent.SmartAlert.Success(resData.Message);
                 AppComponent.Router.navigate(['/master/material-master']);

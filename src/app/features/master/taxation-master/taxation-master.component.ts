@@ -35,7 +35,7 @@ export class TaxationMasterComponent implements OnInit {
                     },
                     { name: 'TaxRate', displayName: 'Tax Rate',cellClass:'text-right', width: "*", cellTooltip: true, filterCellFiltered: true },
                     { name: 'TaxTermName', displayName: 'Tax Term', width: "*", cellTooltip: true, filterCellFiltered: true },
-                    { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
+                    { name: 'IsActive', displayName: 'Active',cellClass:'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
                   ]
                   this.gridOptions.columnDefs = columnDefs;
                   this.onLoad();
@@ -45,7 +45,7 @@ export class TaxationMasterComponent implements OnInit {
                   AppComponent.Router.navigate(['/master/taxation']);
                 }
                 onLoad() {
-                  this.allmasterService.gettatxation().subscribe((resData: any) => {
+                  this.allmasterService.gettatxation('').subscribe((resData: any) => {
                     if (resData.StatusCode != 0) {
                       this.taxationData = resData.Data;
                       AppComponent.SmartAlert.Success(resData.Message);

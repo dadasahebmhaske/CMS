@@ -21,7 +21,7 @@ export class LabourComponent implements OnInit, OnDestroy {
                    this.allOnloadMethods();
               } 
               allOnloadMethods() {
-                this.allmasterService.getDesignation().subscribe((resD: any) => {
+                this.allmasterService.getDesignation('Y').subscribe((resD: any) => {
                   if (resD.StatusCode != 0) {
                     this.designationData = resD.Data;
                   }
@@ -35,6 +35,7 @@ export class LabourComponent implements OnInit, OnDestroy {
                 this.labour.LabourId = this.labour.LabourId == null ? '' : this.labour.LabourId;
                let ciphertext = this.appService.getEncrypted(this.labour);
                 this.allmasterService.post('ManageLabour',ciphertext).subscribe((resData: any) => {
+                  this.loaderbtn = true;
                   if (resData.StatusCode != 0) {
                     AppComponent.SmartAlert.Success(resData.Message);
                     AppComponent.Router.navigate(['/master/labour-master']);

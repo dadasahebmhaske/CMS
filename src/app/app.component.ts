@@ -79,7 +79,7 @@ export class AppComponent implements OnInit, OnDestroy {
       //   AppComponent.Router.navigate(['/auth/login']);
       // }
       if (event.storageArea == localStorage) {
-        let appData = localStorage.getItem('appData');
+        let appData = localStorage.getItem('appCMSData');
         if (appData == undefined) {
           this.router.navigate(['/auth/login']);
           location.reload();

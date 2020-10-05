@@ -33,9 +33,9 @@ export class DepartmentMasterComponent implements OnInit {
           , width: "48",
           headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
         },
-        { name: 'DeptId', displayName: 'Department Id', width: "*", cellTooltip: true, filterCellFiltered: true },
+        //{ name: 'DeptId', displayName: 'Department Id', width: "*", cellTooltip: true, filterCellFiltered: true },
         { name: 'DeptName', displayName: 'Department', width: "*", cellTooltip: true, filterCellFiltered: true },
-        { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
+        { name: 'IsActive', displayName: 'Active',cellClass:'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
       ]
       this.gridOptions.columnDefs = columnDefs;
       this.onLoad();
@@ -45,7 +45,7 @@ export class DepartmentMasterComponent implements OnInit {
       AppComponent.Router.navigate(['/master/department']);
     }
     onLoad() {
-      this.allmasterService.getDepartment().subscribe((resData: any) => {
+      this.allmasterService.getDepartment('').subscribe((resData: any) => {
         if (resData.StatusCode != 0) {
           this.deptData = resData.Data;
           AppComponent.SmartAlert.Success(resData.Message);
