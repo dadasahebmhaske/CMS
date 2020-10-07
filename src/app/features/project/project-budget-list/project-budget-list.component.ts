@@ -5,19 +5,28 @@ import { DatashareService } from '../../../core/custom-services/datashare.servic
 import { MasterService } from '../../../core/custom-services/master.service';
 import { AppService } from '@app/core/custom-services/app.service';
 import { ProjectService } from '../project.service';
+import { BsDatepickerConfig } from 'ngx-bootstrap';
 @Component({
   selector: 'sa-project-budget-list',
   templateUrl: './project-budget-list.component.html',
   styleUrls: ['./project-budget-list.component.css']
 })
 export class ProjectBudgetListComponent implements OnInit {
-          public cpInfo: any = {};
+          public empInfo: any = {};
+          public datePickerConfig: Partial<BsDatepickerConfig>;
+          public Filter: any = {  };
           public gridOptions: IGridoption;
+          public loaderbtn: boolean = true;
+          public minDate: Date;
+          public StartMindate: Date;
+          public maxDate: Date = new Date();
           public projectBudgetData: any;
           constructor(private appService: AppService, private datashare: DatashareService, private masters: MasterService,private projectService:ProjectService) {
-          }
+            this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
+           }
           ngOnInit() {
-            this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+            this.appService.getAppData().subscribe(data => { this.empInfo = data });
+           // this.Filter.StartDate =this.Filter.EndDate = new Date();
             this.configureGrid();
           }
           configureGrid() {
@@ -49,7 +58,11 @@ export class ProjectBudgetListComponent implements OnInit {
             AppComponent.Router.navigate(['/project/project-budget']);
           }
           onLoad() {
-            this.projectService.getProjectBudgetlist().subscribe((resData: any) => {
+            this.loaderbtn=false;
+            this.Filter.StartDate= this.appService.DateToString(this.Filter.StartDate);
+            this.Filter.EndDate= this.appService.DateToString(this.Filter.EndDate)
+            this.projectService.getTransactionlist(101,this.Filter).subscribe((resData: any) => {
+              this.loaderbtn=true;
               if (resData.StatusCode != 0) {
                 this.projectBudgetData = resData.Data.Table; console.log( resData.Data);
                 AppComponent.SmartAlert.Success(resData.Message);
@@ -57,6 +70,14 @@ export class ProjectBudgetListComponent implements OnInit {
               else { this.projectBudgetData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
             });
         
+          }
+          resetEndDate(val) {
+            this.minDate = val;
+            if (val != undefined && val != null && this.Filter.EndDate != null) {
+              if ((new Date(this.Filter.EndDate).getTime()) < (new Date(val).getTime())) {
+                this.Filter.EndDate = '';
+              }
+            }
           }
         
         }

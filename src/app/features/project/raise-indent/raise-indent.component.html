@@ -18,12 +18,10 @@
                     <div class="form-group">
                       <label for="sel1">Site <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.SiteId" name="SiteId" required>
+                      <select class="form-control" [(ngModel)]="project.SiteId" name="SiteId" (change)="onSelectSite()"
+                      [disabled]="project.TranNo!=null"  required>
                         <option value="" selected hidden> Select Site </option>
-                        <option value=""> Sanskruti </option>
-                        <option value=""> Nirmiti </option>
-                        <option value=""> Akruti </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        <option [value]="des.SiteId" *ngFor="let des of SiteData">{{des.SiteName}}
                         </option>
                       </select>
                     </div>
@@ -32,40 +30,22 @@
                     <div class="form-group">
                       <label for="sel1">Project <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.ProjectId" name="ProjectId" required>
+                      <select class="form-control" [(ngModel)]="project.ProjectId" name="ProjectId" (change)="onSelectProject()"  [disabled]="project.TranNo!=null"  required>
                         <option value="" selected hidden> Select Project </option>
-                        <option value=""> Samved </option>
-                        <option value=""> Yajurved </option>
-                        <option value=""> Rugved </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        <option [value]="des.ProjectId" *ngFor="let des of ProjectData">{{des.ProjectName}}
                         </option>
                       </select>
                     </div>
                   </div>
-                  <!-- <div class="col-sm-3">
-                    <div class="form-group">
-                      <label for="sel1">Project Manager <span class="errorMessage">*</span>
-                      </label>
-                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
-                        <option value="" selected hidden> Select Manager </option>
-                        <option value=""> Mr.Koteeswaran S P </option>
-                        <option value=""> Mr.Ram Charan </option>
-                        <option value=""> Mr.Arjun Reddy </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                        </option>
-                      </select>
-                    </div>
-                  </div> -->
+              
                   <div class="col-sm-3">
                     <div class="form-group">
                       <label for="sel1">Project Executive <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.RoleCode" name="RoleCode" required>
-                        <option value="" selected hidden> Select Executive </option>
-                        <option value=""> Mr.Alex Pandey </option>
-                        <option value=""> Mr.Laxman Prasad </option>
-                        <option value=""> Mr.Wangde Bhanuprasad </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                      <select class="form-control" [(ngModel)]="project.ProjectExecutiveId" name="ProjectExecutiveId" [disabled]="project.TranNo!=null"
+                        >
+                        <option value="" selected hidden> Select Engineer </option>
+                        <option [value]="des.ProjectExecutiveId" *ngFor="let des of ExecutiveData">{{des.ExecutiveName}}
                         </option>
                       </select>
                     </div>
@@ -74,23 +54,23 @@
                     <div class="form-group">
                       <label>Expected Date <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Date" [(ngModel)]="transport.Qty"
-                        name="Qty" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Date" [(ngModel)]="project.ExpectedDate"   id="ExpectedDate"
+                        name="ExpectedDate" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" required />
+                   
                     </div>
                   </div>
                 </div>
+                <form name="materialForm" #materialForm="ngForm" (ngSubmit)="addMaterial()" autocomplete="off"
+                ngNativeValidate>
                 <div class="row">
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label for="sel1">Material Type<span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.MaterialTypeId" name="MaterialTypeId" required>
+                      <select class="form-control" [(ngModel)]="Material.TypeId" name="TypeId"
+                      (change)="onSelectActivityMaterial()"  required [disabled]="Material.index!=null">
                         <option value="" selected hidden> Select Type </option>
-                        <option value=""> Bricks Work </option>
-                        <option value=""> Stone Work </option>
-                        <option value=""> Painting </option>
-                        <option value=""> lighting </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                                         <option [value]="des.TypeId" *ngFor="let des of AMTypeData">{{des.TypeName}}
                         </option>
                       </select>
                     </div>
@@ -99,56 +79,79 @@
                     <div class="form-group">
                       <label for="sel1">Material <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.MaterialId" name="MaterialId" required>
+                      <select class="form-control" [(ngModel)]="Material.MatActExpId" name="MatActExpId"
+                      (ngModelChange)="onSelectMaterial()" required [disabled]="Material.index!=null">
                         <option value="" selected hidden> Select Material </option>
-                        <option value=""> Soling (Dabar) </option>
-                        <option value=""> Back Filling Murum </option>
-                        <option value=""> Brickwork For Bench </option>
-                        <option value=""> Brick 6" </option>
-                        <option value=""> Crush Sand </option>
-                        <option value=""> Cement </option>
-                        <option value=""> Tera Cota </option>
-                        <option value=""> Brickwork For Bench </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                         <option [value]="des.MatActExpId" *ngFor="let des of filterMaterialArray">{{des.MatName}}
                         </option>
                       </select>
+                    
+                    </div>
+                  </div> 
+                  <div class="col-sm-1">
+                    <div class="form-group">
+                      <label>Balance Qty <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Qty " [(ngModel)]="Material.RemainBudgetQty"
+                         name="RemainBudgetQty"  disabled />
                     </div>
                   </div>
                   <div class="col-sm-1">
                     <div class="form-group">
                       <label>Qty <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Qty " [(ngModel)]="transport.Qty"
-                        name="Qty" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Qty " [(ngModel)]="Material.UQty"
+                        (ngModelChange)="onSelectMaterial()" name="UQty" saCommonDir dirType="number" required />
                     </div>
                   </div>
                   <div class="col-sm-1">
                     <div class="form-group">
                       <label>Unit <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Unit " [(ngModel)]="transport.Unit"
-                        name="Unit" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Unit " [(ngModel)]="Material.UOM"
+                          name="UOM"   disabled />
                     </div>
                   </div>
-                  <!-- <div class="col-sm-1" >
-                    <div class="form-group">
-                      <label>Amount<span class="errorMessage">*</span>
-                      </label>
-                      <input type="text" class="form-control" placeholder=" Amount " [(ngModel)]="transport.RateAmt"
-                        name="Rate" saCommonDir dirType="alphanumeric" required />
-                    </div>
-                  </div> -->
+             
 
                   <div class="col-sm-1">
                     <div class="form-group">
                         <label>&nbsp; </label>
                         <button class="btn btn-block btn-warning ">
-                            <i class="glyphicon glyphicon-plus"></i> Add </button>
+                          <i class="glyphicon glyphicon-plus"></i> {{Material.index==null?'Add':'Update'}} </button>
                     </div>
                 </div>
 
                 <div class="col-sm-12">
                   <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr align="center" class="text-center">
+                          <th class="text-center">#</th>
+                          <th class="text-center">Activity/Material Type</th>
+                          <th class="text-center">Activity/Material</th>
+                          <th class="text-center">Quantity</th>
+                          <th class="text-center">Unit</th>
+                          <th class="text-center">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody >
+                        <tr *ngFor="let mat of MaterialArray;index as i">
+                          <td><span (onload)="check(i)">{{i+1}}.</span></td>
+                          <td ><strong *ngIf="mat.show">{{mat.TypeName}}</strong></td>                         
+                          <td>{{mat.MatName}}</td>
+                          <td class="text-center">{{mat.Qty==0?'':mat.Qty}}</td>
+                          <td class="text-center">{{mat.UOM}}</td>
+                          <td class="text-center">
+                            <a class="btn btn-xs btn-danger" (click)=onRemoveMaterial(mat,i) *ngIf="mat.TranNo==null">Remove</a>
+                            <a class="btn btn-xs btn-primary" (click)=onEdit(mat,i) *ngIf="mat.TranNo!=null">Edit</a>
+                          </td>
+                        </tr>           
+                 
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
                             <tr align="center" class="text-center">
@@ -200,17 +203,18 @@
                                        
                         </tbody>
                     </table>
-                </div>
+                </div> -->
               </div>
 
                 </div>
-                <div class="row">
+                </form>
+                <!-- <div class="row">
                   <div class="col-sm-6">
                     <label>
                       <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive"
-                        [(ngModel)]='transport.IsActive' /> Close Indent </label>
+                        [(ngModel)]='project.CloseIndent' /> Close Indent </label>
                   </div>
-                </div>
+                </div> -->
                 <footer>
                   <div class="row">
                     <div class="col-sm-12 ">

@@ -11,7 +11,7 @@ import { ProjectService } from '../project.service';
 })
 export class ProjectBudgetComponent implements OnInit, OnDestroy {
   public empInfo: any;
-  public project: any = { RoleCode: '' };
+  public project: any = { };
   public loaderbtn: boolean = true;
   public OtherExp: Boolean = false;
   public Material: any = { BudgetHeadType: '', BudgetHead: '' };
@@ -104,6 +104,9 @@ export class ProjectBudgetComponent implements OnInit, OnDestroy {
       this.MaterialArray[this.Material.index].Rate = this.Material.URate;
       this.MaterialArray[this.Material.index].Qty = this.Material.UQty;
       this.MaterialArray[this.Material.index].Amount = this.Material.UAmount;
+      if ( this.MaterialArray[this.Material.index].MainTypeId == 4) {
+        this.MaterialArray[this.Material.index].Rate = this.MaterialArray[this.Material.index].Amount
+      }
       this.project = this.projectService.calculateTotal(this.project, this.MaterialArray);
     } else if (this.MaterialArray.some(obj => (parseInt(obj.BudgetHeadType) === parseInt(this.Material.BudgetHeadType) && parseInt(obj.BudgetHead) === parseInt(this.Material.BudgetHead)))) {
       AppComponent.SmartAlert.Errmsg("Material / Activity is already added in list.");
@@ -111,6 +114,7 @@ export class ProjectBudgetComponent implements OnInit, OnDestroy {
       this.Material.Rate = this.Material.URate; this.Material.Qty = this.Material.UQty; this.Material.Amount = this.Material.UAmount;
       if (this.Material.MainTypeId == 4) {
         this.Material.Rate = this.Material.Amount;
+      
       }
       this.Material.show = this.MaterialArray.some(obj => parseInt(obj.BudgetHeadType) === parseInt(this.Material.BudgetHeadType)) ? false : true;
       this.MaterialArray.push(this.Material); console.log(this.MaterialArray);
@@ -133,11 +137,13 @@ export class ProjectBudgetComponent implements OnInit, OnDestroy {
     this.Material = mat;
     this.Material.URate = mat.Rate;
     this.Material.UQty = mat.Qty;
+    this.Material.UAmount = mat.Amount;
+    if(this.Material.MainTypeId==4){this.Material.UAmount =mat.Rate }
     this.onSelectActivityMaterial();
   }
 
   public getTranData() {
-    this.projectService.getProjectBudgetTrans(this.project.TranNo).subscribe((resTran: any) => {
+    this.projectService.getTransDetails(101,this.project.TranNo).subscribe((resTran: any) => {
       if (resTran.StatusCode != 0) {
         let amt = this.project.TotProjectCost;
         this.project = resTran.Data.Table1[0];

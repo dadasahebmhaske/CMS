@@ -91,29 +91,29 @@
                         </select>
                       </div>
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-sm-1" *ngIf="!OtherExp">
                       <div class="form-group">
                         <label>Qty <span class="errorMessage">*</span>
                         </label>
                         <input type="text" class="form-control" placeholder="Enter Qty " [(ngModel)]="Material.UQty"
-                        (ngModelChange)="onSelectMaterial()" name="UQty" saCommonDir dirType="number" [disabled]="OtherExp" required />
+                        (ngModelChange)="onSelectMaterial()" name="UQty" saCommonDir dirType="number" required />
                       </div>
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-sm-1" *ngIf="!OtherExp">
                       <div class="form-group">
                         <label>Unit <span class="errorMessage">*</span>
                         </label>
                         <input type="text" class="form-control" placeholder="Enter Unit " [(ngModel)]="Material.UOM"
-                          name="UOM"  disabled />
+                          name="UOM"   disabled />
                       </div>
                     </div>
 
-                    <div class="col-sm-1">
+                    <div class="col-sm-1" *ngIf="!OtherExp">
                       <div class="form-group">
                         <label>Rate <span class="errorMessage">*</span>
                         </label>
                         <input type="text" class="form-control" placeholder=" Rate " [(ngModel)]="Material.URate"
-                        (ngModelChange)="onSelectMaterial()" name="URate" saCommonDir dirType="decimal" [disabled]="OtherExp" required />
+                        (ngModelChange)="onSelectMaterial()" name="URate" saCommonDir dirType="decimal"   required />
                       </div>
                     </div>
 
@@ -157,7 +157,7 @@
                             <td><span (onload)="check(i)">{{i+1}}.</span></td>
                             <td ><strong *ngIf="mat.show">{{mat.BudgetHeadTypeName}}</strong></td>                         
                             <td>{{mat.BudgetHeadName}}</td>
-                            <td class="text-center">{{mat.Qty}}</td>
+                            <td class="text-center">{{mat.Qty==0?'':mat.Qty}}</td>
                             <td class="text-center">{{mat.UOM}}</td>
                             <td class="text-center">{{mat.Rate}}</td>
                             <td class="text-center">{{mat.Amount}}</td>
@@ -166,120 +166,7 @@
                               <a class="btn btn-xs btn-primary" (click)=onEdit(mat,i) *ngIf="mat.TranNo!=null">Edit</a>
                             </td>
                           </tr>           
-                        <!-- <tr>
-                            <td>1.</td>
-                            <td ><strong>BrickWork</strong></td>
-                         
-                            <td>Brickwork for bench</td>
-                            <td class="text-center">65</td>
-                            <td class="text-center">Sqft</td>
-                            <td class="text-center">18</td>
-                            <td class="text-center">1170</td>
-                            <td class="text-center">
-                              <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td></td>  
-                            <td></td>
-                            <td>Cement</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">Bag</td>
-                            <td class="text-center">340</td>
-                            <td class="text-center">340</td>
-                            <td class="text-center">
-                              <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td></td>
-                            <td>Crush Sand</td>
-                            <td class="text-center">0.025</td>
-                            <td class="text-center">Brass</td>
-                            <td class="text-center">3400</td>
-                            <td class="text-center">340</td>
-
-                            <td class="text-center">
-                              <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>2.</td>
-                            <td><strong>Stone Work</strong></td>
-                          
-                            <td>Top On Planter</td>
-                            <td class="text-center">65</td>
-                            <td class="text-center">Sqft</td>
-                            <td class="text-center">25</td>
-                            <td class="text-center">1625</td>
-                            <td class="text-center">
-                              <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td></td>
-                            <td>Shahabad Tile</td>
-                            <td class="text-center">45</td>
-                            <td class="text-center">Sqft</td>
-                            <td class="text-center">25</td>
-
-                            <td class="text-center">2250</td>
-                            <td class="text-center">
-                              <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td></td>
-                            <td>Cement</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">Bag</td>
-                            <td class="text-center">340</td>
-                            <td class="text-center">340</td>
-                            <td class="text-center">
-                              <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>3.</td>
-                            <td ><strong>Painting</strong></td>
-                                                      <td>Tera Cota</td>
-                            <td class="text-center">80</td>
-                            <td class="text-center">Sqft</td>
-                            <td class="text-center">8</td>
-                            <td class="text-center">640</td>
-                            <td class="text-center">
-                              <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>4.</td>
-                            <td ><strong>Electrical</strong></td>
-                        
-                            <td>Light point of planter</td>
-                            <td class="text-center">10</td>
-                            <td class="text-center">Nos</td>
-                            <td class="text-center">650</td>
-                            <td class="text-center">6500</td>
-                            <td class="text-center">
-                              <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td></td>
-                            <td>40AMP RCB</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">Nos</td>
-                            <td class="text-center">2000</td>
-                            <td class="text-center">2000</td>
-                            <td class="text-center">
-                              <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                            </td>
-                          </tr>  -->
-                          <tr>
+                         <tr>
                             <td colspan="6" class="text-right"><strong>TOTAL</strong></td>
                             <td colspan="2" class="text-center"><strong>{{project.TotProjectCost}}</strong> </td>
                           </tr>
@@ -302,7 +189,7 @@
                   <div class="row">
                     <div class="col-sm-12 ">
                       <hr />
-                      <a class="pull-right btn btn-default" routerLink="/project/project-budget-list">
+                      <a class="pull-right btn btn-default" routerLink="/project/raise-indent-list">
                         <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
                       <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
                         <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
