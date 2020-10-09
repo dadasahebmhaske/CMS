@@ -143,7 +143,7 @@
                           <td class="text-center">{{mat.Qty==0?'':mat.Qty}}</td>
                           <td class="text-center">{{mat.UOM}}</td>
                           <td class="text-center">
-                            <a class="btn btn-xs btn-danger" (click)=onRemoveMaterial(mat,i) *ngIf="mat.TranNo==null">Remove</a>
+                            <a class="btn btn-xs btn-danger" (click)=onRemoveMaterial(mat,i)>Remove</a>
                             <a class="btn btn-xs btn-primary" (click)=onEdit(mat,i) *ngIf="mat.TranNo!=null">Edit</a>
                           </td>
                         </tr>           
