@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DatashareService } from '../../../core/custom-services/datashare.service';
 import { AppComponent } from '../../../app.component';
 import { AppService } from '@app/core/custom-services/app.service';
+import { AllmasterService } from '@app/features/master/allmaster.service';
+import { ProjectService } from '../project.service';
 @Component({
   selector: 'sa-generate-po',
   templateUrl: './generate-po.component.html',
@@ -11,11 +13,31 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
             public cpInfo: any;
             public transport: any = {RoleCode:''};
             public loaderbtn: boolean = true;
-            constructor(private appService: AppService, private datashare: DatashareService) { }
+            public SiteData:any=[];
+            public AMTypeData:any=[];
+            constructor(private appService: AppService, private datashare: DatashareService,private allmasterService:AllmasterService,private projectService:ProjectService ) { }
             ngOnInit() {
+              this.getAllonload();
               this.datashare.GetSharedData.subscribe(data => this.transport = data == null ? { IsActive: 'Y',TaxationTermId:'',PaymentTermId:'',DeliveryTermId:'',SiteId:'',PManageId:'',ProjectId:'',MaterialId:'',MaterialTypeId:'',RoleCode:'',RateType:'' } :{ IsActive: 'Y',TaxationTermId:'',PaymentTermId:'',DeliveryTermId:'',SiteId:'',PManageId:'',ProjectId:'',MaterialId:'',MaterialTypeId:'',RoleCode:'',RateType:'' });
               this.appService.getAppData().subscribe(data => { this.cpInfo = data });
             }
+
+            public getAllonload() {
+              this.allmasterService.getSite('Y').subscribe((resSData: any) => {
+                if (resSData.StatusCode != 0) {
+                  this.SiteData = resSData.Data;
+                }
+                else { this.SiteData = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
+              });
+              this.projectService.getAMType(2).subscribe((resMaterial: any) => {
+                if (resMaterial.StatusCode != 0) {
+                  this.AMTypeData = resMaterial.Data; console.log(resMaterial.Data);
+                }
+                else { this.AMTypeData = []; AppComponent.SmartAlert.Errmsg(resMaterial.Message); }
+              });
+          
+            }
+
             public onSubmit() {
               this.loaderbtn = false;
               this.transport.Flag = this.transport.VehicleTypeId == null ? 'IN' : 'UP';
