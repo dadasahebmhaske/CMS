@@ -20,10 +20,7 @@
                       </label>
                       <select class="form-control" [(ngModel)]="transport.SiteId" name="SiteId" required>
                         <option value="" selected hidden> Select Site </option>
-                        <option value=""> Sanskruti </option>
-                        <option value=""> Nirmiti </option>
-                        <option value=""> Akruti </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        <option [value]="des.SiteId" *ngFor="let des of SiteData">{{des.SiteName}}
                         </option>
                       </select>
                     </div>
