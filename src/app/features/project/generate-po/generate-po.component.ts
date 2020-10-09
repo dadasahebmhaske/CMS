@@ -10,16 +10,24 @@ import { ProjectService } from '../project.service';
   styleUrls: ['./generate-po.component.css']
 })
 export class GeneratePoComponent implements OnInit, OnDestroy {
-            public cpInfo: any;
+            public empInfo: any;
             public transport: any = {RoleCode:''};
             public loaderbtn: boolean = true;
             public SiteData:any=[];
-            public AMTypeData:any=[];
+            public AMTypeData:any=[];project:any={};ProjectData:any=[];PayTData:any=[];DeliveryTData:any=[];TaxationData:any=[];
+            VendorData:any=[];
             constructor(private appService: AppService, private datashare: DatashareService,private allmasterService:AllmasterService,private projectService:ProjectService ) { }
             ngOnInit() {
+              this.datashare.GetSharedData.subscribe(data => {
+                this.project = data == null ? { IsActive: 'Y', SiteId: '', ProjectExecutiveId: '', DeliveryTermId: '', ProjectId: '' ,PayTermId:'',TaxId:'',CompanyId:''} : data;
+                // if (this.project.TranNo != null)
+                //   this.getTranData();
+              }); 
+              this.appService.getAppData().subscribe(data => { this.empInfo = data });
+
               this.getAllonload();
               this.datashare.GetSharedData.subscribe(data => this.transport = data == null ? { IsActive: 'Y',TaxationTermId:'',PaymentTermId:'',DeliveryTermId:'',SiteId:'',PManageId:'',ProjectId:'',MaterialId:'',MaterialTypeId:'',RoleCode:'',RateType:'' } :{ IsActive: 'Y',TaxationTermId:'',PaymentTermId:'',DeliveryTermId:'',SiteId:'',PManageId:'',ProjectId:'',MaterialId:'',MaterialTypeId:'',RoleCode:'',RateType:'' });
-              this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+              this.appService.getAppData().subscribe(data => { this.empInfo = data });
             }
 
             public getAllonload() {
@@ -35,14 +43,52 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
                 }
                 else { this.AMTypeData = []; AppComponent.SmartAlert.Errmsg(resMaterial.Message); }
               });
+
+              this.allmasterService.getPayTerm('Y').subscribe((resPData: any) => {
+                if (resPData.StatusCode != 0) {
+                  this.PayTData = resPData.Data;
+                }
+                else { this.PayTData = []; AppComponent.SmartAlert.Errmsg(resPData.Message); }
+              });
+              this.allmasterService.getDeliveryTerm('Y').subscribe((resDData: any) => {
+                if (resDData.StatusCode != 0) {
+                  this.DeliveryTData = resDData.Data;
+                }
+                else { this.DeliveryTData = []; AppComponent.SmartAlert.Errmsg(resDData.Message); }
+              });
+              this.allmasterService.gettatxation('Y').subscribe((resTaxData: any) => {
+                if (resTaxData.StatusCode != 0) {
+                  this.TaxationData = resTaxData.Data;
+                }
+                else { this.TaxationData = []; AppComponent.SmartAlert.Errmsg(resTaxData.Message); }
+              });
+              this.projectService.getVendorContractor(102).subscribe((resVData: any) => {
+                if (resVData.StatusCode != 0) {
+                  this.VendorData = resVData.Data;
+                  let obj;
+                  obj = this.projectService.filterData(this.VendorData, 102 , 'CompanyTypeId');
+                  this.VendorData = obj;
+                }
+                else { this.VendorData = []; AppComponent.SmartAlert.Errmsg(resVData.Message); }
+              });
+
           
+            }
+
+            public onSelectSite() {
+              this.projectService.getProject(this.project.SiteId).subscribe((resSData: any) => {
+                if (resSData.StatusCode != 0) {
+                  this.ProjectData = resSData.Data;
+                }
+                else { this.ProjectData = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
+              });
             }
 
             public onSubmit() {
               this.loaderbtn = false;
               this.transport.Flag = this.transport.VehicleTypeId == null ? 'IN' : 'UP';
-              this.transport.CPCode = this.cpInfo.CPCode;
-              this.transport.UserCode = this.cpInfo.EmpId;
+              this.transport.CPCode = this.empInfo.CPCode;
+              this.transport.UserCode = this.empInfo.EmpId;
               this.transport.VehicleTypeId = this.transport.VehicleTypeId == null ? '' : this.transport.VehicleTypeId;
               this.transport.TransChk = 1;
               let ciphertext = this.appService.getEncrypted(this.transport);

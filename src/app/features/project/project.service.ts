@@ -24,6 +24,9 @@ export class ProjectService {
   public getAM(MainTypeId) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetDataForTransactions?TranNo=&TranType=101&TranSubType=1&Id=&TypeId=&MainTypeId=${MainTypeId}&IsActive=Y`);
   }
+  public getVendorContractor(CompanyTypeId) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=106&StartDate=&EndDate=&UserCode=&CompanyTypeId=${CompanyTypeId}&IsActive=Y`);
+  }
   public getTransDetails(TranType, TranNo) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetExistingTransactionData?TranNo=${TranNo}&TranType=${TranType}&TranSubType=1&IsActive=Y`);
   }

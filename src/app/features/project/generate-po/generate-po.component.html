@@ -18,7 +18,7 @@
                     <div class="form-group">
                       <label for="sel1">Site <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.SiteId" name="SiteId" required>
+                      <select class="form-control" [(ngModel)]="project.SiteId" name="SiteId" (change)="onSelectSite()" required>
                         <option value="" selected hidden> Select Site </option>
                         <option [value]="des.SiteId" *ngFor="let des of SiteData">{{des.SiteName}}
                         </option>
@@ -29,12 +29,9 @@
                     <div class="form-group">
                       <label for="sel1">Project <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.ProjectId" name="ProjectId" required>
+                      <select class="form-control" [(ngModel)]="project.ProjectId" name="ProjectId" required>
                         <option value="" selected hidden> Select Project </option>
-                        <option value=""> Samved </option>
-                        <option value=""> Yajurved </option>
-                        <option value=""> Rugved </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        <option [value]="des.ProjectId" *ngFor="let des of ProjectData">{{des.ProjectName}}
                         </option>
                       </select>
                     </div>
@@ -57,7 +54,7 @@
                     <div class="form-group">
                       <label for="sel1">Project Executive <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.RoleCode" name="RoleCode" required>
+                      <select class="form-control" [(ngModel)]="project.RoleCode" name="RoleCode" required>
                         <option value="" selected hidden> Select Executive </option>
                         <option value=""> Mr.Alex Pandey </option>
                         <option value=""> Mr.Laxman Prasad </option>
@@ -71,7 +68,7 @@
                     <div class="form-group">
                       <label for="sel1">Select Raised Indent <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.RoleCode" name="RoleCode" required>
+                      <select class="form-control" [(ngModel)]="project.RoleCode" name="RoleCode" required>
                         <option value="" selected hidden> Select Indent </option>
                         <option value=""> Samved/Inde/102 </option>
                         <option value=""> Samved/Inde/108 </option>
@@ -375,12 +372,9 @@
                     <div class="form-group">
                       <label for="sel1">Vendor <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.RoleCode" name="RoleCode" required>
+                      <select class="form-control" [(ngModel)]="project.CompanyId" name="CompanyId" required>
                         <option value="" selected hidden> Select Vendor </option>
-                        <option value=""> Mr.Alex Pandey </option>
-                        <option value=""> Mr.Laxman Prasad </option>
-                        <option value=""> Mr.Wangde Bhanuprasad </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        <option [value]="des.CompanyId" *ngFor="let des of VendorData">{{des.CompanyName}}
                         </option>
                       </select>
                     </div>
@@ -390,12 +384,9 @@
                     <div class="form-group">
                       <label for="sel1">Payment Terms <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.PaymentTermId" name="PaymentTermId" required>
+                      <select class="form-control" [(ngModel)]="project.PayTermId" name="PayTermId" required>
                         <option value="" selected hidden> Select Terms </option>
-                        <option value=""> 100% payment immidiately receiving of material on site.Either cheque / DD or IMPS</option>
-                        
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                        </option>
+                        <option [value]="des.PayTermId" *ngFor="let des of PayTData">{{des.PayTerm}}</option>
                       </select>
                     </div>
                   </div>
@@ -403,12 +394,9 @@
                     <div class="form-group">
                       <label for="sel1">Delivery Terms <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.DeliveryTermId" name="DeliveryTermId" required>
+                      <select class="form-control" [(ngModel)]="project.DeliveryTermId" name="DeliveryTermId" required>
                         <option value="" selected hidden> Select Terms </option>
-                        <option value=""> Delivery within 3 days</option>
-                        <option value=""> Delivery within 5 days</option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                        </option>
+                        <option [value]="des.DeliveryTermId" *ngFor="let des of DeliveryTData">{{des.DeliveryTerm}}</option>
                       </select>
                     </div>
                   </div>
@@ -416,11 +404,9 @@
                     <div class="form-group">
                       <label for="sel1">Taxation Terms <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.TaxationTermId" name="TaxationTermId" required>
+                      <select class="form-control" [(ngModel)]="project.TaxId" name="TaxId" required>
                         <option value="" selected hidden> Select Terms </option>
-                        <option value=""> Extra as above</option>
-                        <option value=""> GST Including</option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        <option [value]="des.TaxId" *ngFor="let des of TaxationData">{{des.TaxRate}} {{des.TaxTermName}}
                         </option>
                       </select>
                     </div>
