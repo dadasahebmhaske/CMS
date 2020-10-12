@@ -37,12 +37,12 @@ export class RaiseIndentComponent implements OnInit, OnDestroy {
       }
       else { this.SiteData = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
     });
-    this.projectService.getAMType(2).subscribe((resMaterial: any) => {
-      if (resMaterial.StatusCode != 0) {
-        this.AMTypeData = resMaterial.Data; console.log(resMaterial.Data);
-      }
-      else { this.AMTypeData = []; AppComponent.SmartAlert.Errmsg(resMaterial.Message); }
-    });
+    // this.projectService.getAMType(2).subscribe((resMaterial: any) => {
+    //   if (resMaterial.StatusCode != 0) {
+    //     this.AMTypeData = resMaterial.Data; console.log(resMaterial.Data);
+    //   }
+    //   else { this.AMTypeData = []; AppComponent.SmartAlert.Errmsg(resMaterial.Message); }
+    // });
 
   }
   onSelectActivityMaterial() {
@@ -60,7 +60,9 @@ export class RaiseIndentComponent implements OnInit, OnDestroy {
     this.projectService.getIndentProjectExecutiveAndMaterial(tranNo,this.project.ProjectId).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         this.ExecutiveData = resData.Data.Table;
-        this.AMData = resData.Data.Table1;  console.log(resData.Data.Table1);
+        this.AMTypeData=resData.Data.Table1;
+        this.AMData = resData.Data.Table2; 
+
       }
       else { this.ExecutiveData = []; this.AMData = []; AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
@@ -143,6 +145,7 @@ export class RaiseIndentComponent implements OnInit, OnDestroy {
     this.project.UserCode = this.empInfo.EmpId;
     this.project.TranNo = this.project.TranNo == null ? '' : this.project.TranNo;
     this.project.TranSubType = 1;
+    this.project.TranType=102;
     this.project.RefTranNo = this.MaterialArray[0].RefTranNo;
     this.project.Data = this.MaterialArray;
     let ciphertext = this.appService.getEncrypted(this.project);

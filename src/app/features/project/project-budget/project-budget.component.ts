@@ -168,7 +168,8 @@ export class ProjectBudgetComponent implements OnInit, OnDestroy {
     this.project.UserCode = this.empInfo.EmpId;
     this.project.TranNo = this.project.TranNo == null ? '' : this.project.TranNo;
     this.project.ProjectStatus = 1;
-    //this.project.ProjectExecutiveId = 11;
+    this.project.TranType=101;
+    this.project.TranSubType=1;
     this.project.Data = this.MaterialArray;
     let ciphertext = this.appService.getEncrypted(this.project);
     this.projectService.post('ManageProjectBudget', ciphertext).subscribe((resData: any) => {
