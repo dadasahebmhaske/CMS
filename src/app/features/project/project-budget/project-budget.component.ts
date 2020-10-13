@@ -15,7 +15,7 @@ export class ProjectBudgetComponent implements OnInit, OnDestroy {
   public loaderbtn: boolean = true;
   public OtherExp: Boolean = false;
   public Material: any = { BudgetHeadType: '', BudgetHead: '' };
-  public AMTypeData: any = []; AMData: any = []; ExecutiveData: any; MaterialArray: any = []; PMData: any; ProjectData: any; SiteData: any;
+  public AMTypeData: any = []; AMData: any = []; ExecutiveData: any; MaterialArray: any = []; PMData: any; ProjectData: any; SiteData: any;TranExists:any=[];
 
   constructor(private appService: AppService, private datashare: DatashareService, private allmasterService: AllmasterService, private projectService: ProjectService) { }
   ngOnInit() {
@@ -61,7 +61,7 @@ export class ProjectBudgetComponent implements OnInit, OnDestroy {
     });
     this.projectService.getAMType(4).subscribe((resOtherExp: any) => {
       if (resOtherExp.StatusCode != 0) {
-        this.AMTypeData = this.AMTypeData.concat(resOtherExp.Data); console.log(resOtherExp.Data);
+        this.AMTypeData = this.AMTypeData.concat(resOtherExp.Data); 
       }
       else { AppComponent.SmartAlert.Errmsg(resOtherExp.Message); }
     });
@@ -145,6 +145,7 @@ export class ProjectBudgetComponent implements OnInit, OnDestroy {
   public getTranData() {
     this.projectService.getTransDetails(101,this.project.TranNo).subscribe((resTran: any) => {
       if (resTran.StatusCode != 0) {
+        this.TranExists= resTran.Data.Table;
         let amt = this.project.TotProjectCost;
         this.project = resTran.Data.Table1[0];
         this.project.TotProjectCost = amt;
@@ -183,6 +184,7 @@ export class ProjectBudgetComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.datashare.updateShareData(null);
+    this.appService.removeBackdrop();
   }
 
 }

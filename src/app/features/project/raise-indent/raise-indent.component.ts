@@ -17,7 +17,7 @@ export class RaiseIndentComponent implements OnInit, OnDestroy {
   public loaderbtn: boolean = true;
   public OtherExp: Boolean = false;
   public Material: any = { TypeId: '', MatActExpId: '' };
-  public AMTypeData: any = []; AMData: any = []; ExecutiveData: any;filterMaterialArray:any=[]; MaterialArray: any = []; ProjectData: any; SiteData: any;
+  public AMTypeData: any = []; AMData: any = []; ExecutiveData: any;filterMaterialArray:any=[]; MaterialArray: any = []; ProjectData: any; SiteData: any;TranExists:any=[];
 
   constructor(private appService: AppService, private datashare: DatashareService, private allmasterService: AllmasterService, private projectService: ProjectService) { 
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', minDate:  new Date(), dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
@@ -123,7 +123,8 @@ export class RaiseIndentComponent implements OnInit, OnDestroy {
   public getTranData() {
     this.projectService.getTransDetails(102,this.project.TranNo).subscribe((resTran: any) => {
       if (resTran.StatusCode != 0) {
-        this.project = resTran.Data.Table1[0];
+        this.TranExists=resTran.Data.Table;
+        this.project = resTran.Data.Table1[0]; console.log(resTran.Data);
         this.onSelectSite();
         this.onSelectProject();
         this.MaterialArray = resTran.Data.Table2;
@@ -160,6 +161,7 @@ export class RaiseIndentComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.datashare.updateShareData(null);
+    this.appService.removeBackdrop();
   }
 
 }
