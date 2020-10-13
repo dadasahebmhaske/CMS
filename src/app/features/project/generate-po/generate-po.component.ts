@@ -147,11 +147,14 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
               this.Material.UOMId = obj[0].UOMId;
               this.Material.UOM = obj[0].UOM;
               this.Material.UQty = obj[0].Qty;
+              this.Material.RQty=obj[0].Qty;
               this.Material.URate = obj[0].Rate;
               this.Material.UAmount = obj[0].Amount;
               this.Material.UTotalAmount = obj[0].TotalAmount;
               this.Material.RefTranNo=obj[0].RefTranNo;
               this.Material.RefSrNo=obj[0].RefSrNo;
+
+             
               // if(this.Material.index==null)
               // this.Material.RemainBudgetQty = obj[0].RemainBudgetQty;
               // this.Material.RefTranNo = obj[0].RefTranNo;
@@ -195,6 +198,10 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
             }
 
             GetCalculate(){
+              if(parseInt(this.Material.UQty)>parseInt(this.Material.RQty)){
+                AppComponent.SmartAlert.Errmsg(`Quantity exceeded the Raised qauntity`);
+                this.Material.UQty=null;
+              }
               if (this.Material.UQty != null && this.Material.URate != null) {
                 this.Material.UAmount = parseFloat(this.Material.URate == undefined || this.Material.URate == '' ? 0 : this.Material.URate) * parseFloat(this.Material.UQty == undefined || this.Material.UQty == '' ? 0 : this.Material.UQty);
                 this.Material.UAmount = this.Material.UAmount.toFixed(2);
@@ -230,6 +237,9 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
             }
 
             public onSelectProject(TranNo,RefTranNo) {
+              this.MaterialArray=[];
+              this.project.TotalAmtCost=null; this.project.TotProjectCost=null;
+              this.project.TotIGSTCost=null;this.project.TotCGSTCost=null;this.project.TotSGSTCost=null;
               let tranNo=this.project.TranNo==null?'':this.project.TranNo;
               this.projectService.getProjectExecutiveIndentMaterial(tranNo,this.project.ProjectId,RefTranNo).subscribe((resData: any) => {
                 if (resData.StatusCode != 0) {
