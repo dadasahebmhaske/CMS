@@ -178,16 +178,16 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
             {
               this.Material.CGSTAmount=0;
               this.Material.SGSTAmount=0;
-              this.Material.CGSTAmount=(parseFloat(this.Material.Amount)*parseFloat(this.Material.CGST))/100 ;
+              this.Material.CGSTAmount=(parseFloat(this.Material.UAmount)*parseFloat(this.Material.CGST))/100 ;
               this.Material.CGSTAmount= this.Material.CGSTAmount.toFixed(2);
-              this.Material.SGSTAmount=(parseFloat(this.Material.Amount)*parseFloat(this.Material.SGST))/100 ;
+              this.Material.SGSTAmount=(parseFloat(this.Material.UAmount)*parseFloat(this.Material.SGST))/100 ;
               this.Material.SGSTAmount= this.Material.SGSTAmount.toFixed(2);
 
               this.Material.UTotalAmount=parseFloat(this.Material.UAmount)+parseFloat(this.Material.CGSTAmount)+parseFloat(this.Material.SGSTAmount);
             }
             else{
               this.Material.IGSTAmount=0;
-              this.Material.IGSTAmount=(parseFloat(this.Material.Amount)*parseFloat(this.Material.IGST))/100 ;
+              this.Material.IGSTAmount=(parseFloat(this.Material.UAmount)*parseFloat(this.Material.IGST))/100 ;
               this.Material.IGSTAmount= this.Material.IGSTAmount.toFixed(2);
               this.Material.UTotalAmount=parseFloat(this.Material.UAmount)+parseFloat(this.Material.IGSTAmount);
             }
