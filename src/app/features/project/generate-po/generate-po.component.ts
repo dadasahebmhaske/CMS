@@ -47,7 +47,7 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
     });
     // this.projectService.getAMType(2).subscribe((resMaterial: any) => {
     //   if (resMaterial.StatusCode != 0) {
-    //     this.AMTypeData = resMaterial.Data; console.log(resMaterial.Data);
+    //     this.AMTypeData = resMaterial.Data; 
     //   }
     //   else { this.AMTypeData = []; AppComponent.SmartAlert.Errmsg(resMaterial.Message); }
     // });
@@ -116,7 +116,7 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
   onGetExpensesData() {
     this.projectService.getAM(this.OtherExpTypeData[0].MainTypeId).subscribe((resAData: any) => {
       if (resAData.StatusCode != 0) {
-        this.OtherExpData = resAData.Data.Table; console.log(resAData.Data.Table);
+        this.OtherExpData = resAData.Data.Table; 
       }
       else { this.OtherExpData = []; AppComponent.SmartAlert.Errmsg(resAData.Message); }
     });
