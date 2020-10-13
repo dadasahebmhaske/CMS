@@ -18,7 +18,7 @@
                     <div class="form-group">
                       <label for="sel1">Site <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="project.SiteId" name="SiteId" (change)="onSelectSite()" required>
+                      <select class="form-control" [(ngModel)]="project.SiteId" name="SiteId" (change)="onSelectSite()"  [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Site </option>
                         <option [value]="des.SiteId" *ngFor="let des of SiteData">{{des.SiteName}}
                         </option>
@@ -29,7 +29,7 @@
                     <div class="form-group">
                       <label for="sel1">Project <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="project.ProjectId" name="ProjectId" (change)="onSelectProject('')" required>
+                      <select class="form-control" [(ngModel)]="project.ProjectId" name="ProjectId" (change)="onSelectProject('')"  [disabled]="project.TranNo!=null"  required>
                         <option value="" selected hidden> Select Project </option>
                         <option [value]="des.ProjectId" *ngFor="let des of ProjectData">{{des.ProjectName}}
                         </option>
@@ -54,7 +54,7 @@
                     <div class="form-group">
                       <label for="sel1">Project Executive <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="project.ProjectExecutiveId" name="ProjectExecutiveId" required>
+                      <select class="form-control" [(ngModel)]="project.ProjectExecutiveId" name="ProjectExecutiveId"  [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Engineer </option>
                         <option [value]="des.ProjectExecutiveId" *ngFor="let des of ExecutiveData">{{des.ExecutiveName}}
                         </option>
@@ -65,7 +65,7 @@
                     <div class="form-group">
                       <label for="sel1">Select Raised Indent <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="project.RefTranNo" name="RefTranNo" (change)="onSelectProject(project.RefTranNo)" required>
+                      <select class="form-control" [(ngModel)]="project.RefTranNo" name="RefTranNo" (change)="onSelectProject(project.RefTranNo)"  [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Indent </option>
                         <option [value]="des.TranNo" *ngFor="let des of IndentData">{{des.DispTranNo}}
                         </option>
@@ -81,7 +81,7 @@
                       <label for="sel1">Material Type<span class="errorMessage">*</span>
                       </label>
                       <select class="form-control" [(ngModel)]="Material.TypeId" name="TypeId"
-                      (change)="onSelectActivityMaterial()"  required >
+                      (change)="onSelectActivityMaterial()"   [disabled]="Material.index!=null" required >
                         <option value="" selected hidden> Select Type </option>
                         <option [value]="des.TypeId" *ngFor="let des of AMTypeData">{{des.TypeName}}
                         </option>
@@ -93,7 +93,7 @@
                       <label for="sel1">Material <span class="errorMessage">*</span>
                       </label>
                       <select class="form-control" [(ngModel)]="Material.MatId" name="MatId"
-                      (ngModelChange)="onSelectMaterial()" required>
+                      (ngModelChange)="onSelectMaterial()" [disabled]="Material.index!=null" required>
                         <option value="" selected hidden> Select Material </option>
                          <option [value]="des.MatActExpId" *ngFor="let des of filterMaterialArray">{{des.MatName}}
                         </option>
@@ -106,7 +106,7 @@
                       <label>Qty <span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder="Enter Qty " [(ngModel)]="Material.UQty"
-                        name="UQty"  (ngModelChange)="onSelectMaterial()" saCommonDir dirType="alphanumeric" required />
+                        name="UQty"  (ngModelChange)="GetCalculate()" saCommonDir dirType="number" required />
                     </div>
                   </div>
                   <div class="col-sm-1">
@@ -122,7 +122,7 @@
                       <label>Rate <span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder=" Rate " [(ngModel)]="Material.URate"
-                        name="URate"  (ngModelChange)="onSelectMaterial()" saCommonDir dirType="decimal" required />
+                        name="URate"  (ngModelChange)="GetCalculate()" saCommonDir dirType="decimal" required />
                     </div>
                   </div>
                   <div class="col-sm-1">
@@ -138,7 +138,7 @@
                       <label>IGST % <span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder=" IGST % " [(ngModel)]="Material.IGST"
-                        name="IGST"  (ngModelChange)="onSelectMaterial()" saCommonDir dirType="decimal" required />
+                        name="IGST"  (ngModelChange)="GetCalculate()" saCommonDir dirType="decimal" required />
                     </div>
                   </div>
                   <div class="col-sm-1">
@@ -146,7 +146,7 @@
                       <label>SGST % <span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder=" SGST % " [(ngModel)]="Material.SGST"
-                        name="SGST" (ngModelChange)="onSelectMaterial()" saCommonDir dirType="decimal" required />
+                        name="SGST" (ngModelChange)="GetCalculate()" saCommonDir dirType="decimal" required />
                     </div>
                   </div>
                   <div class="col-sm-1">
@@ -154,7 +154,7 @@
                       <label>CGST % <span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder=" CGST % " [(ngModel)]="Material.CGST"
-                        name="CGST" (ngModelChange)="onSelectMaterial()" saCommonDir dirType="decimal" required />
+                        name="CGST" (ngModelChange)="GetCalculate()" saCommonDir dirType="decimal" required />
                     </div>
                   </div>
                   <div class="col-sm-1">
@@ -170,7 +170,7 @@
                       <label>SGST Amt <span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder=" Amount" [(ngModel)]="Material.SGSTAmount"
-                        name="SGSTAmt" saCommonDir dirType="alphanumeric" required disabled/>
+                        name="SGSTAmt" saCommonDir dirType="decimal" required disabled/>
                     </div>
                   </div>
                   <div class="col-sm-1">
@@ -178,82 +178,23 @@
                       <label>CGST Amt <span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder="Amount" [(ngModel)]="Material.CGSTAmount"
-                        name="CGSTAmt" saCommonDir dirType="alphanumeric" required disabled/>
+                        name="CGSTAmt" saCommonDir dirType="decimal" required disabled/>
                     </div>
                   </div>
-                  <!-- <div class="col-sm-2">
-                    <div class="form-group">
-                      <label for="sel1">Rate type <span class="errorMessage">*</span>
-                      </label>
-                      <select class="form-control" [(ngModel)]="transport.RateType" name="RateType" required>
-                        <option value="" selected hidden> Select Rate Type </option>
-                        <option value="CR"> Rate </option>
-                        <option value="MR"> Material Rate </option>
-                        <option value="LR"> Labour Rate </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-sm-1" *ngIf="transport.RateType=='CR'">
-                    <div class="form-group">
-                      <label>Rate <span class="errorMessage">*</span>
-                      </label>
-                      <input type="text" class="form-control" placeholder=" Rate " [(ngModel)]="transport.Rate"
-                        name="Rate" saCommonDir dirType="alphanumeric" required />
-                    </div>
-                  </div>
-                  <div class="col-sm-1" *ngIf="transport.RateType=='MR'">
-                    <div class="form-group">
-                      <label>Material <span class="errorMessage">*</span>
-                      </label>
-                      <input type="text" class="form-control" placeholder=" Rate " [(ngModel)]="transport.MRate"
-                        name="Unit" saCommonDir dirType="alphanumeric" required />
-                    </div>
-                  </div>
-                  <div class="col-sm-1" *ngIf="transport.RateType=='LR'">
-                    <div class="form-group">
-                      <label>labour <span class="errorMessage">*</span>
-                      </label>
-                      <input type="text" class="form-control" placeholder=" Rate " [(ngModel)]="transport.LRate"
-                        name="LRate" saCommonDir dirType="alphanumeric" required />
-                    </div>
-                  </div>
-                  <div class="col-sm-1" *ngIf="transport.RateType=='CR'">
-                    <div class="form-group">
-                      <label>Amount<span class="errorMessage">*</span>
-                      </label>
-                      <input type="text" class="form-control" placeholder=" Amount " [(ngModel)]="transport.RateAmt"
-                        name="Rate" saCommonDir dirType="alphanumeric" required />
-                    </div>
-                  </div>
-                  <div class="col-sm-2" *ngIf="transport.RateType=='MR'">
-                    <div class="form-group">
-                      <label>Material Amt<span class="errorMessage">*</span>
-                      </label>
-                      <input type="text" class="form-control" placeholder=" Amount " [(ngModel)]="transport.MRateAmt"
-                        name="Unit" saCommonDir dirType="alphanumeric" required />
-                    </div>
-                  </div>
-                  <div class="col-sm-1" *ngIf="transport.RateType=='LR'">
-                    <div class="form-group">
-                      <label>labour Amt<span class="errorMessage">*</span>
-                      </label>
-                      <input type="text" class="form-control" placeholder=" Amount " [(ngModel)]="transport.LRateAmt"
-                        name="LRate" saCommonDir dirType="alphanumeric" required />
-                    </div>
-                  </div> -->
+                  
                   <div class="col-sm-2" >
                     <div class="form-group">
                       <label>Total Amt<span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder=" Amount " [(ngModel)]="Material.TotalAmt"
-                        name="TotalAmt" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder=" Amount " [(ngModel)]="Material.TotalAmount"
+                        name="TotalAmount" saCommonDir dirType="decimal" disabled required />
                     </div>
                   </div>
                   <div class="col-sm-1">
                     <div class="form-group">
                         <label>&nbsp; </label>
                         <button class="btn btn-block btn-warning ">
-                            <i class="glyphicon glyphicon-plus"></i> Add </button>
+                            <i class="glyphicon glyphicon-plus"></i>  {{Material.index==null?'Add':'Update'}} </button>
                     </div>
                 </div>
 
@@ -295,7 +236,7 @@
                               <td class="text-center">{{mat.IGSTAmount}}</td>
                               <td class="text-center">{{mat.SGSTAmount}}</td>
                               <td class="text-center">{{mat.CGSTAmount}}</td>
-                              <td class="text-center">{{mat.TotalAmt}}</td>
+                              <td class="text-center">{{mat.TotalAmount}}</td>
                               <td class="text-center">
                                 <a class="btn btn-xs btn-danger" (click)=onRemoveMaterial(mat,i)>Remove</a>
                                 <a class="btn btn-xs btn-primary" (click)=onEdit(mat,i)>Edit</a>
@@ -354,7 +295,7 @@
                     <div class="form-group">
                       <label for="sel1">Taxation Terms <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="project.TaxationId" name="TaxationId" required>
+                      <select class="form-control" [(ngModel)]="project.TaxationTermId" name="TaxationTermId" required>
                         <option value="" selected hidden> Select Terms </option>
                         <option [value]="des.TaxId" *ngFor="let des of TaxationData">{{des.TaxRate}} {{des.TaxTermName}}
                         </option>

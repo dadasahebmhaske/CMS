@@ -61,7 +61,7 @@ export class ProjectService {
         project.TotIGSTCost = parseFloat(project.TotIGSTCost) + parseFloat(MaterialArray[i].IGSTAmount);
         project.TotCGSTCost = parseFloat(project.TotCGSTCost) + parseFloat(MaterialArray[i].CGSTAmount);
         project.TotSGSTCost = parseFloat(project.TotSGSTCost) + parseFloat(MaterialArray[i].SGSTAmount);
-        project.TotProjectCost = parseFloat(project.TotProjectCost) + parseFloat(MaterialArray[i].TotalAmt);
+        project.TotProjectCost = parseFloat(project.TotProjectCost) + parseFloat(MaterialArray[i].TotalAmount);
       }
     return project;
   }

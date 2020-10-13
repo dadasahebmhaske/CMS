@@ -26,9 +26,10 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
             constructor(private appService: AppService, private datashare: DatashareService,private allmasterService:AllmasterService,private projectService:ProjectService ) { }
             ngOnInit() {
               this.datashare.GetSharedData.subscribe(data => {
-                this.project = data == null ? { IsActive: 'Y', SiteId: '', ProjectExecutiveId: '', DeliveryTermId: '', ProjectId: '' ,PaymentTermId:'',TaxationId:'',VendorId:''} : data;
-                // if (this.project.TranNo != null)
-                //   this.getTranData();
+                this.project = data == null ? { IsActive: 'Y', SiteId: '', ProjectExecutiveId: '', DeliveryTermId: '', ProjectId: '' ,PaymentTermId:'',TaxationTermId:'',VendorId:'',RefTranNo:''} : data;
+               
+                if (this.project.TranNo != null)
+                 this.getTranData();
               }); 
               this.appService.getAppData().subscribe(data => { this.empInfo = data });
 
@@ -88,6 +89,28 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
               });
             }
 
+            public getTranData() {
+              this.projectService.getTransDetails(103,this.project.TranNo).subscribe((resTran: any) => {
+                if (resTran.StatusCode != 0) {
+                  this.project = resTran.Data.Table1[0];
+                  this.onSelectSite();
+                  this.onSelectProject('');
+                  this.onSelectProject(this.project.RefTranNo);
+                  this.MaterialArray = resTran.Data.Table2;
+                  this.OtherExpenseArray = resTran.Data.Table3;
+                  let tempArray = [];
+                  for (let i = 0; i < this.MaterialArray.length; i++) {
+                    this.Material = this.MaterialArray[i];
+                    this.Material.show = tempArray.some(obj => parseInt(obj.TypeId) === parseInt(this.Material.TypeId)) ? false : true;
+                    tempArray.push(this.Material);
+                  }
+                  this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
+                  this.MaterialArray = tempArray;
+                  this.Material = { TypeId: '', MatActExpId: '' }
+                }
+              });
+            }
+
             onGetExpensesData() {
               this.projectService.getAM( this.OtherExpTypeData[0].MainTypeId).subscribe((resAData: any) => {
                 if (resAData.StatusCode != 0) {
@@ -119,7 +142,7 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
 
             onSelectMaterial() {
               let obj;
-              obj = this.projectService.filterData(this.AMData, this.Material.MatActExpId, 'MatId');
+              obj = this.projectService.filterData(this.AMData, this.Material.MatId, 'MatActExpId');
               this.Material.MatName = obj[0].MatName;
               this.Material.UOMId = obj[0].UOMId;
               this.Material.UOM = obj[0].UOM;
@@ -158,14 +181,49 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
               this.Material.SGSTAmount=(parseFloat(this.Material.Amount)*parseFloat(this.Material.SGST))/100 ;
               this.Material.SGSTAmount= this.Material.SGSTAmount.toFixed(2);
 
-              this.Material.TotalAmt=parseFloat(this.Material.Amount)+parseFloat(this.Material.CGSTAmount)+parseFloat(this.Material.SGSTAmount);
+              this.Material.TotalAmount=parseFloat(this.Material.Amount)+parseFloat(this.Material.CGSTAmount)+parseFloat(this.Material.SGSTAmount);
             }
             else{
               this.Material.IGSTAmount=0;
               this.Material.IGSTAmount=(parseFloat(this.Material.Amount)*parseFloat(this.Material.IGST))/100 ;
               this.Material.IGSTAmount= this.Material.IGSTAmount.toFixed(2);
-              this.Material.TotalAmt=parseFloat(this.Material.Amount)+parseFloat(this.Material.IGSTAmount);
+              this.Material.TotalAmount=parseFloat(this.Material.Amount)+parseFloat(this.Material.IGSTAmount);
             }
+
+            }
+
+            GetCalculate(){
+              if (this.Material.UQty != null && this.Material.URate != null) {
+                this.Material.Amount = parseFloat(this.Material.URate == undefined || this.Material.URate == '' ? 0 : this.Material.URate) * parseFloat(this.Material.UQty == undefined || this.Material.UQty == '' ? 0 : this.Material.UQty);
+                this.Material.Amount = this.Material.Amount.toFixed(2);
+              }
+  
+              this.Material.CGSTAmount=this.Material.CGSTAmount==undefined||this.Material.CGSTAmount==''||this.Material.CGSTAmount==null?0:this.Material.CGSTAmount;
+              this.Material.SGSTAmount=this.Material.SGSTAmount==undefined||this.Material.SGSTAmount==''||this.Material.SGSTAmount==null?0:this.Material.SGSTAmount;
+              this.Material.IGSTAmount=this.Material.IGSTAmount==undefined||this.Material.IGSTAmount==''||this.Material.IGSTAmount==null?0:this.Material.IGSTAmount;
+              
+              this.Material.IGST=this.Material.IGST==undefined||this.Material.IGST==''||this.Material.IGST==null?0:this.Material.IGST;
+              this.Material.CGST=this.Material.CGST==undefined||this.Material.CGST==''||this.Material.CGST==null?0:this.Material.CGST;
+              this.Material.SGST=this.Material.SGST==undefined||this.Material.SGST==''||this.Material.SGST==null?0:this.Material.SGST;
+  
+              if(this.Material.IGST==0||this.Material.IGST==null)
+              {
+                this.Material.CGSTAmount=0;
+                this.Material.SGSTAmount=0;
+                this.Material.CGSTAmount=(parseFloat(this.Material.Amount)*parseFloat(this.Material.CGST))/100 ;
+                this.Material.CGSTAmount= this.Material.CGSTAmount.toFixed(2);
+                this.Material.SGSTAmount=(parseFloat(this.Material.Amount)*parseFloat(this.Material.SGST))/100 ;
+                this.Material.SGSTAmount= this.Material.SGSTAmount.toFixed(2);
+  
+                this.Material.TotalAmount=parseFloat(this.Material.Amount)+parseFloat(this.Material.CGSTAmount)+parseFloat(this.Material.SGSTAmount);
+              }
+              else{
+                this.Material.IGSTAmount=0;
+                this.Material.IGSTAmount=(parseFloat(this.Material.Amount)*parseFloat(this.Material.IGST))/100 ;
+                this.Material.IGSTAmount= this.Material.IGSTAmount.toFixed(2);
+                this.Material.TotalAmount=parseFloat(this.Material.Amount)+parseFloat(this.Material.IGSTAmount);
+              }
+  
 
             }
 
@@ -200,7 +258,8 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
                 this.MaterialArray[this.Material.index].IGSTAmount = this.Material.IGSTAmount;
                 this.MaterialArray[this.Material.index].SGSTAmount = this.Material.SGSTAmount;
                 this.MaterialArray[this.Material.index].SGSTAmount = this.Material.SGSTAmount;
-                this.MaterialArray[this.Material.index].TotalAmt = this.Material.TotalAmt;
+                this.MaterialArray[this.Material.index].TotalAmount = this.Material.TotalAmount;
+                this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
                       
                } else if (this.MaterialArray.some(obj => (parseInt(obj.TypeId) === parseInt(this.Material.TypeId) && parseInt(obj.MatId) === parseInt(this.Material.MatId)))) {
                 AppComponent.SmartAlert.Errmsg("Material already added in list.");
@@ -242,7 +301,7 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
             onEdit(mat, i) {
               mat.index = i;
               this.Material = mat;
-             // this.Material.URate = mat.Rate;
+              this.Material.URate = mat.Rate;
               this.Material.UQty = mat.Qty;
               //this.Material.UAmount = mat.Amount;
              // if (this.Material.MainTypeId == 4) { this.Material.UAmount = mat.Rate }
