@@ -54,8 +54,8 @@ export class GeneratePoListComponent implements OnInit {
                   },
                   { name: 'SiteName', displayName: 'Site Name', width: "*", cellTooltip: true, filterCellFiltered: true }, 
                   { name: 'ProjectName', displayName: 'Project Name', width: "*", cellTooltip: true, filterCellFiltered: true },
-                  { name: 'TranNo', displayName: 'Trans No', width: "*", cellTooltip: true, filterCellFiltered: true },
-                 // { name: 'TotalMaterialCount', displayName: 'Total Material Count', width: "*", cellTooltip: true, filterCellFiltered: true },
+                  { name: 'DispTranNo', displayName: 'Trans No', width: "*", cellTooltip: true, filterCellFiltered: true },
+                  { name: 'TranDate', displayName: 'Trans Date', width: "*", cellTooltip: true, filterCellFiltered: true },
                   { name: 'TotAmount', displayName: 'Total Amount', width: "*", cellTooltip: true, filterCellFiltered: true },
                   { name: 'VendorName', displayName: 'Vendor Name', width: "*", cellTooltip: true, filterCellFiltered: true },
                 ]

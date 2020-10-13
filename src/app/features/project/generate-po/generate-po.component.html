@@ -29,7 +29,7 @@
                     <div class="form-group">
                       <label for="sel1">Project <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="project.ProjectId" name="ProjectId" (change)="onSelectProject('')"  [disabled]="project.TranNo!=null"  required>
+                      <select class="form-control" [(ngModel)]="project.ProjectId" name="ProjectId" (change)="onSelectProject('','')"  [disabled]="project.TranNo!=null"  required>
                         <option value="" selected hidden> Select Project </option>
                         <option [value]="des.ProjectId" *ngFor="let des of ProjectData">{{des.ProjectName}}
                         </option>
@@ -65,7 +65,7 @@
                     <div class="form-group">
                       <label for="sel1">Select Raised Indent <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="project.RefTranNo" name="RefTranNo" (change)="onSelectProject(project.RefTranNo)"  [disabled]="project.TranNo!=null" required>
+                      <select class="form-control" [(ngModel)]="project.RefTranNo" name="RefTranNo" (change)="onSelectProject('',project.RefTranNo)"  [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Indent </option>
                         <option [value]="des.TranNo" *ngFor="let des of IndentData">{{des.DispTranNo}}
                         </option>
@@ -129,7 +129,7 @@
                     <div class="form-group">
                       <label>Amount <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Amount" [(ngModel)]="Material.Amount"
+                      <input type="text" class="form-control" placeholder="UAmount" [(ngModel)]="Material.UAmount"
                         name="Amount" saCommonDir dirType="decimal" required disabled/>
                     </div>
                   </div>
@@ -138,7 +138,7 @@
                       <label>IGST % <span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder=" IGST % " [(ngModel)]="Material.IGST"
-                        name="IGST"  (ngModelChange)="GetCalculate()" saCommonDir dirType="decimal" required />
+                        name="IGST"  (ngModelChange)="GetCalculate()" saCommonDir dirType="decimal" disabled required />
                     </div>
                   </div>
                   <div class="col-sm-1">
@@ -146,7 +146,7 @@
                       <label>SGST % <span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder=" SGST % " [(ngModel)]="Material.SGST"
-                        name="SGST" (ngModelChange)="GetCalculate()" saCommonDir dirType="decimal" required />
+                        name="SGST" (ngModelChange)="GetCalculate()" saCommonDir dirType="decimal" disabled required />
                     </div>
                   </div>
                   <div class="col-sm-1">
@@ -154,7 +154,7 @@
                       <label>CGST % <span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder=" CGST % " [(ngModel)]="Material.CGST"
-                        name="CGST" (ngModelChange)="GetCalculate()" saCommonDir dirType="decimal" required />
+                        name="CGST" (ngModelChange)="GetCalculate()" saCommonDir dirType="decimal" disabled required />
                     </div>
                   </div>
                   <div class="col-sm-1">
@@ -186,8 +186,8 @@
                     <div class="form-group">
                       <label>Total Amt<span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder=" Amount " [(ngModel)]="Material.TotalAmount"
-                        name="TotalAmount" saCommonDir dirType="decimal" disabled required />
+                      <input type="text" class="form-control" placeholder=" Amount " [(ngModel)]="Material.UTotalAmount"
+                        name="UTotalAmount" saCommonDir dirType="decimal" disabled required />
                     </div>
                   </div>
                   <div class="col-sm-1">
