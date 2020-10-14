@@ -28,7 +28,7 @@ export class GrnComponent implements OnInit, OnDestroy {
              }
             ngOnInit() {
               this.datashare.GetSharedData.subscribe(data => {
-                this.project = data == null ? { IsActive: 'Y', SiteId: '', ProjectExecutiveId: '', DeliveryTermId: '', ProjectId: '' ,PaymentTermId:'',TaxationTermId:'',VendorId:'',RefTranNo:''} : data;
+                this.project = data == null ? { IsActive: 'Y', SiteId: '',  ProjectId: '',VendorId:'',RefTranNo:''} : data;
                
                 // if (this.project.TranNo != null)
                 //  this.getTranData();
@@ -82,6 +82,7 @@ export class GrnComponent implements OnInit, OnDestroy {
                     let tempArray = [];
                     this.Material.show = tempArray.some(obj => parseInt(obj.TypeId) === parseInt(this.Material.TypeId)) ? false : true;
                     tempArray.push(this.Material);
+                    this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
                   }
                  // this.Material.show = this.MaterialArray.some(obj => parseInt(obj.TypeId) === parseInt(this.Material.TypeId)) ? false : true;
 
@@ -103,22 +104,29 @@ export class GrnComponent implements OnInit, OnDestroy {
               });
             }
 
+            
 
             public onSubmit() {
               this.loaderbtn = false;
-              this.transport.Flag = this.transport.VehicleTypeId == null ? 'IN' : 'UP';
-              this.transport.CPCode = this.cpInfo.CPCode;
-              this.transport.UserCode = this.cpInfo.EmpId;
-              this.transport.VehicleTypeId = this.transport.VehicleTypeId == null ? '' : this.transport.VehicleTypeId;
-              this.transport.TransChk = 1;
-              let ciphertext = this.appService.getEncrypted(this.transport);
-              // this.transportService.postTransport(ciphertext).subscribe((resData: any) => {
-              //   if (resData.StatusCode != 0) {
-              //     AppComponent.SmartAlert.Success(resData.Message);
-              //     AppComponent.Router.navigate(['/master/transport-master']);
-              //   }
-              //   else { AppComponent.SmartAlert.Errmsg(resData.Message); }
-              // });
+              this.project.Flag = this.project.TranNo == null|| this.project.TranNo == ''? 'IN' : 'UP';
+              this.project.UserCode = this.empInfo.EmpId;
+              this.project.TranNo = this.project.TranNo == null ? '' : this.project.TranNo;
+              this.project.TranSubType = 1;
+              this.project.TranType=104;
+              this.project.TranDate = new Date();
+              this.project.ChallanDate= this.appService.DateToString(this.project.ChallanDate);
+              this.project.Remark = '';
+             // this.project.RefTranNo = this.MaterialArray[0].RefTranNo;
+              this.project.Data = this.MaterialArray;
+              let ciphertext = this.appService.getEncrypted(this.project);
+              this.projectService.post('ManageGRN', ciphertext).subscribe((resData: any) => {
+                this.loaderbtn = true;
+                if (resData.StatusCode != 0) {
+                  AppComponent.SmartAlert.Success(resData.Message);
+                  AppComponent.Router.navigate(['/project/grn-list']);
+                }
+                else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+              });
             }
             ngOnDestroy() {
               this.datashare.updateShareData(null);

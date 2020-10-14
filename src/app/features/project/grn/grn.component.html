@@ -79,7 +79,7 @@
                       <label>Challan / Invoice  Date <span class="errorMessage">*</span>
                       </label>
                         <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="project.ChallanDate" name="ChallanDate" id="startDate"
-                                (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
+                        onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
                     </div>
                   </div>
                   <div class="col-sm-2">
@@ -201,18 +201,18 @@
                                 <a class="btn btn-xs btn-danger" (click)=onRemoveMaterial(mat,i)>Remove</a>
                                 <a class="btn btn-xs btn-primary" (click)=onEdit(mat,i)>Edit</a>
                               </td> -->
-                              <td>  <input type="text" class="form-control" style="width: 60px;" placeholder=" Qty " [(ngModel)]="transport.ReceivedQty"
+                              <td>  <input type="text" class="form-control" style="width: 60px;" placeholder=" Qty " [(ngModel)]="mat.ReceivedQty"
                                 name="ReceivedQty" saCommonDir dirType="alphanumeric" required /> </td>
                                          <td>  <div class="form-group">
-                                    <select class="form-control" [(ngModel)]="transport.IsQualityOk" name="IsQualityOk" required>
+                                    <select class="form-control" [(ngModel)]="mat.IsQualityOk" name="IsQualityOk" required>
                                       <option value="" selected hidden> Select </option>
                                       <option value="Y"> Yes </option>
                                       <option value="N"> No</option>
                                     </select>
                                   </div></td>
-                                <td>  <input type="text" class="form-control" style="width: 60px;" placeholder="Qty " [(ngModel)]="transport.RejectedQty"
+                                <td>  <input type="text" class="form-control" style="width: 60px;" placeholder="Qty " [(ngModel)]="mat.RejectedQty"
                                   name="RejectedQty" saCommonDir dirType="alphanumeric" required /> </td>
-                                  <td>  <input type="text" class="form-control" style="width: 100px;" placeholder="Remark " [(ngModel)]="transport.Remark"
+                                  <td>  <input type="text" class="form-control" style="width: 100px;" placeholder="Remark " [(ngModel)]="mat.Remark"
                                     name="Remark" saCommonDir dirType="alphanumeric" required /> </td>
                             
                             </tr> 
@@ -246,18 +246,15 @@
                               
                                 </tr> -->
                               
-                                              <tr>
-                                                <td colspan="5" class="text-right"><strong>TOTAL</strong></td>
-                                                <td class="text-center"><strong>23000</strong>  </td>
-                                                <td></td>    <td></td>    <td></td>
-                                                <td class="text-center"><strong>19</strong>  </td>
-                                                <td class="text-center"><strong>38</strong>  </td>
-                                                <td class="text-center"><strong>38</strong>  </td>
-                                                <td  class="text-center"><strong>340900</strong>  </td>
-                                                <td  class="text-center"><strong>0</strong>  </td>
-                                                <td  class="text-center"><strong>0</strong>  </td>
-                                                <td></td><td></td>
-                                              </tr>
+                                <tr>
+                                  <td colspan="6" class="text-right"><strong>TOTAL</strong></td>
+                                  <td class="text-center"><strong>{{project.TotalAmtCost}}</strong>  </td>
+                                  <td></td>    <td></td>    <td></td>
+                                  <td class="text-center"><strong>{{project.TotIGSTCost}}</strong>  </td>
+                                  <td class="text-center"><strong>{{project.TotSGSTCost}}</strong>  </td>
+                                  <td class="text-center"><strong>{{project.TotCGSTCost}}</strong>  </td>
+                                  <td colspan="2" class="text-center"><strong>{{project.TotProjectCost}}</strong>  </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -293,7 +290,7 @@
                     <div class="form-group">
                       <label for="sel1">Receiving Location <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="project.ReceivedProjectId" name="ReceivedProjectId" (change)="onSelectProject('')"  [disabled]="project.TranNo!=null"  required>
+                      <select class="form-control" [(ngModel)]="project.ReceivedProjectId" name="ReceivedProjectId" [disabled]="project.TranNo!=null"  required>
                         <option value="" selected hidden> Select Receiving Location </option>
                         <option [value]="des.ProjectId" *ngFor="let des of ProjectData">{{des.ProjectName}}
                         </option>
