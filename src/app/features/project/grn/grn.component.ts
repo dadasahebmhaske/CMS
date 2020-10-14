@@ -78,6 +78,8 @@ export class GrnComponent implements OnInit, OnDestroy {
                   for (let i = 0; i < this.MaterialArray.length; i++) {
                     this.Material = this.MaterialArray[i];
                     this.Material.show = tempArray.some(obj => parseInt(obj.TypeId) === parseInt(this.Material.TypeId)) ? false : true;
+                    //let idtif=`ReceivedQty${i}`;
+                    this.Material[i][`ReceivedQty${i}`]=this.Material.ReceivedQty;
                     tempArray.push(this.Material);
                   }
                   this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);

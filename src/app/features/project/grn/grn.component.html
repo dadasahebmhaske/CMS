@@ -199,7 +199,7 @@
                               <td class="text-center">{{mat.CGSTAmount}}</td>
                               <td class="text-center">{{mat.TotalAmount}}</td>
                           
-                              <td>  <input type="text" class="form-control" style="width: 60px;" placeholder=" Qty " [(ngModel)]="this['mat.ReceivedQty'+i]"
+                              <td>  <input type="text" class="form-control" style="width: 60px;" placeholder=" Qty " [(ngModel)]="mat.ReceivedQty[i]"
                                 name="ReceivedQty{{i}}" saCommonDir dirType="alphanumeric" required /> </td>
                                          <td>  <div class="form-group">
                                     <select class="form-control" [(ngModel)]="mat.IsQualityOk" name="IsQualityOk" required>
