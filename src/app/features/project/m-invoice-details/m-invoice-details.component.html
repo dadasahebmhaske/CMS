@@ -11,19 +11,17 @@
           </header>
           <div>
             <div class="widget-body">
-              <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
+              <form name="invoiceForm" #invoiceForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
                 ngNativeValidate>
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group">
                       <label for="sel1">Site <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.SiteId" name="SiteId" required>
+                      <select class="form-control" [(ngModel)]="project.SiteId" name="SiteId" (change)="onSelectSite()"
+                        [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Site </option>
-                        <option value=""> Sanskruti </option>
-                        <option value=""> Nirmiti </option>
-                        <option value=""> Akruti </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        <option [value]="des.SiteId" *ngFor="let des of SiteData">{{des.SiteName}}
                         </option>
                       </select>
                     </div>
@@ -32,144 +30,122 @@
                     <div class="form-group">
                       <label for="sel1">Project <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.ProjectId" name="ProjectId" required>
+                      <select class="form-control" [(ngModel)]="project.ProjectId" name="ProjectId"
+                        (change)="onSelectProject('')" [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Project </option>
-                        <option value=""> Samved </option>
-                        <option value=""> Yajurved </option>
-                        <option value=""> Rugved </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        <option [value]="des.ProjectId" *ngFor="let des of ProjectData">{{des.ProjectName}}
                         </option>
                       </select>
                     </div>
                   </div>
-                  <div class="col-sm-4">
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="sel1">Vendor <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="project.VendorId" name="VendorId"
+                        (change)="onSelectVendor()" required>
+                        <option value="" selected hidden> Select Vendor </option>
+                        <option [value]="des.VendorId" *ngFor="let des of VendorData">{{des.VendorName}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
                     <div class="form-group">
                       <label for="sel1">Select GRN <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
+                      <select class="form-control" [(ngModel)]="project.RefTranNo" name="RefTranNo"
+                        (change)="onSelectProject(project.RefTranNo)" required>
                         <option value="" selected hidden> Select GRN </option>
-                        <option value="">GRN/PR/01</option>
-                        <option value="">GRN/PR/02</option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                        </option>
+                        <option [value]="des.TranNo" *ngFor="let des of GRNArray">{{des.DispTranNo}}
                       </select>
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
-                      <label>Invoice  No. <span class="errorMessage">*</span>
+                      <label>Invoice No. <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Invoice No. " [(ngModel)]="transport.InvoiceNo"
-                        name="InvoiceNo" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Invoice No. "
+                        [(ngModel)]="project.InvoiceNo" name="InvoiceNo" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
-             
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Invoice Date <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Invoice Date " [(ngModel)]="transport.INVDate"
-                        name="INVDate" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Date" [(ngModel)]="project.InvoiceDate"
+                        id="InvoiceDate" name="InvoiceDate" onkeydown="return false" bsDatepicker
+                        [bsConfig]="datePickerConfig" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-8">
+                    <div class="form-group">
+                      <label>Remark
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Remark " [(ngModel)]="project.Remark"
+                        name="Remark" />
                     </div>
                   </div>
                   <div class="col-sm-12">
                     <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr align="center" class="text-center">
-                                    <th  class="text-center">#</th>
-                                    <th  class="text-center">Activity</th>
-                                    <th  class="text-center">Quantity</th>
-                                    <th class="text-center">Unit</th>
-                                    <th  class="text-center">Rate</th>
-                                    <th class="text-center">Amount</th>
-                                    <th class="text-center">IGST %</th>
-                                    <th class="text-center">SGST %</th>
-                                    <th class="text-center">CGST %</th>
-                                    <th class="text-center">IGST Amount</th>
-                                    <th class="text-center">SGST Amount</th>
-                                    <th class="text-center">CGST Amount</th>
-                                    <th class="text-center">Total Amount </th>
-                                    <th class="text-center">Remove </th>
-                                </tr>
-                           
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>1.</td>
-                                <td colspan="13"><strong>BrickWork</strong></td>
-                              </tr>
-                                <tr>
-                                <td></td>
-                                <td>Brickwork for bench</td>
-                                <td class="text-center">65</td>
-                                <td class="text-center">Sqft</td>
-                                <td  class="text-center">18</td>
-                                <td  class="text-center">1170</td>
-                                <td  class="text-center">0</td>
-                                <td  class="text-center">9</td>
-                                <td  class="text-center">9</td>
-                                <td  class="text-center">0</td>
-                                <td  class="text-center">19</td>
-                                <td  class="text-center">19</td>
-                                 <td class="text-center">1178</td>
-                                 <td class="text-center">
-                                  <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                              </td> 
-                                </tr>
-                                <tr>
-                                  <td></td>
-                                  <td>Cement</td>
-                                  <td class="text-center">1</td>
-                                  <td class="text-center">Bag</td>
-                                  <td  class="text-center">340</td>
-                                  <td class="text-center">340</td>
-                                  <td  class="text-center">9</td>
-                                  <td  class="text-center">0</td>
-                                  <td  class="text-center">0</td>
-                                  <td  class="text-center">19</td>
-                                  <td  class="text-center">0</td>
-                                  <td  class="text-center">0</td>
-                                
-                                   <td class="text-center">340</td>
-                                   <td class="text-center">
-                                    <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                                </td> 
-                                  </tr>
-                                  <tr>
-                                    <td></td>
-                                    <td>Crush Sand</td>
-                                    <td class="text-center">0.025</td>
-                                    <td class="text-center">Brass</td>
-                                    <td  class="text-center">3400</td>
-                                    <td class="text-center">85</td>
-                                    <td  class="text-center">0</td>
-                                    <td  class="text-center">9</td>
-                                    <td  class="text-center">9</td>
-                                    <td  class="text-center">0</td>
-                                    <td  class="text-center">19</td>
-                                    <td  class="text-center">19</td>
-                                     <td class="text-center">85</td>
-                                     <td class="text-center">
-                                      <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                                  </td> 
-                                    </tr>
-                                              <tr>
-                                                <td colspan="5" class="text-right"><strong>TOTAL</strong></td>
-                                                <td class="text-center"><strong>23000</strong>  </td>
-                                                <td></td>    <td></td>    <td></td>
-                                                <td class="text-center"><strong>19</strong>  </td>
-                                                <td class="text-center"><strong>38</strong>  </td>
-                                                <td class="text-center"><strong>38</strong>  </td>
-                                                <td class="text-center"><strong>340900</strong>  </td><td></td>
-                                              </tr>
-                            </tbody>
-                        </table>
+                      <table class="table table-hover">
+                        <thead>
+                          <tr align="center" class="text-center">
+                            <th  class="text-center">#</th>
+                            <th class="text-center">Material Type</th>
+                            <th class="text-center">Material</th>
+                            <th  class="text-center">Quantity</th>
+                            <th class="text-center">Unit</th>
+                            <th  class="text-center">Rate</th>
+                            <th class="text-center">Amount</th>
+                            <th class="text-center">IGST %</th>
+                            <th class="text-center">SGST %</th>
+                            <th class="text-center">CGST %</th>
+                            <th class="text-center">IGST Amount</th>
+                            <th class="text-center">SGST Amount</th>
+                            <th class="text-center">CGST Amount</th>
+                            <th class="text-center">Total Amount </th> 
+                            <th class="text-center">Action </th> 
+                          </tr>
+
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let mat of MaterialArray;index as i">
+                            <td><span (onload)="check(i)">{{i+1}}.</span></td>
+                            <td ><strong *ngIf="mat.show">{{mat.TypeName}}</strong></td>                         
+                            <td>{{mat.MatName}}</td>
+                            <td class="text-center">{{mat.Qty==0?'':mat.Qty}}</td>
+                            <td class="text-center">{{mat.UOM}}</td>
+                            <td class="text-center">{{mat.Rate}}</td>
+                            <td class="text-center">{{mat.Amount}}</td>
+                            <td class="text-center">{{mat.IGST}}</td>
+                            <td class="text-center">{{mat.SGST}}</td>
+                            <td class="text-center">{{mat.CGST}}</td>
+                            <td class="text-center">{{mat.IGSTAmount}}</td>
+                            <td class="text-center">{{mat.SGSTAmount}}</td>
+                            <td class="text-center">{{mat.CGSTAmount}}</td>
+                            <td class="text-center">{{mat.TotalAmount}}</td>
+                            <td class="text-center">
+                              <a class="btn btn-xs btn-danger action-btn" (click)=onRemoveMaterial(mat,i)>Remove</a>
+                            </td>
+                          </tr>
+                          
+                          <tr>
+                            <td colspan="6" class="text-right"><strong>TOTAL</strong></td>
+                            <td class="text-center"><strong>{{project.TotalAmtCost}}</strong>  </td>
+                            <td></td>    <td></td>    <td></td>
+                            <td class="text-center"><strong>{{project.TotIGSTCost}}</strong>  </td>
+                            <td class="text-center"><strong>{{project.TotSGSTCost}}</strong>  </td>
+                            <td class="text-center"><strong>{{project.TotCGSTCost}}</strong>  </td>
+                            <td colspan="2" class="text-center"><strong>{{project.TotProjectCost}}</strong>  </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
+                  </div>
                 </div>
-                </div>
-           
-              
+
+
                 <footer>
                   <div class="row">
                     <div class="col-sm-12 ">
