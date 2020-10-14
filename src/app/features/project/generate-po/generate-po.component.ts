@@ -349,6 +349,5 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
             ngOnDestroy() {
               this.datashare.updateShareData(null);
             }
-          
           }
           

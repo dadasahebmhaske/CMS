@@ -606,3 +606,7 @@ option {
 .menu-on-top nav ul ul, .menu-on-top nav ul ul ul {
   width: 250px;
 }
+.action-btn{
+  width:58px;
+  margin:0 3px;
+}
