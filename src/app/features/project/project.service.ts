@@ -36,6 +36,9 @@ export class ProjectService {
   public getProjectExecutiveIndentMaterial(TranNo,ProjectId,RefTranNo) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetDataForTransactions?TranNo=${TranNo}&RefTranNo=${RefTranNo}&TranType=103&TranSubType=1&Id=${ProjectId}&TypeId=&MainTypeId=&IsActive=Y`);
   }
+  public getProjectVendorPO(TranNo,ProjectId,RefTranNo) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetDataForTransactions?TranNo=${TranNo}&RefTranNo=${RefTranNo}&TranType=104&TranSubType=1&Id=${ProjectId}&TypeId=&MainTypeId=&IsActive=Y`);
+  }
   public getTransactionlist(TranType,filter) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetTransactionList?TranType=${TranType}&TranSubType=1&FromDate=${filter.StartDate}&ToDate=${filter.EndDate}&UserCode=101&IsActive=Y`);
   }

@@ -50,7 +50,7 @@
                         </label>
                         <select class="form-control" [(ngModel)]="project.VendorId" name="VendorId" required>
                           <option value="" selected hidden> Select Vendor </option>
-                          <option [value]="des.CompanyId" *ngFor="let des of VendorData">{{des.CompanyName}}
+                          <option [value]="des.VendorId" *ngFor="let des of VendorData">{{des.VendorName}}
                           </option>
                         </select>
                       </div>
@@ -59,9 +59,9 @@
                       <div class="form-group">
                         <label for="sel1">Select PO <span class="errorMessage">*</span>
                         </label>
-                        <select class="form-control" [(ngModel)]="project.RefTranNo" name="RefTranNo"  [disabled]="project.TranNo!=null" required>
+                        <select class="form-control" [(ngModel)]="project.RefTranNo" name="RefTranNo"  (change)="onSelectProject(project.RefTranNo)" [disabled]="project.TranNo!=null" required>
                           <option value="" selected hidden> Select PO </option>
-                          <option [value]="des.TranNo" *ngFor="let des of IndentData">{{des.DispTranNo}}
+                          <option [value]="des.TranNo" *ngFor="let des of POData">{{des.DispTranNo}}
                           </option>
                         </select>
                       </div>
@@ -70,50 +70,35 @@
                     <div class="form-group">
                       <label>Challan No./Invoice No. <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Challan No. " [(ngModel)]="transport.INVNo"
-                        name="Qty" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Challan No. " [(ngModel)]="project.ChallanNo"
+                        name="ChallanNo" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Challan / Invoice  Date <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Invoice Date " [(ngModel)]="transport.INVDate"
-                        name="INVDate" saCommonDir dirType="alphanumeric" required />
+                        <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="project.ChallanDate" name="ChallanDate" id="startDate"
+                        onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Challan / Invoice  Amount <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Challan Amount " [(ngModel)]="transport.Amount"
-                        name="Amount" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Challan Amount " [(ngModel)]="project.ChallanAmount"
+                        name="ChallanAmount" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Challan GST Amount <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter GST Amount " [(ngModel)]="transport.GSTAmount"
-                        name="GSTAmount" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter GST Amount " [(ngModel)]="project.ChallanGSTAmount"
+                        name="ChallanGSTAmount" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
-                  <div class="col-sm-2">
-                    <div class="form-group">
-                      <label>PO No. <span class="errorMessage">*</span>
-                      </label>
-                      <input type="text" class="form-control" placeholder="Enter PO No. " [(ngModel)]="transport.PONo"
-                        name="PONo" saCommonDir dirType="alphanumeric" required />
-                    </div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div class="form-group">
-                      <label>PO Date <span class="errorMessage">*</span>
-                      </label>
-                      <input type="text" class="form-control" placeholder="Enter PO Date " [(ngModel)]="transport.PODate"
-                        name="PODate" saCommonDir dirType="alphanumeric" required />
-                    </div>
-                  </div>
+                  
                   <!-- <div class="col-sm-2">
                     <div class="form-group">
                       <label for="sel1">Quality Ok <span class="errorMessage">*</span>
@@ -176,7 +161,8 @@
                             <thead>
                                 <tr align="center" class="text-center">
                                     <th  class="text-center">#</th>
-                                    <th  class="text-center">Activity</th>
+                                    <th class="text-center">Material Type</th>
+                                    <th class="text-center">Material</th>
                                     <th  class="text-center">Quantity</th>
                                     <th class="text-center">Unit</th>
                                     <th  class="text-center">Rate</th>
@@ -196,11 +182,41 @@
                            
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>1.</td>
-                                <td colspan="13"><strong>BrickWork</strong></td>
-                              </tr>
-                                <tr>
+                                <tr *ngFor="let mat of MaterialArray;index as i">
+                              <td><span (onload)="check(i)">{{i+1}}.</span></td>
+                              <td ><strong *ngIf="mat.show">{{mat.TypeName}}</strong></td>                         
+                              <td>{{mat.MatName}}</td>
+                              <td class="text-center">{{mat.Qty==0?'':mat.Qty}}</td>
+                              <td class="text-center">{{mat.UOM}}</td>
+                              <td class="text-center">{{mat.Rate}}</td>
+                              <td class="text-center">{{mat.Amount}}</td>
+                              <td class="text-center">{{mat.IGST}}</td>
+                              <td class="text-center">{{mat.SGST}}</td>
+                              <td class="text-center">{{mat.CGST}}</td>
+                              <td class="text-center">{{mat.IGSTAmount}}</td>
+                              <td class="text-center">{{mat.SGSTAmount}}</td>
+                              <td class="text-center">{{mat.CGSTAmount}}</td>
+                              <td class="text-center">{{mat.TotalAmount}}</td>
+                              <!-- <td class="text-center">
+                                <a class="btn btn-xs btn-danger" (click)=onRemoveMaterial(mat,i)>Remove</a>
+                                <a class="btn btn-xs btn-primary" (click)=onEdit(mat,i)>Edit</a>
+                              </td> -->
+                              <td>  <input type="text" class="form-control" style="width: 60px;" placeholder=" Qty " [(ngModel)]="mat.ReceivedQty"
+                                name="ReceivedQty" saCommonDir dirType="alphanumeric" required /> </td>
+                                         <td>  <div class="form-group">
+                                    <select class="form-control" [(ngModel)]="mat.IsQualityOk" name="IsQualityOk" required>
+                                      <option value="" selected hidden> Select </option>
+                                      <option value="Y"> Yes </option>
+                                      <option value="N"> No</option>
+                                    </select>
+                                  </div></td>
+                                <td>  <input type="text" class="form-control" style="width: 60px;" placeholder="Qty " [(ngModel)]="mat.RejectedQty"
+                                  name="RejectedQty" saCommonDir dirType="alphanumeric" required /> </td>
+                                  <td>  <input type="text" class="form-control" style="width: 100px;" placeholder="Remark " [(ngModel)]="mat.Remark"
+                                    name="Remark" saCommonDir dirType="alphanumeric" required /> </td>
+                            
+                            </tr> 
+                              <!-- <tr>
                                 <td></td>
                                 <td>Brickwork for bench</td>
                                 <td class="text-center">65</td>
@@ -228,76 +244,17 @@
                                     <td>  <input type="text" class="form-control" style="width: 100px;" placeholder="Remark " [(ngModel)]="transport.Qty"
                                       name="Remark" saCommonDir dirType="alphanumeric" required /> </td>
                               
-                                </tr>
+                                </tr> -->
+                              
                                 <tr>
-                                  <td></td>
-                                  <td>Cement</td>
-                                  <td class="text-center">1</td>
-                                  <td class="text-center">Bag</td>
-                                  <td  class="text-center">340</td>
-                                  <td class="text-center">340</td>
-                                  <td  class="text-center">9</td>
-                                  <td  class="text-center">0</td>
-                                  <td  class="text-center">0</td>
-                                  <td  class="text-center">19</td>
-                                  <td  class="text-center">0</td>
-                                  <td  class="text-center">0</td>
-                                
-                                   <td class="text-center">340</td>
-                                   <td>  <input type="text" class="form-control" style="width: 60px;" placeholder=" Qty " [(ngModel)]="transport.Qty"
-                                    name="Qty" saCommonDir dirType="alphanumeric" required /> </td>
-                                    <td>  <div class="form-group">
-                                      <select class="form-control" [(ngModel)]="transport.RateType" name="RateType" required>
-                                        <option value="" selected hidden> Select </option>
-                                        <option value="Y"> Yes </option>
-                                        <option value="N"> No</option>
-                                      </select>
-                                    </div></td>
-                                  <td>  <input type="text" class="form-control" style="width: 60px;" placeholder="Qty " [(ngModel)]="transport.Qty"
-                                    name="Qty" saCommonDir dirType="alphanumeric" required /> </td>
-                                    <td>  <input type="text" class="form-control" style="width: 100px;" placeholder="Remark " [(ngModel)]="transport.Qty"
-                                      name="Remark" saCommonDir dirType="alphanumeric" required /> </td>
-                                  </tr>
-                                  <tr>
-                                    <td></td>
-                                    <td>Crush Sand</td>
-                                    <td class="text-center">0.025</td>
-                                    <td class="text-center">Brass</td>
-                                    <td  class="text-center">3400</td>
-                                    <td class="text-center">85</td>
-                                    <td  class="text-center">0</td>
-                                    <td  class="text-center">9</td>
-                                    <td  class="text-center">9</td>
-                                    <td  class="text-center">0</td>
-                                    <td  class="text-center">19</td>
-                                    <td  class="text-center">19</td>
-                                     <td class="text-center">85</td>
-                                     <td>  <input type="text" class="form-control" style="width: 60px;" placeholder=" Qty " [(ngModel)]="transport.Qty"
-                                      name="Qty" saCommonDir dirType="alphanumeric" required /> </td>
-                                      <td>  <div class="form-group">
-                                        <select class="form-control" [(ngModel)]="transport.RateType" name="RateType" required>
-                                          <option value="" selected hidden> Select </option>
-                                          <option value="Y"> Yes </option>
-                                          <option value="N"> No</option>
-                                        </select>
-                                      </div></td>
-                                    <td>  <input type="text" class="form-control" style="width: 60px;" placeholder="Qty " [(ngModel)]="transport.Qty"
-                                      name="Qty" saCommonDir dirType="alphanumeric" required /> </td>
-                                      <td>  <input type="text" class="form-control" style="width: 100px;" placeholder="Remark " [(ngModel)]="transport.Qty"
-                                        name="Remark" saCommonDir dirType="alphanumeric" required /> </td>
-                                    </tr>
-                                              <tr>
-                                                <td colspan="5" class="text-right"><strong>TOTAL</strong></td>
-                                                <td class="text-center"><strong>23000</strong>  </td>
-                                                <td></td>    <td></td>    <td></td>
-                                                <td class="text-center"><strong>19</strong>  </td>
-                                                <td class="text-center"><strong>38</strong>  </td>
-                                                <td class="text-center"><strong>38</strong>  </td>
-                                                <td  class="text-center"><strong>340900</strong>  </td>
-                                                <td  class="text-center"><strong>0</strong>  </td>
-                                                <td  class="text-center"><strong>0</strong>  </td>
-                                                <td></td><td></td>
-                                              </tr>
+                                  <td colspan="6" class="text-right"><strong>TOTAL</strong></td>
+                                  <td class="text-center"><strong>{{project.TotalAmtCost}}</strong>  </td>
+                                  <td></td>    <td></td>    <td></td>
+                                  <td class="text-center"><strong>{{project.TotIGSTCost}}</strong>  </td>
+                                  <td class="text-center"><strong>{{project.TotSGSTCost}}</strong>  </td>
+                                  <td class="text-center"><strong>{{project.TotCGSTCost}}</strong>  </td>
+                                  <td colspan="2" class="text-center"><strong>{{project.TotProjectCost}}</strong>  </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -318,12 +275,34 @@
                       name="Reason" saCommonDir dirType="alphanumeric" required />
                   </div>
                 </div> -->
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="sel1">Receiving Site <span class="errorMessage">*</span>
+                    </label>
+                    <select class="form-control" [(ngModel)]="project.ReceivedSiteId" name="ReceivedSiteId" (change)="onSelectSite()"  [disabled]="project.TranNo!=null" required>
+                      <option value="" selected hidden> Select Receiving Site </option>
+                      <option [value]="des.SiteId" *ngFor="let des of ReceivingSiteData">{{des.SiteName}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="sel1">Receiving Location <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="project.ReceivedProjectId" name="ReceivedProjectId" [disabled]="project.TranNo!=null"  required>
+                        <option value="" selected hidden> Select Receiving Location </option>
+                        <option [value]="des.ProjectId" *ngFor="let des of ProjectData">{{des.ProjectName}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
                 <div class="col-sm-2">
                   <div class="form-group">
                     <label> Vehicle No. <span class="errorMessage">*</span>
                     </label>
-                    <input type="text" class="form-control" placeholder="Enter Vehicle No." [(ngModel)]="transport.PODate"
-                      name="PODate" saCommonDir dirType="alphanumeric" required />
+                    <input type="text" class="form-control" placeholder="Enter Vehicle No." [(ngModel)]="transport.VehicleNo"
+                      name="VehicleNo" saCommonDir dirType="alphanumeric" required />
                   </div>
                 </div>
 
