@@ -42,6 +42,9 @@ export class GrnListComponent implements OnInit {
                   },
                   { name: 'DispTranNo', displayName: 'TranNo', width: "*", cellTooltip: true, filterCellFiltered: true },
                   { name: 'TranDate', displayName: 'Tran Date', width: "*", cellTooltip: true, filterCellFiltered: true },
+                  { name: 'SiteName', displayName: 'Site Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+                  { name: 'ProjectName', displayName: 'Project Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+                  { name: 'ChallanNo', displayName: 'Challan No', width: "*", cellTooltip: true, filterCellFiltered: true },
                   { name: 'VendorName', displayName: 'Vendor Name', width: "*", cellTooltip: true, filterCellFiltered: true },
                   { name: 'ChallanAmount', displayName: 'Challan Amount', width: "*", cellTooltip: true, filterCellFiltered: true },
                   { name: 'ChallanDate', displayName: 'Challan Date', width: "*", cellTooltip: true, filterCellFiltered: true },
@@ -52,7 +55,7 @@ export class GrnListComponent implements OnInit {
               }
               onEditFunction = ($event) => {
                 this.datashare.updateShareData($event.row);
-                AppComponent.Router.navigate(['/master/site']);
+                AppComponent.Router.navigate(['/project/grn']);
               }
               onLoad() {
                 this.loaderbtn=false;
@@ -67,6 +70,15 @@ export class GrnListComponent implements OnInit {
                   else { this.GRNDataData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
                 });
             
+              }
+
+              resetEndDate(val) {
+                this.minDate = val;
+                if (val != undefined && val != null && this.Filter.EndDate != null) {
+                  if ((new Date(this.Filter.EndDate).getTime()) < (new Date(val).getTime())) {
+                    this.Filter.EndDate = '';
+                  }
+                }
               }
             
             }

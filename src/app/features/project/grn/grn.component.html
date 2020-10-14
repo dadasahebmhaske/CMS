@@ -178,6 +178,7 @@
                                     <th class="text-center">Quality Ok </th>
                                     <th class="text-center">Rejected Qty </th>
                                     <th class="text-center">Remark</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                            
                             </thead>
@@ -197,12 +198,9 @@
                               <td class="text-center">{{mat.SGSTAmount}}</td>
                               <td class="text-center">{{mat.CGSTAmount}}</td>
                               <td class="text-center">{{mat.TotalAmount}}</td>
-                              <!-- <td class="text-center">
-                                <a class="btn btn-xs btn-danger" (click)=onRemoveMaterial(mat,i)>Remove</a>
-                                <a class="btn btn-xs btn-primary" (click)=onEdit(mat,i)>Edit</a>
-                              </td> -->
-                              <td>  <input type="text" class="form-control" style="width: 60px;" placeholder=" Qty " [(ngModel)]="mat.ReceivedQty"
-                                name="ReceivedQty" saCommonDir dirType="alphanumeric" required /> </td>
+                          
+                              <td>  <input type="text" class="form-control" style="width: 60px;" placeholder=" Qty " [(ngModel)]="this['mat.ReceivedQty'+i]"
+                                name="ReceivedQty{{i}}" saCommonDir dirType="alphanumeric" required /> </td>
                                          <td>  <div class="form-group">
                                     <select class="form-control" [(ngModel)]="mat.IsQualityOk" name="IsQualityOk" required>
                                       <option value="" selected hidden> Select </option>
@@ -210,11 +208,14 @@
                                       <option value="N"> No</option>
                                     </select>
                                   </div></td>
-                                <td>  <input type="text" class="form-control" style="width: 60px;" placeholder="Qty " [(ngModel)]="mat.RejectedQty"
+                                <td>  <input type="text" class="form-control"  style="width: 60px;" placeholder="Qty " [(ngModel)]="mat.RejectedQty"
                                   name="RejectedQty" saCommonDir dirType="alphanumeric" required /> </td>
                                   <td>  <input type="text" class="form-control" style="width: 100px;" placeholder="Remark " [(ngModel)]="mat.Remark"
                                     name="Remark" saCommonDir dirType="alphanumeric" required /> </td>
-                            
+                                    <td class="text-center">
+                                        <a class="btn btn-xs btn-danger action-btn" (click)=onRemoveMaterial(mat,i)>Remove</a>
+                                        <!-- <a class="btn btn-xs btn-primary action-btn" (click)=onEdit(mat,i)>Edit</a> -->
+                                      </td>
                             </tr> 
                               <!-- <tr>
                                 <td></td>

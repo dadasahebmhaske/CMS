@@ -30,8 +30,8 @@ export class GrnComponent implements OnInit, OnDestroy {
               this.datashare.GetSharedData.subscribe(data => {
                 this.project = data == null ? { IsActive: 'Y', SiteId: '',  ProjectId: '',VendorId:'',RefTranNo:''} : data;
                
-                // if (this.project.TranNo != null)
-                //  this.getTranData();
+                if (this.project.TranNo != null)
+                 this.getTranData();
               }); 
               this.appService.getAppData().subscribe(data => { this.empInfo = data });
 
@@ -62,6 +62,29 @@ export class GrnComponent implements OnInit, OnDestroy {
                 else { this.VendorData = []; AppComponent.SmartAlert.Errmsg(resVData.Message); }
               });
 
+            }
+
+            public getTranData() {
+              this.projectService.getTransDetails(104, this.project.TranNo).subscribe((resTran: any) => {
+                if (resTran.StatusCode != 0) {
+                 // this.TranExists = resTran.Data.Table;
+                 // this.Access = this.TranExists.length == 0 ? this.project.IsApproved == 'Y' ? false : true : false;
+                  this.project = resTran.Data.Table1[0];
+                  this.onSelectSite();
+                  this.onSelectProject('');
+                  this.onSelectProject(this.project.RefTranNo);
+                  this.MaterialArray = resTran.Data.Table2;
+                  let tempArray = [];
+                  for (let i = 0; i < this.MaterialArray.length; i++) {
+                    this.Material = this.MaterialArray[i];
+                    this.Material.show = tempArray.some(obj => parseInt(obj.TypeId) === parseInt(this.Material.TypeId)) ? false : true;
+                    tempArray.push(this.Material);
+                  }
+                  this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
+                  this.MaterialArray = tempArray;
+                  this.Material = { TypeId: '', MatActExpId: '' }
+                }
+              });
             }
 
             public onSelectProject(RefTranNo) {
@@ -104,7 +127,10 @@ export class GrnComponent implements OnInit, OnDestroy {
               });
             }
 
-            
+            onRemoveMaterial(data, index) {
+              this.MaterialArray.splice(index, 1);
+              this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
+            }
 
             public onSubmit() {
               this.loaderbtn = false;
