@@ -23,7 +23,7 @@ export class MInvoiceDetailsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getAllonload();
     this.datashare.GetSharedData.subscribe(data => {
-      this.project = data == null ? { IsActive: 'Y', SiteId: '', ProjectId: '',VendorId:'', RefTranNo: '' } : data;
+      this.project = data == null ? { IsActive: 'Y', SiteId: '', ProjectId: '', VendorId: '', RefTranNo: '' } : data;
       if (this.project.TranNo != null)
       //  this.getTranData();
     }); this.appService.getAppData().subscribe(data => { this.empInfo = data });
@@ -53,17 +53,38 @@ export class MInvoiceDetailsComponent implements OnInit, OnDestroy {
           this.VendorData = resData.Data.Table1;
           this.GRNData = resData.Data.Table2;
         } else {
-          this.MaterialArray=resData.Data.Table;
+          this.MaterialArray = resData.Data.Table;
+          let tempArray = [];
           for (let i = 0; i < this.MaterialArray.length; i++) {
-            let Material = this.MaterialArray[i];
-            let tempArray = [];
+            let Material = this.MaterialArray[i];          
             Material.show = tempArray.some(obj => parseInt(obj.TypeId) === parseInt(Material.TypeId)) ? false : true;
             tempArray.push(Material);
             this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
           }
+          this.MaterialArray=tempArray;
         }
       }
-      else {RefTranNo == ''?(this.VendorData=this.GRNData=[]):this.MaterialArray=[];  AppComponent.SmartAlert.Errmsg(resData.Message); }
+      else { RefTranNo == '' ? (this.VendorData = this.GRNData = []) : this.MaterialArray = []; AppComponent.SmartAlert.Errmsg(resData.Message); }
+    });
+  }
+  public getTranData() {
+    this.projectService.getTransDetails(105, this.project.TranNo).subscribe((resTran: any) => {
+      if (resTran.StatusCode != 0) {
+        this.TranExists = resTran.Data.Table;
+       this.project = resTran.Data.Table1[0];
+        this.onSelectSite();
+        this.onSelectProject('');
+        this.onSelectVendor();      
+        this.MaterialArray = resTran.Data.Table2;
+        let tempArray = [];
+        for (let i = 0; i < this.MaterialArray.length; i++) {
+          let Material = this.MaterialArray[i];
+          Material.show = tempArray.some(obj => parseInt(obj.TypeId) === parseInt(Material.TypeId)) ? false : true;
+                    tempArray.push(Material);
+        }
+        this.MaterialArray = tempArray;
+        this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
+            }
     });
   }
   onSelectVendor() {
@@ -72,14 +93,46 @@ export class MInvoiceDetailsComponent implements OnInit, OnDestroy {
   onRemoveMaterial(data, index) {
     this.MaterialArray.splice(index, 1);
     this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
-}
+  }
+  public onQtyChange(mat, ind) {
+    console.log(mat);
+    console.log(this.MaterialArray);
+    if (parseInt(mat.Qty) <= 0) {
+      AppComponent.SmartAlert.Errmsg(`Quantity should be grater than 0`);
+      this.MaterialArray[ind].Qty = 1;
+    } else if (parseInt(mat.Qty) >= parseInt(mat.RemainBudgetQty)) {
+      AppComponent.SmartAlert.Errmsg(`Quantity exceeded the GRN quantity`);
+      this.MaterialArray[ind].Qty = parseInt(mat.RemainBudgetQty);
+    } 
+      this.MaterialArray[ind].Qty = mat.Qty;
+      this.MaterialArray[ind].Amount = parseFloat(this.MaterialArray[ind].Rate) * parseFloat(this.MaterialArray[ind].Qty);
+      this.MaterialArray[ind].Amount = (this.MaterialArray[ind].Amount).toFixed(2);
+      if (this.MaterialArray[ind].IGST == 0 || this.MaterialArray[ind].IGST == null) {
+        this.MaterialArray[ind].CGSTAmount = 0;
+        this.MaterialArray[ind].SGSTAmount = 0;
+        this.MaterialArray[ind].CGSTAmount = (parseFloat(this.MaterialArray[ind].Amount) * parseFloat(this.MaterialArray[ind].CGST)) / 100;
+        this.MaterialArray[ind].CGSTAmount = (this.MaterialArray[ind].CGSTAmount).toFixed(2);
+        this.MaterialArray[ind].SGSTAmount = (parseFloat(this.MaterialArray[ind].Amount) * parseFloat(this.MaterialArray[ind].SGST)) / 100;
+        this.MaterialArray[ind].SGSTAmount = (this.MaterialArray[ind].SGSTAmount).toFixed(2);
+        this.MaterialArray[ind].TotalAmount = parseFloat(this.MaterialArray[ind].Amount) + parseFloat(this.MaterialArray[ind].CGSTAmount) + parseFloat(this.MaterialArray[ind].SGSTAmount);
+      }
+      else {
+        this.MaterialArray[ind].IGSTAmount = 0;
+        this.MaterialArray[ind].IGSTAmount = (parseFloat(this.MaterialArray[ind].Amount) * parseFloat(this.MaterialArray[ind].IGST)) / 100;
+        this.MaterialArray[ind].IGSTAmount = (this.MaterialArray[ind].IGSTAmount).toFixed(2);
+        this.MaterialArray[ind].TotalAmount = parseFloat(this.MaterialArray[ind].Amount) + parseFloat(this.MaterialArray[ind].IGSTAmount);
+      }
+      this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
+    
+
+  }
   public onSubmit() {
     this.loaderbtn = false;
-    this.project.Flag = this.project.TranNo == null || this.project.TranNo == ''? 'IN' : 'UP';
+    this.project.Flag = this.project.TranNo == null || this.project.TranNo == '' ? 'IN' : 'UP';
     this.project.UserCode = this.empInfo.EmpId;
     this.project.TranNo = this.project.TranNo == null ? '' : this.project.TranNo;
     this.project.TranSubType = 1;
-    this.project.TranType=105;
+    this.project.TranType = 105;
     this.project.TranDate = new Date();
     //this.project.ChallanDate= this.appService.DateToString(this.project.ChallanDate);
     //this.project.Remark = '';
@@ -94,7 +147,7 @@ export class MInvoiceDetailsComponent implements OnInit, OnDestroy {
       else { AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
- 
+
   ngOnDestroy() {
     this.datashare.updateShareData(null);
   }

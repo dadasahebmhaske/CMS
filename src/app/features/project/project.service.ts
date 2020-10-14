@@ -42,6 +42,9 @@ export class ProjectService {
   public getGRNDeatils(TranNo,ProjectId,RefTranNo) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetDataForTransactions?TranNo=${TranNo}&RefTranNo=${RefTranNo}&TranType=105&TranSubType=1&Id=${ProjectId}&TypeId=&MainTypeId=&IsActive=Y`);
   }
+  public getInvoiceDeatils(TranNo,ProjectId,RefTranNo) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetDataForTransactions?TranNo=${TranNo}&RefTranNo=${RefTranNo}&TranType=106&TranSubType=1&Id=${ProjectId}&TypeId=&MainTypeId=&IsActive=Y`);
+  }
   public getTransactionlist(TranType,filter) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetTransactionList?TranType=${TranType}&TranSubType=1&FromDate=${filter.StartDate}&ToDate=${filter.EndDate}&UserCode=101&IsActive=Y`);
   }
@@ -62,7 +65,6 @@ export class ProjectService {
     project.TotProjectCost = 0;project.TotIGSTCost=0;project.TotCGSTCost=0;project.TotSGSTCost=0;
     if (MaterialArray.length != 0)
       for (let i = 0; i < MaterialArray.length; i++) {
-
         project.TotalAmtCost = parseFloat(project.TotalAmtCost) + parseFloat(MaterialArray[i].Amount);
         project.TotIGSTCost = parseFloat(project.TotIGSTCost) + parseFloat(MaterialArray[i].IGSTAmount);
         project.TotCGSTCost = parseFloat(project.TotCGSTCost) + parseFloat(MaterialArray[i].CGSTAmount);
