@@ -36,8 +36,18 @@
                           </select>
                         </div>
                       </div>
-                      
                       <div class="col-sm-3">
+                          <div class="form-group">
+                            <label for="sel1">Vendor <span class="errorMessage">*</span>
+                            </label>
+                            <select class="form-control" [(ngModel)]="project.VendorId" name="VendorId" required>
+                              <option value="" selected hidden> Select Vendor </option>
+                              <option [value]="des.CompanyId" *ngFor="let des of VendorData">{{des.CompanyName}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      <!-- <div class="col-sm-3">
                         <div class="form-group">
                           <label for="sel1">Project Executive <span class="errorMessage">*</span>
                           </label>
@@ -47,7 +57,7 @@
                             </option>
                           </select>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="col-sm-3">
                         <div class="form-group">
                           <label for="sel1">Select GRN <span class="errorMessage">*</span>
@@ -60,57 +70,50 @@
                         </div>
                       </div>
                 </div>
+                <form name="materialForm" #materialForm="ngForm" (ngSubmit)="addMaterial()" autocomplete="off"
+                ngNativeValidate>
                 <div class="row">
-                  <div class="col-sm-2">
-                    <div class="form-group">
-                      <label for="sel1">Material Type<span class="errorMessage">*</span>
-                      </label>
-                      <select class="form-control" [(ngModel)]="transport.MaterialTypeId" name="MaterialTypeId" required>
-                        <option value="" selected hidden> Select Type </option>
-                        <option value=""> Bricks Work </option>
-                        <option value=""> Stone Work </option>
-                        <option value=""> Painting </option>
-                        <option value=""> lighting </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div class="form-group">
-                      <label for="sel1">Material <span class="errorMessage">*</span>
-                      </label>
-                      <select class="form-control" [(ngModel)]="transport.MaterialId" name="MaterialId" required>
-                        <option value="" selected hidden> Select Activity/Material </option>
-                        <option value=""> Soling (Dabar) </option>
-                        <option value=""> Back Filling Murum </option>
-                        <option value=""> Brickwork For Bench </option>
-                        <option value=""> Brick 6" </option>
-                        <option value=""> Crush Sand </option>
-                        <option value=""> Cement </option>
-                        <option value=""> Tera Cota </option>
-                        <option value=""> Brickwork For Bench </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-sm-1">
-                    <div class="form-group">
-                      <label>Qty <span class="errorMessage">*</span>
-                      </label>
-                      <input type="text" class="form-control" placeholder="Enter Qty " [(ngModel)]="transport.Qty"
-                        name="Qty" saCommonDir dirType="alphanumeric" required />
-                    </div>
-                  </div>
-                  <div class="col-sm-1">
-                    <div class="form-group">
-                      <label>Unit <span class="errorMessage">*</span>
-                      </label>
-                      <input type="text" class="form-control" placeholder="Enter Unit " [(ngModel)]="transport.Unit"
-                        name="Unit" saCommonDir dirType="alphanumeric" required />
-                    </div>
-                  </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="sel1">Material Type<span class="errorMessage">*</span>
+                          </label>
+                          <select class="form-control" [(ngModel)]="Material.TypeId" name="TypeId"
+                          (change)="onSelectActivityMaterial()"   [disabled]="Material.index!=null" required >
+                            <option value="" selected hidden> Select Type </option>
+                            <option [value]="des.TypeId" *ngFor="let des of AMTypeData">{{des.TypeName}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="sel1">Material <span class="errorMessage">*</span>
+                          </label>
+                          <select class="form-control" [(ngModel)]="Material.MatId" name="MatId"
+                          (ngModelChange)="onSelectMaterial()" [disabled]="Material.index!=null" required>
+                            <option value="" selected hidden> Select Material </option>
+                             <option [value]="des.MatActExpId" *ngFor="let des of filterMaterialArray">{{des.MatName}}
+                            </option>
+                          </select>
+                        
+                        </div>
+                      </div> 
+                      <div class="col-sm-1">
+                        <div class="form-group">
+                          <label>Qty <span class="errorMessage">*</span>
+                          </label>
+                          <input type="text" class="form-control" placeholder="Enter Qty " [(ngModel)]="Material.UQty"
+                            name="UQty"  (ngModelChange)="GetCalculate()" saCommonDir dirType="number" required />
+                        </div>
+                      </div>
+                      <div class="col-sm-1">
+                        <div class="form-group">
+                          <label>Unit <span class="errorMessage">*</span>
+                          </label>
+                          <input type="text" class="form-control" placeholder="Enter Unit " [(ngModel)]="Material.UOM"
+                            name="UOM" saCommonDir dirType="alphanumeric" required disabled/>
+                        </div>
+                      </div>
                   <div class="col-sm-1">
                     <div class="form-group">
                         <label>&nbsp; </label>
@@ -123,131 +126,62 @@
                   <div class="table-responsive">
                       <table class="table table-hover">
                           <thead>
-                              <tr align="center" class="text-center">
-                                  <th rowspan="2" >#</th>
-                                  <th rowspan="2" >Activity / Material</th>
-                                  <th rowspan="2" class="text-center">Quantity</th>
-                                  <th rowspan="2" class="text-center">Unit</th>
+                            <tr align="center" class="text-center">
+                              <th class="text-center">#</th>
+                              <th class="text-center">Material Type</th>
+                              <th class="text-center">Material</th>
+                              <th class="text-center">Quantity</th>
+                              <th class="text-center">Unit</th>
+                              <!-- <th class="text-center">Rate</th>
+                              <th class="text-center">Amount</th>
+                              <th class="text-center">IGST(%)</th>
+                              <th class="text-center">SGST(%)</th>
+                              <th class="text-center">CGST(%)</th>
+                              <th class="text-center">IGST Amount	</th>
+                              <th class="text-center">SGST Amount	</th>
+                              <th class="text-center">CGST Amount	</th>
+                              <th class="text-center">Total Amount</th> -->
+                              <th class="text-center">Action</th>
+                            </tr>
                          
-                                  <th rowspan="2" class="text-center">Remove</th>
-                              </tr>
-                    
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>1.</td>
-                              <td colspan="9"><strong>BrickWork</strong></td>
-                            </tr>
-                              <tr>
-                              <td></td>
-                              <td>Brickwork for bench</td>
-                              <td class="text-center">65</td>
-                              <td class="text-center">Sqft</td>
-                   
-                                   <td class="text-center">
-                                      <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                                  </td> 
-                              </tr>
-                              <tr>
-                                <td></td>
-                                <td>Cement</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">Bag</td>
-                           
-                                     <td class="text-center">
-                                        <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                                    </td> 
-                                </tr>
-                                <tr>
-                                  <td></td>
-                                  <td>Crush Sand</td>
-                                  <td class="text-center">0.025</td>
-                                  <td class="text-center">Brass</td>
-                 
-                                       <td class="text-center">
-                                          <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                                      </td> 
-                                  </tr>
-                                  <tr>
-                                    <td>2.</td>
-                                    <td colspan="9"><strong>Stone Work</strong></td>
-                                  </tr>
-
-                                  <tr>
-                                    <td></td>
-                                    <td>Top On Planter</td>
-                                    <td class="text-center">65</td>
-                                    <td class="text-center">Sqft</td>
-                               
-                                         <td class="text-center">
-                                            <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                                        </td> 
-                                    </tr>
-                                    <tr>
-                                      <td></td>
-                                      <td>Shahabad Tile</td>
-                                      <td class="text-center">45</td>
-                                      <td class="text-center">Sqft</td>
-                                
-                                           <td class="text-center">
-                                              <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                                          </td> 
-                                      </tr>
-                                      <tr>
-                                        <td></td>
-                                        <td>Cement</td>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center">Bag</td>
-                                 
-                                             <td class="text-center">
-                                                <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                                            </td> 
-                                        </tr>
-                                        <tr>
-                                          <td>3.</td>
-                                          <td colspan="9"><strong>Painting</strong></td>
-                                        </tr>
-                                        <tr>
-                                          <td></td>
-                                          <td>Tera Cota</td>
-                                          <td class="text-center">80</td>
-                                          <td class="text-center">Sqft</td>
-                                         
-                                               <td class="text-center">
-                                                  <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                                              </td>
-                                          </tr>
-                                          <tr>
-                                                                                      <td>4.</td>
-                                          <td colspan="9"><strong>Electrical</strong></td>
-                                        </tr>
-                                        <tr>
-                                          <td></td>
-                                          <td>Light point of planter</td>
-                                          <td class="text-center">10</td>
-                                          <td class="text-center">Nos</td>
-                                   
-                                               <td class="text-center">
-                                                  <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                                              </td>
-                                          </tr>
-                                          <tr>
-                                            <td></td>
-                                            <td>40AMP RCB</td>
-                                            <td class="text-center">1</td>
-                                            <td class="text-center">Nos</td>
-                                        
-                                                 <td class="text-center">
-                                                    <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
-                                                </td>
-                                            </tr>
-                                        
+                            <tr *ngFor="let mat of MaterialArray;index as i">
+                              <td><span (onload)="check(i)">{{i+1}}.</span></td>
+                              <td ><strong *ngIf="mat.show">{{mat.TypeName}}</strong></td>                         
+                              <td>{{mat.MatName}}</td>
+                              <td class="text-center">{{mat.Qty==0?'':mat.Qty}}</td>
+                              <td class="text-center">{{mat.UOM}}</td>
+                              <!-- <td class="text-center">{{mat.Rate}}</td>
+                              <td class="text-center">{{mat.Amount}}</td>
+                              <td class="text-center">{{mat.IGST}}</td>
+                              <td class="text-center">{{mat.SGST}}</td>
+                              <td class="text-center">{{mat.CGST}}</td>
+                              <td class="text-center">{{mat.IGSTAmount}}</td>
+                              <td class="text-center">{{mat.SGSTAmount}}</td>
+                              <td class="text-center">{{mat.CGSTAmount}}</td>
+                              <td class="text-center">{{mat.TotalAmount}}</td> -->
+                              <td class="text-center">
+                                <a class="btn btn-xs btn-danger action-btn" (click)=onRemoveMaterial(mat,i)>Remove</a>
+                                <!-- <a class="btn btn-xs btn-primary action-btn" (click)=onEdit(mat,i)>Edit</a> -->
+                              </td>
+                            </tr>  
+                            <!-- <tr>
+                              <td colspan="6" class="text-right"><strong>TOTAL</strong></td>
+                              <td class="text-center"><strong>{{project.TotalAmtCost}}</strong>  </td>
+                              <td></td>    <td></td>    <td></td>
+                              <td class="text-center"><strong>{{project.TotIGSTCost}}</strong>  </td>
+                              <td class="text-center"><strong>{{project.TotSGSTCost}}</strong>  </td>
+                              <td class="text-center"><strong>{{project.TotCGSTCost}}</strong>  </td>
+                              <td colspan="2" class="text-center"><strong>{{project.TotProjectCost}}</strong>  </td>
+                            </tr> -->
                           </tbody>
                       </table>
                   </div>
               </div>
 
                 </div>
+                </form>
                 <div class="row">
                   <div class="col-sm-4">
                     <div class="form-group">
@@ -258,19 +192,20 @@
                     </div>
                   </div>
                   <div class="col-sm-2">
-                    <div class="form-group">
-                      <label>Date <span class="errorMessage">*</span>
-                      </label>
-                      <input type="text" class="form-control" placeholder="Enter Date " [(ngModel)]="transport.Date"
-                        name="Date" saCommonDir dirType="alphanumeric" required />
+                      <div class="form-group">
+                        <label> Date <span class="errorMessage">*</span>
+                        </label>
+                          <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="project.ChallanDate" name="ChallanDate" id="startDate"
+                          onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-sm-2">
+                  <div class="col-sm-4">
                     <div class="form-group">
-                      <label>Time <span class="errorMessage">*</span>
-                      </label>
-                      <input type="text" class="form-control" placeholder="Enter Time " [(ngModel)]="transport.Time"
-                        name="Time" saCommonDir dirType="alphanumeric" required />
+                      <!-- <label>Time <span class="errorMessage">*</span>
+                      </label> -->
+                      <timepicker [(ngModel)]="mytime"></timepicker>
+                      <!-- <input type="text" class="form-control" placeholder="Enter Time " [(ngModel)]="transport.Time"
+                        name="Time" saCommonDir dirType="alphanumeric" required /> -->
                     </div>
                   </div>
                 </div>

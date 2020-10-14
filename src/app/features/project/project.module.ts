@@ -7,6 +7,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
 import { RoleAccessGuard } from '@app/core/guards/roleAccess.guard';
 import { ProjectService } from './project.service';
 import { AllmasterService } from '../master/allmaster.service';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 @NgModule({
   declarations: [componentArray,UigridprojectDirective],
@@ -14,6 +15,7 @@ import { AllmasterService } from '../master/allmaster.service';
     CommonModule,
     SharedModule,
     routing,
+    TimepickerModule.forRoot(),
     
     BsDatepickerModule.forRoot(),
   ],
