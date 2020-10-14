@@ -34,8 +34,7 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
     this.appService.getAppData().subscribe(data => { this.empInfo = data });
 
     this.getAllonload();
-    this.datashare.GetSharedData.subscribe(data => this.transport = data == null ? { IsActive: 'Y', TaxationTermId: '', PaymentTermId: '', DeliveryTermId: '', SiteId: '', PManageId: '', ProjectId: '', MaterialId: '', MaterialTypeId: '', RoleCode: '', RateType: '' } : { IsActive: 'Y', TaxationTermId: '', PaymentTermId: '', DeliveryTermId: '', SiteId: '', PManageId: '', ProjectId: '', MaterialId: '', MaterialTypeId: '', RoleCode: '', RateType: '' });
-    this.appService.getAppData().subscribe(data => { this.empInfo = data });
+  
   }
 
   public getAllonload() {
@@ -149,6 +148,8 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
     this.Material.UOMId = obj[0].UOMId;
     this.Material.UOM = obj[0].UOM;
     this.Material.UQty = obj[0].Qty;
+    this.Material.RQty = obj[0].Qty;
+    this.Material.URate = obj[0].Rate;
     this.Material.URate = obj[0].Rate;
     this.Material.UAmount = obj[0].Amount;
     this.Material.UTotalAmount = obj[0].TotalAmount;
@@ -196,6 +197,10 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
   }
 
   GetCalculate() {
+    if(parseInt(this.Material.UQty)>parseInt(this.Material.RQty)){
+      AppComponent.SmartAlert.Errmsg(`Quantity exceeded the Raised qauntity`);
+      this.Material.UQty=null;
+    }
     if (this.Material.UQty != null && this.Material.URate != null) {
       this.Material.UAmount = parseFloat(this.Material.URate == undefined || this.Material.URate == '' ? 0 : this.Material.URate) * parseFloat(this.Material.UQty == undefined || this.Material.UQty == '' ? 0 : this.Material.UQty);
       this.Material.UAmount = this.Material.UAmount.toFixed(2);
@@ -229,22 +234,25 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
 
   }
 
-  public onSelectProject(TranNo, RefTranNo) {
-    let tranNo = this.project.TranNo == null ? '' : this.project.TranNo;
-    this.projectService.getProjectExecutiveIndentMaterial(tranNo, this.project.ProjectId, RefTranNo).subscribe((resData: any) => {
+  public onSelectProject(TranNo,RefTranNo) {
+    this.MaterialArray=[];
+    this.project.TotalAmtCost=null; this.project.TotProjectCost=null;
+    this.project.TotIGSTCost=null;this.project.TotCGSTCost=null;this.project.TotSGSTCost=null;
+    let tranNo=this.project.TranNo==null?'':this.project.TranNo;
+    this.projectService.getProjectExecutiveIndentMaterial(tranNo,this.project.ProjectId,RefTranNo).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
-        if (RefTranNo == '') {
-          this.ExecutiveData = resData.Data.Table;
-          this.IndentData = resData.Data.Table1;
-        }
-        else {
-          this.AMTypeData = resData.Data.Table;
-          this.AMData = resData.Data.Table1;
-          console.log(this.AMTypeData);
-          console.log(this.AMData);
-        }
+      if(RefTranNo==''){ 
+        this.ExecutiveData = resData.Data.Table;
+        this.IndentData=resData.Data.Table1;
       }
-      else { this.ExecutiveData = []; this.AMData = []; this.AMTypeData = []; AppComponent.SmartAlert.Errmsg(resData.Message); }
+      else{
+        this.AMTypeData=resData.Data.Table;
+        this.AMData = resData.Data.Table1; 
+        console.log(this.AMTypeData);
+        console.log(this.AMData);
+      }
+      }
+      else { this.ExecutiveData = []; this.AMData = []; this.AMTypeData=[];AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
 
@@ -307,6 +315,7 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
     this.Material = mat;
     this.Material.URate = mat.Rate;
     this.Material.UQty = mat.Qty;
+    this.Material.RQty = mat.Qty;
     this.Material.UAmount = mat.Amount;
     this.Material.UTotalAmount = mat.TotalAmount;
     //this.Material.UAmount = mat.Amount;
