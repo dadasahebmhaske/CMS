@@ -19,7 +19,7 @@ export class GrnComponent implements OnInit, OnDestroy {
             public maxDate: Date = new Date();
             public transport: any = {RoleCode:''};
             public loaderbtn: boolean = true;
-            public project:any={};Material:any={};
+            public project:any={};Material:any={};ReceivedlocData:any=[];
             public MaterialArray:any=[];AMTypeData:any=[];AMData:any=[];
 
             public SiteData:any=[];VendorData:any=[];ProjectData:any=[];ReceivingSiteData:any=[];POData:any=[];
@@ -70,7 +70,8 @@ export class GrnComponent implements OnInit, OnDestroy {
                  // this.TranExists = resTran.Data.Table;
                  // this.Access = this.TranExists.length == 0 ? this.project.IsApproved == 'Y' ? false : true : false;
                   this.project = resTran.Data.Table1[0];
-                  this.onSelectSite();
+                  this.onSelectSite(this.project.SiteId,'S');
+                  this.onSelectSite(this.project.ReceivedSiteId,'R');
                 this.onSelectProject('');
               //  this.onSelectProject(this.project.RefTranNo);
                   this.MaterialArray = resTran.Data.Table2;
@@ -118,10 +119,16 @@ export class GrnComponent implements OnInit, OnDestroy {
               });
             }
 
-            public onSelectSite() {
-              this.projectService.getProject(this.project.SiteId).subscribe((resSData: any) => {
+            public onSelectSite(id,param) {
+              this.projectService.getProject(id).subscribe((resSData: any) => {
                 if (resSData.StatusCode != 0) {
-                  this.ProjectData = resSData.Data;
+                  if(param=='S'){
+                    this.ProjectData = resSData.Data;
+                  }
+                  else{
+                    this.ReceivedlocData=resSData.Data;
+                  }
+                 
                 }
                 else { this.ProjectData = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
               });

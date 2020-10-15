@@ -24,14 +24,14 @@ export class MInvoiceDetailsComponent implements OnInit, OnDestroy {
     this.getAllonload();
     this.datashare.GetSharedData.subscribe(data => {
       this.project = data == null ? { IsActive: 'Y', SiteId: '', ProjectId: '',VendorId:'', RefTranNo: '' } : data;
-      if (this.project.TranNo != null)
+     // if (this.project.TranNo != null)
       //  this.getTranData();
     }); this.appService.getAppData().subscribe(data => { this.empInfo = data });
   }
   public getAllonload() {
     this.allmasterService.getSite('Y').subscribe((resSData: any) => {
       if (resSData.StatusCode != 0) {
-        this.SiteData = resSData.Data; c
+        this.SiteData = resSData.Data; 
       }
       else { this.SiteData = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
     });

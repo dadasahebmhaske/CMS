@@ -42,7 +42,7 @@
                             </label>
                             <select class="form-control" [(ngModel)]="project.VendorId" name="VendorId" required>
                               <option value="" selected hidden> Select Vendor </option>
-                              <option [value]="des.CompanyId" *ngFor="let des of VendorData">{{des.CompanyName}}
+                              <option [value]="des.VendorId" *ngFor="let des of VendorData">{{des.VendorName}}
                               </option>
                             </select>
                           </div>
@@ -92,7 +92,7 @@
                           <select class="form-control" [(ngModel)]="Material.MatId" name="MatId"
                           (ngModelChange)="onSelectMaterial()" [disabled]="Material.index!=null" required>
                             <option value="" selected hidden> Select Material </option>
-                             <option [value]="des.MatActExpId" *ngFor="let des of filterMaterialArray">{{des.MatName}}
+                             <option [value]="des.MatId" *ngFor="let des of filterMaterialArray">{{des.MatName}}
                             </option>
                           </select>
                         
@@ -187,15 +187,15 @@
                     <div class="form-group">
                       <label>Material Carrying Person <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Person Name " [(ngModel)]="transport.CPName"
-                        name="CPName" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Person Name " [(ngModel)]="project.CarryingPerson"
+                        name="CarryingPerson" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
                   <div class="col-sm-2">
                       <div class="form-group">
                         <label> Date <span class="errorMessage">*</span>
                         </label>
-                          <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="project.ChallanDate" name="ChallanDate" id="startDate"
+                          <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="project.CarryingDate" name="CarryingDate" id="startDate"
                           onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
                       </div>
                     </div>
@@ -203,7 +203,7 @@
                     <div class="form-group">
                       <!-- <label>Time <span class="errorMessage">*</span>
                       </label> -->
-                      <timepicker [(ngModel)]="mytime"></timepicker>
+                      <timepicker [(ngModel)]="project.CarryingTime" name="CarryingTime"></timepicker>
                       <!-- <input type="text" class="form-control" placeholder="Enter Time " [(ngModel)]="transport.Time"
                         name="Time" saCommonDir dirType="alphanumeric" required /> -->
                     </div>

@@ -89,6 +89,8 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
             
               }
 
+              
+
               public onSelectProject(TranNo,RefTranNo) {
                 this.MaterialArray=[];
                 this.project.TotalAmtCost=null; this.project.TotProjectCost=null;
@@ -97,12 +99,20 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
                 this.projectService.getProjectExecutiveGRNMaterial(tranNo,this.project.ProjectId,RefTranNo).subscribe((resData: any) => {
                   if (resData.StatusCode != 0) {
                   if(RefTranNo==''){ 
-                    this.ExecutiveData = resData.Data.Table;
-                    this.GRNData=resData.Data.Table1;
+                    this.VendorData = resData.Data.Table1;
+                    this.GRNData=resData.Data.Table2;
                   }
                   else{
+                    //this.MaterialArray=resData.Data.Table;
                     this.AMTypeData=resData.Data.Table;
                     this.AMData = resData.Data.Table1; 
+                   for (let i = 0; i < this.MaterialArray.length; i++) {
+                    this.Material = this.MaterialArray[i];
+                    let tempArray = [];
+                    this.Material.show = tempArray.some(obj => parseInt(obj.TypeId) === parseInt(this.Material.TypeId)) ? false : true;
+                    tempArray.push(this.Material);
+                    this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
+                  }
                     console.log(this.AMTypeData);
                     console.log(this.AMData);
                   }
@@ -113,7 +123,7 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
 
               onSelectMaterial() {
                 let obj;
-                obj = this.projectService.filterData(this.AMData, this.Material.MatId, 'MatActExpId');
+                obj = this.projectService.filterData(this.AMData, this.Material.MatId, 'MatId');
                 this.Material.MatName = obj[0].MatName;
                 this.Material.UOMId = obj[0].UOMId;
                 this.Material.UOM = obj[0].UOM;
@@ -131,6 +141,9 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
                 // }
             
               }
+
+            
+
 
               addMaterial() {
                 if (this.Material.index != null) {
@@ -162,11 +175,13 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
                 this.project.TranSubType = 1;
                 this.project.TranType = 107;
                 this.project.TranDate = new Date();
+                this.project.CarryingDate= this.appService.DateToString(this.project.CarryingDate);
+                this.project.CarryingTime= this.appService.DateToString(this.project.CarryingTime);
                 this.project.Remark = '';
                 // this.project.RefTranNo = this.MaterialArray[0].RefTranNo;
                 this.project.Data = this.MaterialArray;
                 let ciphertext = this.appService.getEncrypted(this.project);
-                this.projectService.post('ManageMaterialIssue', ciphertext).subscribe((resData: any) => {
+                this.projectService.post('ManageMatIssue', ciphertext).subscribe((resData: any) => {
                   this.loaderbtn = true;
                   if (resData.StatusCode != 0) {
                     AppComponent.SmartAlert.Success(resData.Message);
