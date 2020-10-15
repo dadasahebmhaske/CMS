@@ -71,15 +71,13 @@ export class GrnComponent implements OnInit, OnDestroy {
                  // this.Access = this.TranExists.length == 0 ? this.project.IsApproved == 'Y' ? false : true : false;
                   this.project = resTran.Data.Table1[0];
                   this.onSelectSite();
-                  this.onSelectProject('');
-                  this.onSelectProject(this.project.RefTranNo);
+                this.onSelectProject('');
+              //  this.onSelectProject(this.project.RefTranNo);
                   this.MaterialArray = resTran.Data.Table2;
                   let tempArray = [];
                   for (let i = 0; i < this.MaterialArray.length; i++) {
                     this.Material = this.MaterialArray[i];
                     this.Material.show = tempArray.some(obj => parseInt(obj.TypeId) === parseInt(this.Material.TypeId)) ? false : true;
-                    //let idtif=`ReceivedQty${i}`;
-                    this.Material[i][`ReceivedQty${i}`]=this.Material.ReceivedQty;
                     tempArray.push(this.Material);
                   }
                   this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);

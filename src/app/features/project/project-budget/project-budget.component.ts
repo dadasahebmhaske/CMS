@@ -164,7 +164,7 @@ export class ProjectBudgetComponent implements OnInit, OnDestroy {
   }
   public onSubmit() {
     this.loaderbtn = false;
-    this.project.Flag = this.project.TranNo == null ? 'IN' : 'UP';
+    this.project.Flag = this.project.TranNo == null || this.project.TranNo == '' ? 'IN' : 'UP';
     this.project.TranDate = new Date();
     this.project.UserCode = this.empInfo.EmpId;
     this.project.TranNo = this.project.TranNo == null ? '' : this.project.TranNo;
