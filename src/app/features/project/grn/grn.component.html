@@ -23,7 +23,7 @@
                     <div class="form-group">
                       <label for="sel1">Site <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="project.SiteId" name="SiteId" (change)="onSelectSite()"
+                      <select class="form-control" [(ngModel)]="project.SiteId" name="SiteId" (change)="onSelectSite(project.SiteId,'S')"
                         [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Site </option>
                         <option [value]="des.SiteId" *ngFor="let des of SiteData">{{des.SiteName}}
@@ -214,8 +214,8 @@
                                 [(ngModel)]="mat.ReceivedQty" #nameControl="ngModel" name="ReceivedQty_{{i}}"
                                 required /> </td>
                             <td>
-                              <div class="form-group">
-                                <select class="form-control" style="width: 50px;" [(ngModel)]="mat.IsQualityOk" name="IsQualityOk_{{i}}"
+                              <div class="form-group" >
+                                <select class="form-control" style="width: 70px;" [(ngModel)]="mat.IsQualityOk" name="IsQualityOk_{{i}}"
                                   required>
                                   <option value="" selected hidden> Select </option>
                                   <option value="Y"> Yes </option>
@@ -300,7 +300,7 @@
                       <label for="sel1">Receiving Site <span class="errorMessage">*</span>
                       </label>
                       <select class="form-control" [(ngModel)]="project.ReceivedSiteId" name="ReceivedSiteId"
-                        (change)="onSelectSite()" [disabled]="project.TranNo!=null" required>
+                        (change)="onSelectSite(project.ReceivedSiteId,'R')" [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Receiving Site </option>
                         <option [value]="des.SiteId" *ngFor="let des of ReceivingSiteData">{{des.SiteName}}
                         </option>
@@ -314,7 +314,7 @@
                       <select class="form-control" [(ngModel)]="project.ReceivedProjectId" name="ReceivedProjectId"
                         [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Receiving Location </option>
-                        <option [value]="des.ProjectId" *ngFor="let des of ProjectData">{{des.ProjectName}}
+                        <option [value]="des.ProjectId" *ngFor="let des of ReceivedlocData">{{des.ProjectName}}
                         </option>
                       </select>
                     </div>
@@ -324,7 +324,7 @@
                       <label> Vehicle No. <span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder="Enter Vehicle No."
-                        [(ngModel)]="transport.VehicleNo" name="VehicleNo" saCommonDir dirType="alphanumeric"
+                        [(ngModel)]="project.VehicleNo" name="VehicleNo" saCommonDir dirType="alphanumeric"
                         required />
                     </div>
                   </div>
