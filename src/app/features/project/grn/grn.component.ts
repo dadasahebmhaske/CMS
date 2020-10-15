@@ -20,7 +20,7 @@ export class GrnComponent implements OnInit, OnDestroy {
             public transport: any = {RoleCode:''};
             public loaderbtn: boolean = true;
             public project:any={};Material:any={};
-            public MaterialArray:any=[];AMTypeData:any=[];AMData:any=[];TranExists:any=[];
+            public MaterialArray:any=[];AMTypeData:any=[];AMData:any=[];TranExists:any=[];ReceivedlocData:any=[];
 
             public SiteData:any=[];VendorData:any=[];ProjectData:any=[];ReceivingSiteData:any=[];POData:any=[];
             constructor(private appService: AppService, private datashare: DatashareService,private allmasterService:AllmasterService,private projectService:ProjectService) {
