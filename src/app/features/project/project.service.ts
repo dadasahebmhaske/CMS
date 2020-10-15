@@ -59,6 +59,9 @@ export class ProjectService {
   public getApprove(TranNo,TranType) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetApproveTransaction?TranNo=${TranNo}&TranType=${TranType}&TranSubType=1&IsActive=Y`);
   }
+  public getClose(TranNo,TranType) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetCloseTransaction?TranNo=${TranNo}&TranType=${TranType}&TranSubType=1&IsActive=Y`);
+  }
 
   public calculateTotal(project, MaterialArray) {
     project.TotProjectCost = 0;

@@ -17,6 +17,7 @@ import {
     @Output() onEdit: EventEmitter<{}>;
     @Output() onDelete: EventEmitter<{}>;
     @Output() onApprove: EventEmitter<{}>;
+    @Output() onClose: EventEmitter<{}>;
     @Output() onSelect: EventEmitter<{}>;
   
     constructor(elementRef: ElementRef, injector: Injector) {

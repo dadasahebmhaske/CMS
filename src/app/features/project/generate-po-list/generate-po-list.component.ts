@@ -48,8 +48,8 @@ export class GeneratePoListComponent implements OnInit {
                     headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Delete</div>', enableFiltering: false
                   },
                   {
-                    name: 'Select1', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-primary btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">&nbsp;Close&nbsp;</button> '
-                    , width: "50",
+                    name: 'Select1', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-warning btn-xs"  ng-click="grid.appScope.closeEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">&nbsp;Close&nbsp;</button> '
+                    , width: "55",
                     headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Close</div>', enableFiltering: false
                   },
                   {
@@ -93,7 +93,16 @@ export class GeneratePoListComponent implements OnInit {
               onApproveFunction = ($event) => {
                 this.projectService.getApprove($event.row.TranNo, 103).subscribe((resData: any) => {
                   if (resData.StatusCode != 0) {
-                   // this.onLoad();
+                    this.onLoad();
+                    AppComponent.SmartAlert.Success(resData.Message);
+                      }
+                  else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+                });
+              }
+              onCloseFunction = ($event) => {
+                this.projectService.getClose($event.row.TranNo, 103).subscribe((resData: any) => {
+                  if (resData.StatusCode != 0) {
+                   this.onLoad();
                     AppComponent.SmartAlert.Success(resData.Message);
                       }
                   else { AppComponent.SmartAlert.Errmsg(resData.Message); }
