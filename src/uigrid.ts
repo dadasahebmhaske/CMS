@@ -10,6 +10,7 @@ export function initUiGrid() {
       data: '<',
       onEdit: '&',
       onDelete: '&',
+      onApprove: '&',
       onSelect: '&',
       onSelected: '&',
       gridOptions: '='
@@ -97,6 +98,11 @@ export function initUiGrid() {
       }
       $scope.deleteEmployee = function (row) {
         ctrl.onDelete({
+          row
+        });
+      }
+      $scope.approveEmployee = function (row) {
+        ctrl.onApprove({
           row
         });
       }

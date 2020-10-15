@@ -20,7 +20,7 @@ export class GrnComponent implements OnInit, OnDestroy {
             public transport: any = {RoleCode:''};
             public loaderbtn: boolean = true;
             public project:any={};Material:any={};
-            public MaterialArray:any=[];AMTypeData:any=[];AMData:any=[];
+            public MaterialArray:any=[];AMTypeData:any=[];AMData:any=[];TranExists:any=[];
 
             public SiteData:any=[];VendorData:any=[];ProjectData:any=[];ReceivingSiteData:any=[];POData:any=[];
             constructor(private appService: AppService, private datashare: DatashareService,private allmasterService:AllmasterService,private projectService:ProjectService) {
@@ -28,7 +28,7 @@ export class GrnComponent implements OnInit, OnDestroy {
              }
             ngOnInit() {
               this.datashare.GetSharedData.subscribe(data => {
-                this.project = data == null ? { IsActive: 'Y', SiteId: '',  ProjectId: '',VendorId:'',RefTranNo:''} : data;
+                this.project = data == null ? { IsActive: 'Y', SiteId: '',  ProjectId: '',VendorId:'',RefTranNo:'',ReceivedProjectId:'',ReceivedSiteId:''} : data;
                
                 if (this.project.TranNo != null)
                  this.getTranData();
@@ -36,8 +36,6 @@ export class GrnComponent implements OnInit, OnDestroy {
               this.appService.getAppData().subscribe(data => { this.empInfo = data });
 
               this.getAllonload();
-              this.datashare.GetSharedData.subscribe(data => this.transport = data == null ? { IsActive: 'Y',TaxationTermId:'',PaymentTermId:'',DeliveryTermId:'',SiteId:'',PManageId:'',ProjectId:'',MaterialId:'',MaterialTypeId:'',RoleCode:'',RateType:'' } :{ IsActive: 'Y',TaxationTermId:'',PaymentTermId:'',DeliveryTermId:'',SiteId:'',PManageId:'',ProjectId:'',MaterialId:'',MaterialTypeId:'',RoleCode:'',RateType:'' });
-              this.appService.getAppData().subscribe(data => { this.empInfo = data });
             }
 
             public getAllonload() {
@@ -67,7 +65,7 @@ export class GrnComponent implements OnInit, OnDestroy {
             public getTranData() {
               this.projectService.getTransDetails(104, this.project.TranNo).subscribe((resTran: any) => {
                 if (resTran.StatusCode != 0) {
-                 // this.TranExists = resTran.Data.Table;
+                  this.TranExists = resTran.Data.Table;
                  // this.Access = this.TranExists.length == 0 ? this.project.IsApproved == 'Y' ? false : true : false;
                   this.project = resTran.Data.Table1[0];
                   this.onSelectSite();

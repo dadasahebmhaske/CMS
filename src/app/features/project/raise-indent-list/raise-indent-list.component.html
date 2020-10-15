@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <div class="col-sm-12 table-responsive">
-                        <ui-grid [data]="RaiseIndentData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                        <ui-grid [data]="RaiseIndentData" [gridOptions]="gridOptions" (onDelete)="onDeleteFunction($event)" (onEdit)="onEditFunction($event)"></ui-grid>
                     </div>
                 </div>
             </div>

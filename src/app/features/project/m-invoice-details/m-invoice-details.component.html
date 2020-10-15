@@ -48,7 +48,7 @@
                       <label for="sel1">Vendor <span class="errorMessage">*</span>
                       </label>
                       <select class="form-control" [(ngModel)]="project.VendorId" name="VendorId"
-                        (change)="onSelectVendor()" required>
+                        (change)="onSelectVendor()" [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Vendor </option>
                         <option [value]="des.VendorId" *ngFor="let des of VendorData">{{des.VendorName}}
                         </option>
@@ -60,7 +60,7 @@
                       <label for="sel1">Select GRN <span class="errorMessage">*</span>
                       </label>
                       <select class="form-control" [(ngModel)]="project.RefTranNo" name="RefTranNo"
-                        (change)="onSelectProject(project.RefTranNo)" required>
+                        (change)="onSelectProject(project.RefTranNo)" [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select GRN </option>
                         <option [value]="des.TranNo" *ngFor="let des of GRNArray">{{des.DispTranNo}}
                       </select>
@@ -71,15 +71,15 @@
                       <label>Invoice No. <span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder="Enter Invoice No. "
-                        [(ngModel)]="project.InvoiceNo" name="InvoiceNo" saCommonDir dirType="alphanumeric" required />
+                        [(ngModel)]="project.VendorInvoiceNo" name="VendorInvoiceNo" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Invoice Date <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Date" [(ngModel)]="project.InvoiceDate"
-                        id="InvoiceDate" name="InvoiceDate" onkeydown="return false" bsDatepicker
+                      <input type="text" class="form-control" placeholder="Enter Date" [(ngModel)]="project.VendorInvoiceDate"
+                        id="VendorInvoiceDate" name="VendorInvoiceDate" onkeydown="return false" bsDatepicker
                         [bsConfig]="datePickerConfig" required />
                     </div>
                   </div>

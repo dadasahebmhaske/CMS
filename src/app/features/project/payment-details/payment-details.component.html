@@ -11,12 +11,12 @@
           </header>
           <div>
             <div class="widget-body">
-              <div class="row" *ngIf="TranExists.length>0">
+              <!-- <div class="row" *ngIf="TranExists.length>0">
                 <div class="col-sm-12 text-center">
                   <button type="button" class="btn btn-danger btn-lg" data-toggle="modal"
                     data-target="#TransactionModal">Access Denied, Next Transaction Exists </button>
                 </div>
-              </div>
+              </div> -->
               <form name="paymentForm" #paymentForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
                 ngNativeValidate>
                 <div class="row">
@@ -49,7 +49,7 @@
                       <label for="sel1">Vendor <span class="errorMessage">*</span>
                       </label>
                       <select class="form-control" [(ngModel)]="project.VendorId" name="VendorId"
-                        (change)="onSelectVendor()" required>
+                        (change)="onSelectVendor()"  [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Vendor </option>
                         <option [value]="des.VendorId" *ngFor="let des of VendorData">{{des.VendorName}}
                         </option>
@@ -61,7 +61,7 @@
                       <label for="sel1">Select Invoice <span class="errorMessage">*</span>
                       </label>
                       <select class="form-control" [(ngModel)]="project.RefTranNo" name="RefTranNo"
-                        (change)="onSelectProject(project.RefTranNo)" required>
+                        (change)="onSelectInvoice()"  [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Invoice </option>
                         <option [value]="des.TranNo" *ngFor="let des of InvoiceArray">{{des.DispTranNo}}
                       </select>
@@ -71,8 +71,9 @@
                     <div class="form-group">
                       <label>Invoice No. <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Invoice No. "
-                        [(ngModel)]="project.InvoiceNo" name="InvoiceNo" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Invoice No. " disabled
+                        [(ngModel)]="project. VendorInvoiceNo" name="VendorInvoiceNo" saCommonDir dirType="alphanumeric"
+                        required />
                     </div>
                   </div>
 
@@ -80,26 +81,26 @@
                     <div class="form-group">
                       <label>Invoice Date <span class="errorMessage">*</span>
                       </label>
-                                       <input type="text" class="form-control" placeholder="Enter Invoice Date" [(ngModel)]="project.InvoiceDate"
-                        id="InvoiceDate" name="InvoiceDate" onkeydown="return false" bsDatepicker
-                        [bsConfig]="datePickerConfig" required />
+                      <input type="text" class="form-control" placeholder="Enter Invoice Date"
+                        [(ngModel)]="project.InvoiceDate" id="InvoiceDate" name="InvoiceDate" onkeydown="return false"
+                        bsDatepicker [bsConfig]="datePickerConfig" disabled required />
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Payment Date <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Payment Date" [(ngModel)]="project.PayDate"
-                      id="PayDate" name="PayDate" onkeydown="return false" bsDatepicker
-                      [bsConfig]="datePickerConfig" required />
+                      <input type="text" class="form-control" placeholder="Enter Payment Date"
+                        [(ngModel)]="project.PaymentDate" id="PaymentDate" name="PaymentDate" onkeydown="return false"
+                        bsDatepicker [bsConfig]="datePickerConfig" required />
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Payment Amount <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Payment Amount "
-                        [(ngModel)]="project.PayAmount" name="PayAmount" saCommonDir dirType="decimal" required />
+                      <input type="text" class="form-control" placeholder="Enter Payment Amount " disabled
+                        [(ngModel)]="project.TotAmount" name="TotAmount" saCommonDir dirType="decimal" required />
                     </div>
                   </div>
                   <div class="col-sm-2">
@@ -127,6 +128,14 @@
                       </label>
                       <input type="text" class="form-control" placeholder="Enter RTGS  No." [(ngModel)]="project.RTGSNo"
                         name="ChequeNo" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-12" >
+                    <div class="form-group">
+                      <label>Remark
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Remark" [(ngModel)]="project.Remark"
+                        name="Remark"  />
                     </div>
                   </div>
                 </div>

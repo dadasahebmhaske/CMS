@@ -48,6 +48,12 @@ export class ProjectService {
   public getTransactionlist(TranType,filter) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetTransactionList?TranType=${TranType}&TranSubType=1&FromDate=${filter.StartDate}&ToDate=${filter.EndDate}&UserCode=101&IsActive=Y`);
   }
+  public getDeleteTransaction(TranNo,TranType) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetDeleteTransactionData?TranNo=${TranNo}&TranType=${TranType}&TranSubType=1&IsActive=Y`);
+  }
+  public getApprove(TranNo,TranType) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetApproveTransaction?TranNo=${TranNo}&TranType=${TranType}&TranSubType=1&IsActive=Y`);
+  }
 
   public calculateTotal(project, MaterialArray) {
     project.TotProjectCost = 0;

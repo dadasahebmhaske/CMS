@@ -161,7 +161,7 @@
                             <td class="text-center">{{mat.UOM}}</td>
                             <td class="text-center">{{mat.Rate}}</td>
                             <td class="text-center">{{mat.Amount}}</td>
-                            <td class="text-center">
+                            <td class="text-center action-col">
                               <a class="btn btn-xs btn-danger action-btn" (click)=onRemoveMaterial(mat,i) >Remove</a>
                               <a class="btn btn-xs btn-primary action-btn" (click)=onEdit(mat,i) *ngIf="mat.TranNo!=null">Edit</a>
                             </td>

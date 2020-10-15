@@ -25,13 +25,13 @@ export class MInvoiceDetailsComponent implements OnInit, OnDestroy {
     this.datashare.GetSharedData.subscribe(data => {
       this.project = data == null ? { IsActive: 'Y', SiteId: '', ProjectId: '', VendorId: '', RefTranNo: '' } : data;
       if (this.project.TranNo != null)
-      //  this.getTranData();
+       this.getTranData();
     }); this.appService.getAppData().subscribe(data => { this.empInfo = data });
   }
   public getAllonload() {
     this.allmasterService.getSite('Y').subscribe((resSData: any) => {
       if (resSData.StatusCode != 0) {
-        this.SiteData = resSData.Data; c
+        this.SiteData = resSData.Data; 
       }
       else { this.SiteData = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
     });
@@ -52,6 +52,9 @@ export class MInvoiceDetailsComponent implements OnInit, OnDestroy {
         if (RefTranNo == '') {
           this.VendorData = resData.Data.Table1;
           this.GRNData = resData.Data.Table2;
+          if(this.project.TranNo!=null){
+            this.onSelectVendor(); 
+          }
         } else {
           this.MaterialArray = resData.Data.Table;
           let tempArray = [];

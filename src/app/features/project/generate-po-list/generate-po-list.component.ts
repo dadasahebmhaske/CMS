@@ -43,17 +43,22 @@ export class GeneratePoListComponent implements OnInit {
                     headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
                   },
                   {
+                    name: 'Select11', displayName: 'Delete', cellTemplate: '<button  style="margin:3px;" class="btn-danger btn-xs"  ng-click="grid.appScope.deleteEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">Delete</button> '
+                    , width: "57",
+                    headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Delete</div>', enableFiltering: false
+                  },
+                  {
                     name: 'Select1', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-primary btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">&nbsp;Close&nbsp;</button> '
                     , width: "50",
                     headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Close</div>', enableFiltering: false
                   },
                   {
-                    name: 'Select2', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-primary btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">&nbsp;Acknowledge&nbsp;</button> '
-                    , width: "100",
-                    headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Acknowledge</div>', enableFiltering: false
+                    name: 'Select2', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-success btn-xs"  ng-click="grid.appScope.approveEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">&nbsp;Approve&nbsp;</button> '
+                    , width: "74",
+                    headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Approve</div>', enableFiltering: false
                   },
                   {
-                    name: 'Select3', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-success btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">&nbsp;Download PO&nbsp;</button> '
+                    name: 'Select3', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-info btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">&nbsp;Download PO&nbsp;</button> '
                     , width: "105",
                     headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Downoad PO</div>', enableFiltering: false
                   },
@@ -75,6 +80,25 @@ export class GeneratePoListComponent implements OnInit {
                 AppComponent.Router.navigate(['/project/generate-po']);
               }
 
+              onDeleteFunction = ($event) => {
+                this.datashare.updateShareData($event.row);
+                this.projectService.getDeleteTransaction($event.row.TranNo, 103).subscribe((resData: any) => {
+                  if (resData.StatusCode != 0) {
+                    this.onLoad();
+                    AppComponent.SmartAlert.Success(resData.Message);
+                      }
+                  else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+                });
+              }
+              onApproveFunction = ($event) => {
+                this.projectService.getApprove($event.row.TranNo, 103).subscribe((resData: any) => {
+                  if (resData.StatusCode != 0) {
+                   // this.onLoad();
+                    AppComponent.SmartAlert.Success(resData.Message);
+                      }
+                  else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+                });
+              }
               onLoad() {
                 this.loaderbtn=false;
                 this.Filter.StartDate= this.appService.DateToString(this.Filter.StartDate);

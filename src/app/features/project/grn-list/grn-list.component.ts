@@ -40,6 +40,11 @@ export class GrnListComponent implements OnInit {
                     , width: "48",
                     headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
                   },
+                  {
+                    name: 'Select1', displayName: 'Delete', cellTemplate: '<button  style="margin:3px;" class="btn-danger btn-xs"  ng-click="grid.appScope.deleteEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">Delete</button> '
+                    , width: "57",
+                    headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Delete</div>', enableFiltering: false
+                  },
                   { name: 'DispTranNo', displayName: 'TranNo', width: "*", cellTooltip: true, filterCellFiltered: true },
                   { name: 'TranDate', displayName: 'Tran Date', width: "*", cellTooltip: true, filterCellFiltered: true },
                   { name: 'SiteName', displayName: 'Site Name', width: "*", cellTooltip: true, filterCellFiltered: true },
@@ -56,6 +61,16 @@ export class GrnListComponent implements OnInit {
               onEditFunction = ($event) => {
                 this.datashare.updateShareData($event.row);
                 AppComponent.Router.navigate(['/project/grn']);
+              }
+              onDeleteFunction = ($event) => {
+                this.datashare.updateShareData($event.row);
+                this.projectService.getDeleteTransaction($event.row.TranNo, 104).subscribe((resData: any) => {
+                  if (resData.StatusCode != 0) {
+                    this.onLoad();
+                    AppComponent.SmartAlert.Success(resData.Message);
+                      }
+                  else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+                });
               }
               onLoad() {
                 this.loaderbtn=false;

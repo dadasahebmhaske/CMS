@@ -52,6 +52,10 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
         if (RefTranNo == '') {
           this.VendorData = resData.Data.Table1;
           this.InvoiceData = resData.Data.Table2;
+          if(this.project.TranNo!=null){
+            this.onSelectVendor();  
+        this.onSelectInvoice(); 
+          }
         } else {
           this.MaterialArray = resData.Data.Table;
           }
@@ -61,12 +65,13 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
   }
   public getTranData() {
     this.projectService.getTransDetails(106, this.project.TranNo).subscribe((resTran: any) => {
-      if (resTran.StatusCode != 0) {
+      if (resTran.StatusCode != 0) { 
         this.TranExists = resTran.Data.Table;
        this.project = resTran.Data.Table1[0];
         this.onSelectSite();
         this.onSelectProject('');
-        this.onSelectVendor();      
+        this.onSelectVendor();  
+        this.onSelectInvoice();    
         this.MaterialArray = resTran.Data.Table2;
   
             }
@@ -74,6 +79,13 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
   }
   onSelectVendor() {
     this.InvoiceArray = this.projectService.filterData(this.InvoiceData, this.project.VendorId, 'VendorId');
+  }
+  onSelectInvoice(){
+    let obj;
+    obj = this.projectService.filterData(this.InvoiceArray, this.project.RefTranNo, 'TranNo');
+    this.project.InvoiceDate=obj[0].InvoiceDate;
+    this.project.VendorInvoiceNo=obj[0].VendorInvoiceNo;
+    this.project.TotAmount=obj[0].TotAmount;
   }
   public onSubmit() {
     this.loaderbtn = false;
@@ -85,7 +97,7 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
     this.project.TranDate = new Date();
     //this.project.ChallanDate= this.appService.DateToString(this.project.ChallanDate);
     //this.project.Remark = '';
-    this.project.Data = this.MaterialArray;
+    //this.project.Data = this.MaterialArray;
     let ciphertext = this.appService.getEncrypted(this.project);
     this.projectService.post('ManagePayment', ciphertext).subscribe((resData: any) => {
       this.loaderbtn = true;
