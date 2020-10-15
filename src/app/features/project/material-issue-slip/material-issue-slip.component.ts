@@ -20,8 +20,9 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
                 public MaterialArray: any = [];
                 public StartMindate: Date;
                 public maxDate: Date = new Date();
-                mytime: Date = new Date();
+                public mytime: Date = new Date();
                 public GRNData: any = [];
+                public IssueSiteData:any=[];IssueProjectData:any=[];
                 public other: any = { OtherExpId: '' };
                 public AMTypeData: any = []; project: any = {};transport: any = {}; ProjectData: any = []; PayTData: any = []; DeliveryTData: any = []; TaxationData: any = [];
                 VendorData: any = []; ExecutiveData: any = []; AMData: any = []; filterMaterialArray: any = []; TranExists: any = [];
@@ -31,10 +32,10 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
                }
               ngOnInit() {
                 this.datashare.GetSharedData.subscribe(data => {
-                  this.project = data == null ? { IsActive: 'Y', SiteId: '', ProjectExecutiveId: '', DeliveryTermId: '', ProjectId: '', PaymentTermId: '', TaxationTermId: '', VendorId: '', RefTranNo: '' } : data;
+                  this.project = data == null ? { IsActive: 'Y', SiteId: '', ProjectId: '',IssueProjectId:'',IssueSiteId:'', VendorId: '', RefTranNo: '' } : data;
             
-                 // if (this.project.TranNo != null)
-                   // this.getTranData();
+                if (this.project.TranNo != null)
+                    this.getTranData();
                 });
                 this.appService.getAppData().subscribe(data => { this.empInfo = data });
             
@@ -45,6 +46,7 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
                 this.allmasterService.getSite('Y').subscribe((resSData: any) => {
                   if (resSData.StatusCode != 0) {
                     this.SiteData = resSData.Data;
+                    this.IssueSiteData = this.projectService.filterData(this.SiteData,'N', 'IsMainSite');
                   }
                   else { this.SiteData = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
                 });
@@ -69,10 +71,42 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
                 // });
               }
 
-              public onSelectSite() {
-                this.projectService.getProject(this.project.SiteId).subscribe((resSData: any) => {
+              public getTranData() {
+                this.projectService.getTransDetails(107, this.project.TranNo).subscribe((resTran: any) => {
+                  if (resTran.StatusCode != 0) {
+                   // this.TranExists = resTran.Data.Table;
+                   // this.Access = this.TranExists.length == 0 ? this.project.IsApproved == 'Y' ? false : true : false;
+                    this.project = resTran.Data.Table1[0];
+                    this.project.CarryingTime=new Date( this.project.CarryingTime);
+                    this.onSelectSite(this.project.SiteId,'S');
+                  this.onSelectSite(this.project.IssueSiteId,'R');
+                    this.onSelectProject(this.project.TranNo, '');
+                    this.onSelectProject(this.project.TranNo, this.project.RefTranNo);
+                    this.MaterialArray = resTran.Data.Table2;
+                    let tempArray = [];
+                    for (let i = 0; i < this.MaterialArray.length; i++) {
+                      this.Material = this.MaterialArray[i];
+                      this.Material.show = tempArray.some(obj => parseInt(obj.TypeId) === parseInt(this.Material.TypeId)) ? false : true;
+                      
+                      tempArray.push(this.Material);
+                    }
+                    this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
+                    this.MaterialArray = tempArray;
+                    this.Material = { TypeId: '', MatActExpId: '' }
+                  }
+                });
+              }
+
+              public onSelectSite(id,param) {
+                this.projectService.getProject(id).subscribe((resSData: any) => {
                   if (resSData.StatusCode != 0) {
-                    this.ProjectData = resSData.Data;
+                    if(param=='S'){
+                      this.ProjectData = resSData.Data;
+                    }
+                    else{
+                      this.IssueProjectData=resSData.Data;
+                    }
+                   
                   }
                   else { this.ProjectData = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
                 });
@@ -129,12 +163,14 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
                 this.Material.UOM = obj[0].UOM;
                 this.Material.UQty = obj[0].Qty;
                 // this.Material.RQty = obj[0].Qty;
-                // this.Material.URate = obj[0].Rate;
-                // this.Material.URate = obj[0].Rate;
-                // this.Material.UAmount = obj[0].Amount;
-                // this.Material.UTotalAmount = obj[0].TotalAmount;
+                 this.Material.URate = obj[0].Rate;
+                 this.Material.UAmount = obj[0].Amount;
+                 this.Material.UTotalAmount = obj[0].TotalAmount;
                 this.Material.RefTranNo = obj[0].RefTranNo;
                 this.Material.RefSrNo = obj[0].RefSrNo;
+                this.Material.CGST = obj[0].CGST;
+                this.Material.IGST = obj[0].IGST;
+                this.Material.SGST = obj[0].SGST;
                 // if (this.Material.UQty != null && this.Material.URate != null) {
                 //   this.Material.UAmount = parseFloat(this.Material.URate == undefined || this.Material.URate == '' ? 0 : this.Material.URate) * parseFloat(this.Material.UQty == undefined || this.Material.UQty == '' ? 0 : this.Material.UQty);
                 //   this.Material.UAmount = this.Material.UAmount.toFixed(2);
@@ -154,6 +190,9 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
                   AppComponent.SmartAlert.Errmsg("Material already added in list.");
                 } else {
                   this.Material.Qty = this.Material.UQty;
+                  this.Material.Rate = this.Material.URate;
+                  this.Material.Amount = this.Material.UAmount;
+
                   this.Material.show = this.MaterialArray.some(obj => parseInt(obj.TypeId) === parseInt(this.Material.TypeId)) ? false : true;
                   this.MaterialArray.push(this.Material);
                  // this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
@@ -168,27 +207,33 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
               }
 
               public onSubmit() {
-                this.loaderbtn = false;
-                this.project.Flag = this.project.TranNo == null || this.project.TranNo == '' ? 'IN' : 'UP';
-                this.project.UserCode = this.empInfo.EmpId;
-                this.project.TranNo = this.project.TranNo == null ? '' : this.project.TranNo;
-                this.project.TranSubType = 1;
-                this.project.TranType = 107;
-                this.project.TranDate = new Date();
-                this.project.CarryingDate= this.appService.DateToString(this.project.CarryingDate);
-                this.project.CarryingTime= this.appService.DateToString(this.project.CarryingTime);
-                this.project.Remark = '';
-                // this.project.RefTranNo = this.MaterialArray[0].RefTranNo;
-                this.project.Data = this.MaterialArray;
-                let ciphertext = this.appService.getEncrypted(this.project);
-                this.projectService.post('ManageMatIssue', ciphertext).subscribe((resData: any) => {
-                  this.loaderbtn = true;
-                  if (resData.StatusCode != 0) {
-                    AppComponent.SmartAlert.Success(resData.Message);
-                    AppComponent.Router.navigate(['/project/material-issue-slip-list']);
-                  }
-                  else { AppComponent.SmartAlert.Errmsg(resData.Message); }
-                });
+                // if(this.project.IssueProjectId==this.project.IssueProjectId){
+                //   AppComponent.SmartAlert.Errmsg("Project and Issue Project should Not be same");
+                // }else{
+                  this.loaderbtn = false;
+                  this.project.Flag = this.project.TranNo == null || this.project.TranNo == '' ? 'IN' : 'UP';
+                  this.project.UserCode = this.empInfo.EmpId;
+                  this.project.TranNo = this.project.TranNo == null ? '' : this.project.TranNo;
+                  this.project.TranSubType = 1;
+                  this.project.TranType = 107;
+                  this.project.TranDate = new Date();
+                  this.project.CarryingDate= this.appService.DateToString(this.project.CarryingDate);
+                  var d = new Date(this.project.CarryingTime);
+                  this.project.CarryingTime= d.toLocaleTimeString('en-US',{hour:'numeric',minute:'numeric',hour12:true });
+                  this.project.Remark = '';
+                  // this.project.RefTranNo = this.MaterialArray[0].RefTranNo;
+                  this.project.Data = this.MaterialArray;
+                  let ciphertext = this.appService.getEncrypted(this.project);
+                  this.projectService.post('ManageMatIssue', ciphertext).subscribe((resData: any) => {
+                    this.loaderbtn = true;
+                    if (resData.StatusCode != 0) {
+                      AppComponent.SmartAlert.Success(resData.Message);
+                      AppComponent.Router.navigate(['/project/material-issue-slip-list']);
+                    }
+                    else { this.project.CarryingTime=''; AppComponent.SmartAlert.Errmsg(resData.Message); }
+                  });
+                
+                
               }
 
 

@@ -37,21 +37,34 @@ export class MaterialIssueSlipListComponent implements OnInit {
                   let columnDefs = [];
                   columnDefs = [
                     {
-                      name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-primary btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">&nbsp;Generate PO&nbsp;</button> '
-                      , width: "100",
-                      headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Generate PO</div>', enableFiltering: false
-                    },
-                    {
-                      name: 'Select1', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-success btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">&nbsp;Download PO&nbsp;</button> '
-                      , width: "105",
-                      headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Downoad PO</div>', enableFiltering: false
-                    },
+                    name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-primary btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">&nbsp;Edit&nbsp;</button> '
+                    , width: "48",
+                    headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
+                  },
+                  {
+                    name: 'Select1', displayName: 'Delete', cellTemplate: '<button  style="margin:3px;" class="btn-danger btn-xs"  ng-click="grid.appScope.deleteEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">Delete</button> '
+                    , width: "57",
+                    headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Delete</div>', enableFiltering: false
+                  },
+                    // {
+                    //   name: 'Select1', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-primary btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">&nbsp;Generate PO&nbsp;</button> '
+                    //   , width: "100",
+                    //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Generate PO</div>', enableFiltering: false
+                    // },
+                    // {
+                    //   name: 'Select2', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-success btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">&nbsp;Download PO&nbsp;</button> '
+                    //   , width: "105",
+                    //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Downoad PO</div>', enableFiltering: false
+                    // },
+                    { name: 'DispTranNo', displayName: 'Tran No', width: "*", cellTooltip: true, filterCellFiltered: true },
+                    { name: 'TranDate', displayName: 'Tran Date', width: "*", cellTooltip: true, filterCellFiltered: true },
+                   
                     { name: 'SiteName', displayName: 'Site Name', width: "*", cellTooltip: true, filterCellFiltered: true }, 
                     { name: 'ProjectName', displayName: 'Project Name', width: "*", cellTooltip: true, filterCellFiltered: true },
-                    { name: 'Indent', displayName: 'Indent', width: "*", cellTooltip: true, filterCellFiltered: true },
-                    { name: 'TotalMaterialCount', displayName: 'Total Material Count', width: "*", cellTooltip: true, filterCellFiltered: true },
-                    { name: 'Amount', displayName: 'Amount', width: "*", cellTooltip: true, filterCellFiltered: true },
-                    { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
+                 
+                    { name: 'IssueProjectName', displayName: 'Issue Project Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+                    { name: 'IssueSiteName', displayName: 'Issue Site Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+                    { name: 'VendorName', displayName: 'Vendor Name', width: "*", cellTooltip: true, filterCellFiltered: true },
                   ]
                   this.gridOptions.columnDefs = columnDefs;
                   this.onLoad();
@@ -59,8 +72,20 @@ export class MaterialIssueSlipListComponent implements OnInit {
                 }
                 onEditFunction = ($event) => {
                   this.datashare.updateShareData($event.row);
-                  AppComponent.Router.navigate(['/project/generate-po']);
+                  AppComponent.Router.navigate(['/project/material-issue-slip']);
                 }
+
+                onDeleteFunction = ($event) => {
+                  this.datashare.updateShareData($event.row);
+                  this.projectService.getDeleteTransaction($event.row.TranNo, 107).subscribe((resData: any) => {
+                    if (resData.StatusCode != 0) {
+                      this.onLoad();
+                      AppComponent.SmartAlert.Success(resData.Message);
+                        }
+                    else {  AppComponent.SmartAlert.Errmsg(resData.Message); }
+                  });
+                }
+
                 onLoad() {
                   this.loaderbtn=false;
                   this.Filter.StartDate= this.appService.DateToString(this.Filter.StartDate);
