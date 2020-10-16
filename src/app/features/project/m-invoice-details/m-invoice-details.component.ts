@@ -103,7 +103,7 @@ export class MInvoiceDetailsComponent implements OnInit, OnDestroy {
     if (parseInt(mat.Qty) <= 0) {
       AppComponent.SmartAlert.Errmsg(`Quantity should be grater than 0`);
       this.MaterialArray[ind].Qty = 1;
-    } else if (parseInt(mat.Qty) >= parseInt(mat.RemainBudgetQty)) {
+    } else if (parseInt(mat.Qty) > parseInt(mat.RemainBudgetQty)) {
       AppComponent.SmartAlert.Errmsg(`Quantity exceeded the GRN quantity`);
       this.MaterialArray[ind].Qty = parseInt(mat.RemainBudgetQty);
     } 

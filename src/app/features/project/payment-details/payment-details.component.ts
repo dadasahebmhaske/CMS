@@ -58,6 +58,14 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
           }
         } else {
           this.MaterialArray = resData.Data.Table;
+          let tempArray = [];
+          for (let i = 0; i < this.MaterialArray.length; i++) {
+            let Material = this.MaterialArray[i];
+            Material.show = tempArray.some(obj => parseInt(obj.TypeId) === parseInt(Material.TypeId)) ? false : true;
+                      tempArray.push(Material);
+          }
+          this.MaterialArray = tempArray;
+          this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
           }
       }
       else { RefTranNo == '' ? (this.VendorData = this.InvoiceData = []) : this.MaterialArray = []; AppComponent.SmartAlert.Errmsg(resData.Message); }
