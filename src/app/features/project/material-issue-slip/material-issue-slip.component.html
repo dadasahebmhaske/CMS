@@ -40,7 +40,7 @@
                           <div class="form-group">
                             <label for="sel1">Vendor <span class="errorMessage">*</span>
                             </label>
-                            <select class="form-control" [(ngModel)]="project.VendorId" name="VendorId"  required>
+                            <select class="form-control"  (change)="onSelectVendor()" [(ngModel)]="project.VendorId" name="VendorId" [disabled]="project.TranNo!=null"  required>
                               <option value="" selected hidden> Select Vendor </option>
                               <option [value]="des.VendorId" *ngFor="let des of VendorData">{{des.VendorName}}
                               </option>
@@ -64,7 +64,7 @@
                           </label>
                           <select class="form-control" [(ngModel)]="project.RefTranNo" name="RefTranNo" (change)="onSelectProject('',project.RefTranNo)"  [disabled]="project.TranNo!=null" required>
                             <option value="" selected hidden> Select GRN </option>
-                            <option [value]="des.TranNo" *ngFor="let des of GRNData">{{des.DispTranNo}}
+                            <option [value]="des.TranNo" *ngFor="let des of GRNArray">{{des.DispTranNo}}
                             </option>
                           </select>
                         </div>
@@ -128,8 +128,8 @@
                           <thead>
                             <tr align="center" class="text-center">
                               <th class="text-center">#</th>
-                              <th class="text-center">Material Type</th>
-                              <th class="text-center">Material</th>
+                              <th>Material Type</th>
+                              <th>Material</th>
                               <th class="text-center">Quantity</th>
                               <th class="text-center">Unit</th>
                               <!-- <th class="text-center">Rate</th>
@@ -147,7 +147,7 @@
                           </thead>
                           <tbody>
                             <tr *ngFor="let mat of MaterialArray;index as i">
-                              <td><span (onload)="check(i)">{{i+1}}.</span></td>
+                              <td  class="text-center">{{i+1}}.</td>
                               <td ><strong *ngIf="mat.show">{{mat.TypeName}}</strong></td>                         
                               <td>{{mat.MatName}}</td>
                               <td class="text-center">{{mat.Qty==0?'':mat.Qty}}</td>
@@ -213,7 +213,7 @@
                       <label for="sel1">Issue Site <span class="errorMessage">*</span>
                       </label>
                       <select class="form-control" [(ngModel)]="project.IssueSiteId" name="IssueSiteId"
-                        (change)="onSelectSite(project.IssueSiteId,'R')" [disabled]="project.TranNo!=null" required>
+                        (change)="onSelectSite(project.IssueSiteId,'R')"  required>
                         <option value="" selected hidden> Select Issue Site </option>
                         <option [value]="des.SiteId" *ngFor="let des of IssueSiteData">{{des.SiteName}}
                         </option>
@@ -225,7 +225,7 @@
                       <label for="sel1">Issue Project<span class="errorMessage">*</span>
                       </label>
                       <select class="form-control" [(ngModel)]="project.IssueProjectId" name="IssueProjectId"
-                        [disabled]="project.TranNo!=null" required>
+                         required>
                         <option value="" selected hidden> Select Issue Project </option>
                         <option [value]="des.ProjectId" *ngFor="let des of IssueProjectData">{{des.ProjectName}}
                         </option>

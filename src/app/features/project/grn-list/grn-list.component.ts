@@ -45,14 +45,14 @@ export class GrnListComponent implements OnInit {
                     , width: "57",
                     headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Delete</div>', enableFiltering: false
                   },
-                  { name: 'DispTranNo', displayName: 'TranNo', width: "*", cellTooltip: true, filterCellFiltered: true },
-                  { name: 'TranDate', displayName: 'Tran Date', width: "*", cellTooltip: true, filterCellFiltered: true },
+                  { name: 'DispTranNo', displayName: 'Trans No.',cellClass:'text-center',  width: "*", cellTooltip: true, filterCellFiltered: true },
+                  { name: 'TranDate', displayName: 'Tran Date', width: "*",cellClass:'text-center',  cellTooltip: true, filterCellFiltered: true },
                   { name: 'SiteName', displayName: 'Site Name', width: "*", cellTooltip: true, filterCellFiltered: true },
                   { name: 'ProjectName', displayName: 'Project Name', width: "*", cellTooltip: true, filterCellFiltered: true },
-                  { name: 'ChallanNo', displayName: 'Challan No', width: "*", cellTooltip: true, filterCellFiltered: true },
+                  { name: 'ChallanNo', displayName: 'Challan No', width: "*", cellClass:'text-center', cellTooltip: true, filterCellFiltered: true },
                   { name: 'VendorName', displayName: 'Vendor Name', width: "*", cellTooltip: true, filterCellFiltered: true },
-                  { name: 'ChallanAmount', displayName: 'Challan Amount', width: "*", cellTooltip: true, filterCellFiltered: true },
-                  { name: 'ChallanDate', displayName: 'Challan Date', width: "*", cellTooltip: true, filterCellFiltered: true },
+                  { name: 'ChallanAmount', displayName: 'Challan Amount', width: "*", cellClass:'text-right', cellTooltip: true, filterCellFiltered: true },
+                  { name: 'ChallanDate', displayName: 'Challan Date', width: "*", cellClass:'text-center', cellTooltip: true, filterCellFiltered: true },
                   { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
                 ]
                 this.gridOptions.columnDefs = columnDefs;

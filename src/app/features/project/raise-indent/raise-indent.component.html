@@ -133,8 +133,8 @@
                       <thead>
                         <tr align="center" class="text-center">
                           <th class="text-center">#</th>
-                          <th class="text-center">Material Type</th>
-                          <th class="text-center">Material</th>
+                          <th >Material Type</th>
+                          <th>Material</th>
                           <th class="text-center">Quantity</th>
                           <th class="text-center">Unit</th>
                           <th class="text-center">Action</th>
@@ -142,7 +142,7 @@
                       </thead>
                       <tbody >
                         <tr *ngFor="let mat of MaterialArray;index as i">
-                          <td><span (onload)="check(i)">{{i+1}}.</span></td>
+                          <td class="text-center"><span (onload)="check(i)">{{i+1}}.</span></td>
                           <td ><strong *ngIf="mat.show">{{mat.TypeName}}</strong></td>                         
                           <td>{{mat.MatName}}</td>
                           <td class="text-center">{{mat.Qty==0?'':mat.Qty}}</td>
@@ -239,7 +239,6 @@
     </div>
   </sa-widgets-grid>
 </div>
-
 <!-- Modal -->
 <div class=" modal fade" id="TransactionModal" role="dialog">
   <div class="modal-dialog modal-lg">
@@ -260,9 +259,9 @@
                       <thead>
                         <tr>
                           <th>#</th>
-                          <th>Trans No.</th>
-                          <th>Trans Date</th>
-                          <th>Trans Name</th>
+                          <th>Transaction No.</th>
+                          <th>Transaction Date</th>
+                          <th>Transaction Name</th>
                           <th>Created By</th>
                           <th>Updated By</th>
                         </tr>
@@ -273,8 +272,8 @@
                           <td>{{pr.DispTranNo}}</td>
                           <td>{{pr.TranDate}}</td>
                           <td>{{pr.TranShortName}}</td>
-                         <td class="text-right">{{pr.CreatedByName}}</td>
-                          <td class="text-right">{{pr.UpdatedByName}}</td>
+                         <td >{{pr.CreatedByName}}</td>
+                          <td >{{pr.UpdatedByName}}</td>
                         </tr>
                       </tbody>
                     </table>

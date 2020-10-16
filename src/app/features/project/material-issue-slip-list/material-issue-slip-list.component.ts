@@ -32,7 +32,7 @@ export class MaterialIssueSlipListComponent implements OnInit {
                 configureGrid() {
                   this.gridOptions = <IGridoption>{}
                   this.gridOptions.exporterMenuPdf = false;
-                  this.gridOptions.exporterExcelFilename = 'Transport Master list.xlsx';
+                  this.gridOptions.exporterExcelFilename = 'Material Issued list.xlsx';
                   this.gridOptions.selectionRowHeaderWidth = 0;
                   let columnDefs = [];
                   columnDefs = [
@@ -56,8 +56,8 @@ export class MaterialIssueSlipListComponent implements OnInit {
                     //   , width: "105",
                     //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Downoad PO</div>', enableFiltering: false
                     // },
-                    { name: 'DispTranNo', displayName: 'Tran No', width: "*", cellTooltip: true, filterCellFiltered: true },
-                    { name: 'TranDate', displayName: 'Tran Date', width: "*", cellTooltip: true, filterCellFiltered: true },
+                    { name: 'DispTranNo', displayName: 'Trans No.', width: "*", cellClass:'text-center', cellTooltip: true, filterCellFiltered: true },
+                    { name: 'TranDate', displayName: 'Tran Date', width: "*", cellClass:'text-center', cellTooltip: true, filterCellFiltered: true },
                    
                     { name: 'SiteName', displayName: 'Site Name', width: "*", cellTooltip: true, filterCellFiltered: true }, 
                     { name: 'ProjectName', displayName: 'Project Name', width: "*", cellTooltip: true, filterCellFiltered: true },

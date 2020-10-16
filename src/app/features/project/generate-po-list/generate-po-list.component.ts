@@ -33,7 +33,7 @@ export class GeneratePoListComponent implements OnInit {
               configureGrid() {
                 this.gridOptions = <IGridoption>{}
                 this.gridOptions.exporterMenuPdf = false;
-                this.gridOptions.exporterExcelFilename = 'Transport Master list.xlsx';
+                this.gridOptions.exporterExcelFilename = 'Generate PO list.xlsx';
                 this.gridOptions.selectionRowHeaderWidth = 0;
                 let columnDefs = [];
                 columnDefs = [
@@ -62,13 +62,13 @@ export class GeneratePoListComponent implements OnInit {
                     , width: "105",
                     headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Downoad PO</div>', enableFiltering: false
                   },
-                  { name: 'DispTranNo', displayName: 'Trans No', width: "*", cellTooltip: true, filterCellFiltered: true },
-                  { name: 'TranDate', displayName: 'Trans Date', width: "*", cellTooltip: true, filterCellFiltered: true },
+                  { name: 'DispTranNo', displayName: 'Trans No.', width: "*", cellTooltip: true,cellClass:'text-center',  filterCellFiltered: true },
+                  { name: 'TranDate', displayName: 'Trans Date', width: "*", cellTooltip: true, cellClass:'text-center', filterCellFiltered: true },
                   
                   { name: 'SiteName', displayName: 'Site Name', width: "*", cellTooltip: true, filterCellFiltered: true }, 
                   { name: 'ProjectName', displayName: 'Project Name', width: "*", cellTooltip: true, filterCellFiltered: true },
                 
-                  { name: 'TotAmount', displayName: 'Total Amount', width: "*", cellTooltip: true, filterCellFiltered: true },
+                  { name: 'TotAmount', displayName: 'Total Amount', width: "*", cellClass:'text-right', cellTooltip: true, filterCellFiltered: true },
                   { name: 'VendorName', displayName: 'Vendor Name', width: "*", cellTooltip: true, filterCellFiltered: true },
                 ]
                 this.gridOptions.columnDefs = columnDefs;
@@ -81,7 +81,6 @@ export class GeneratePoListComponent implements OnInit {
               }
 
               onDeleteFunction = ($event) => {
-                this.datashare.updateShareData($event.row);
                 this.projectService.getDeleteTransaction($event.row.TranNo, 103).subscribe((resData: any) => {
                   if (resData.StatusCode != 0) {
                     this.onLoad();

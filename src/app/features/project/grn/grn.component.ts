@@ -19,7 +19,7 @@ export class GrnComponent implements OnInit, OnDestroy {
             public maxDate: Date = new Date();
             public transport: any = {RoleCode:''};
             public loaderbtn: boolean = true;
-            public project:any={};Material:any={};CompQTY;
+            public project:any={};Material:any={};CompQTY;POArray:any=[]
             public MaterialArray:any=[];AMTypeData:any=[];AMData:any=[];TranExists:any=[];ReceivedlocData:any=[];
 
             public SiteData:any=[];VendorData:any=[];ProjectData:any=[];ReceivingSiteData:any=[];POData:any=[];
@@ -71,6 +71,7 @@ export class GrnComponent implements OnInit, OnDestroy {
                   this.onSelectSite(this.project.SiteId,'S');
                   this.onSelectSite(this.project.ReceivedSiteId,'R');
                 this.onSelectProject('');
+                this.onSelectVendor(); 
               //  this.onSelectProject(this.project.RefTranNo);
                   this.MaterialArray = resTran.Data.Table2;
                   let tempArray = [];
@@ -86,6 +87,10 @@ export class GrnComponent implements OnInit, OnDestroy {
               });
             }
 
+            onSelectVendor() {
+              this.POArray = this.projectService.filterData(this.POData, this.project.VendorId, 'VendorId');
+            }
+
             public onSelectProject(RefTranNo) {
               this.MaterialArray=[];
               this.project.TotalAmtCost=null; this.project.TotProjectCost=null;
@@ -96,6 +101,9 @@ export class GrnComponent implements OnInit, OnDestroy {
                 if(RefTranNo==''){ 
                   this.VendorData = resData.Data.Table1;
                   this.POData=resData.Data.Table2;
+                  if(this.project.TranNo!=null){
+                    this.onSelectVendor(); 
+                  }
                 }
                 else{
                   this.MaterialArray=resData.Data.Table;
@@ -134,15 +142,16 @@ export class GrnComponent implements OnInit, OnDestroy {
 
             CompareQTY(index){
              
-                this.CompQTY=parseInt(this.MaterialArray[index].ReceivedQty)+parseInt(this.MaterialArray[index].RejectedQty);
+              this.CompQTY=parseInt(this.MaterialArray[index].ReceivedQty)+parseInt(this.MaterialArray[index].RejectedQty);
 
-                if(parseInt(this.MaterialArray[index].Qty)<parseInt(this.CompQTY)){
-                  AppComponent.SmartAlert.Errmsg(`Recevied Qty + Rejected Qty exceeded the PO qauntity`);
-                 // this.MaterialArray[index].Qty=null;
-                
-              }
-            
+              if(parseInt(this.MaterialArray[index].Qty)<parseInt(this.CompQTY)){
+                AppComponent.SmartAlert.Errmsg(`Recevied Qty + Rejected Qty exceeded the PO qauntity`);
+               this.MaterialArray[index].RejectedQty=null;
+               this.MaterialArray[index].ReceivedQty=null;
+              
             }
+          
+          }
 
             onRemoveMaterial(data, index) {
               this.MaterialArray.splice(index, 1);
