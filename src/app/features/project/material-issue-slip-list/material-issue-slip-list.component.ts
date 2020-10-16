@@ -32,7 +32,7 @@ export class MaterialIssueSlipListComponent implements OnInit {
                 configureGrid() {
                   this.gridOptions = <IGridoption>{}
                   this.gridOptions.exporterMenuPdf = false;
-                  this.gridOptions.exporterExcelFilename = 'Transport Master list.xlsx';
+                  this.gridOptions.exporterExcelFilename = 'Material Issued list.xlsx';
                   this.gridOptions.selectionRowHeaderWidth = 0;
                   let columnDefs = [];
                   columnDefs = [

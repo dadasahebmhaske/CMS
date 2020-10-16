@@ -56,13 +56,15 @@ export class RaiseIndentComponent implements OnInit, OnDestroy {
 
   }
   public onSelectProject() {
+    this.Material = { TypeId: '', MatActExpId: '' };
+        this.MaterialArray=[];
     let tranNo=this.project.TranNo==null?'':this.project.TranNo;
     this.projectService.getIndentProjectExecutiveAndMaterial(tranNo,this.project.ProjectId).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         this.ExecutiveData = resData.Data.Table;
         this.AMTypeData=resData.Data.Table1;
         this.AMData = resData.Data.Table2; 
-
+        
       }
       else { this.ExecutiveData = []; this.AMData = []; AppComponent.SmartAlert.Errmsg(resData.Message); }
     });

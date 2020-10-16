@@ -81,7 +81,6 @@ export class GeneratePoListComponent implements OnInit {
               }
 
               onDeleteFunction = ($event) => {
-                this.datashare.updateShareData($event.row);
                 this.projectService.getDeleteTransaction($event.row.TranNo, 103).subscribe((resData: any) => {
                   if (resData.StatusCode != 0) {
                     this.onLoad();
