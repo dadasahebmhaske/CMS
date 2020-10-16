@@ -78,6 +78,7 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
        this.project = resTran.Data.Table1[0];
         this.onSelectSite();
         this.onSelectProject('');
+        this.onSelectProject(this.project.RefTranNo);
         this.onSelectVendor();  
         this.onSelectInvoice();    
         this.MaterialArray = resTran.Data.Table2;
