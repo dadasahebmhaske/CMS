@@ -46,15 +46,14 @@ export class RaiseIndentListComponent implements OnInit {
         , width: "57",
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Delete</div>', enableFiltering: false
       },
-
-      { name: 'SiteName', displayName: 'Site Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'DispTranNo', displayName: 'Trans No.',cellClass:'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TranDate', displayName: 'Trans Date',cellClass:'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
+           { name: 'SiteName', displayName: 'Site Name', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'ProjectName', displayName: 'Project Name', width: "*", cellTooltip: true, filterCellFiltered: true },
      // { name: 'ManagerName', displayName: 'Manager Name', width: "*", cellTooltip: true, filterCellFiltered: true },
      // { name: 'ExecutiveName', displayName: 'Executive Name', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'ExpectedDate', displayName: 'Expected Date',cellClass:'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'DispTranNo', displayName: 'Trans No.',cellClass:'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'TranDate', displayName: 'Trans Date',cellClass:'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
-      //{ name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
+     //{ name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();

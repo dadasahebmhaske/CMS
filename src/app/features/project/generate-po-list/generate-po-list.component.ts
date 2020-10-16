@@ -119,8 +119,7 @@ export class GeneratePoListComponent implements OnInit {
                     AppComponent.SmartAlert.Success(resData.Message);
                   }
                   else { this.GeneratePODataData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
-                });
-            
+                });            
               }
 
               resetEndDate(val) {

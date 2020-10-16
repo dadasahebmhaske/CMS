@@ -46,14 +46,14 @@ export class MInvoiceDetailsListComponent implements OnInit {
         , width: "57",
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Delete</div>', enableFiltering: false
       },
-      { name: 'SiteName', displayName: 'Site Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'DispTranNo', displayName: 'Trans No.', cellClass: 'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TranDate', displayName: 'Trans Date', cellClass: 'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
+          { name: 'SiteName', displayName: 'Site Name', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'ProjectName', displayName: 'Project Name', width: "*", cellTooltip: true, filterCellFiltered: true },
       // { name: 'ManagerName', displayName: 'Manager Name', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'VendorInvoiceNo', displayName: 'Invoice No', width: "*",cellClass: 'text-center', cellTooltip: true, filterCellFiltered: true },
       { name: 'VendorInvoiceDate', displayName: 'Invoice Date', cellClass: 'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'TotAmount', displayName: 'Amount', width: "*", cellClass: 'text-right', cellTooltip: true, filterCellFiltered: true },
-      { name: 'DispTranNo', displayName: 'Trans No.', cellClass: 'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'TranDate', displayName: 'Trans Date', cellClass: 'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
       ] 
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();
