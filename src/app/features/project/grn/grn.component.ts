@@ -19,7 +19,7 @@ export class GrnComponent implements OnInit, OnDestroy {
             public maxDate: Date = new Date();
             public transport: any = {RoleCode:''};
             public loaderbtn: boolean = true;
-            public project:any={};Material:any={};
+            public project:any={};Material:any={};CompQTY;
             public MaterialArray:any=[];AMTypeData:any=[];AMData:any=[];TranExists:any=[];ReceivedlocData:any=[];
 
             public SiteData:any=[];VendorData:any=[];ProjectData:any=[];ReceivingSiteData:any=[];POData:any=[];
@@ -130,6 +130,18 @@ export class GrnComponent implements OnInit, OnDestroy {
                 }
                 else { this.ProjectData = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
               });
+            }
+
+            CompareQTY(index){
+             
+                this.CompQTY=parseInt(this.MaterialArray[index].ReceivedQty)+parseInt(this.MaterialArray[index].RejectedQty);
+
+                if(parseInt(this.MaterialArray[index].Qty)<parseInt(this.CompQTY)){
+                  AppComponent.SmartAlert.Errmsg(`Recevied Qty + Rejected Qty exceeded the PO qauntity`);
+                 // this.MaterialArray[index].Qty=null;
+                
+              }
+            
             }
 
             onRemoveMaterial(data, index) {

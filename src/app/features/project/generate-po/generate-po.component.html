@@ -389,6 +389,8 @@
                       <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn" *ngIf="Access">
                         <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
                         {{loaderbtn==true? 'Submit & Generate PO':'Loading'}}</button>
+                        <button class="pull-left btn btn-danger marg-right" type="submit" *ngIf="!Access">
+                          Purchase Order Approved, Can't Modify</button>
                     </div>
                   </div>
                 </footer>

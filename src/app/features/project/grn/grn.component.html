@@ -212,7 +212,7 @@
 
                             <td> <input type="text" class="form-control" style="width: 60px;" placeholder=" Qty "
                                 [(ngModel)]="mat.ReceivedQty" #nameControl="ngModel" name="ReceivedQty_{{i}}"
-                                required /> </td>
+                                (ngModelChange)="CompareQTY(i)" required /> </td>
                             <td>
                               <div class="form-group" >
                                 <select class="form-control" style="width: 70px;" [(ngModel)]="mat.IsQualityOk" name="IsQualityOk_{{i}}"
@@ -225,7 +225,7 @@
                             </td>
                             <td> <input type="text" class="form-control" style="width: 60px;" placeholder="Qty "
                               #nameControl="ngModel" [(ngModel)]="mat.RejectedQty" name="RejectedQty_{{i}}" saCommonDir dirType="alphanumeric"
-                                required /> </td>
+                                required (ngModelChange)="CompareQTY(i)"/> </td>
                             <td> <input type="text" class="form-control" style="width: 100px;" placeholder="Remark "
                               #nameControl="ngModel" [(ngModel)]="mat.Remark" name="Remark_{{i}}" saCommonDir dirType="alphanumeric"  />
                             </td>

@@ -46,7 +46,8 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
                 this.allmasterService.getSite('Y').subscribe((resSData: any) => {
                   if (resSData.StatusCode != 0) {
                     this.SiteData = resSData.Data;
-                    this.IssueSiteData = this.projectService.filterData(this.SiteData,'N', 'IsMainSite');
+                    this.IssueSiteData = resSData.Data;
+                  //  this.IssueSiteData = this.projectService.filterData(this.SiteData,'N', 'IsMainSite');
                   }
                   else { this.SiteData = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
                 });
@@ -207,9 +208,9 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
               }
 
               public onSubmit() {
-                // if(this.project.IssueProjectId==this.project.IssueProjectId){
-                //   AppComponent.SmartAlert.Errmsg("Project and Issue Project should Not be same");
-                // }else{
+                if(this.project.ProjectId==this.project.IssueProjectId){
+                  AppComponent.SmartAlert.Errmsg("Project and Issue Project should Not be same");
+                }else{
                   this.loaderbtn = false;
                   this.project.Flag = this.project.TranNo == null || this.project.TranNo == '' ? 'IN' : 'UP';
                   this.project.UserCode = this.empInfo.EmpId;
@@ -232,8 +233,7 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
                     }
                     else { this.project.CarryingTime=''; AppComponent.SmartAlert.Errmsg(resData.Message); }
                   });
-                
-                
+                }
               }
 
 

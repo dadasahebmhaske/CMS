@@ -149,7 +149,7 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
     this.Material.UOMId = obj[0].UOMId;
     this.Material.UOM = obj[0].UOM;
     this.Material.UQty = obj[0].Qty;
-    this.Material.RQty = obj[0].Qty;
+    this.Material.RQty = obj[0].RemainBudgetQty;
     this.Material.URate = obj[0].Rate;
     this.Material.URate = obj[0].Rate;
     this.Material.UAmount = obj[0].Amount;
@@ -316,7 +316,7 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
     this.Material = mat;
     this.Material.URate = mat.Rate;
     this.Material.UQty = mat.Qty;
-    this.Material.RQty = mat.Qty;
+    this.Material.RQty = mat.RemainBudgetQty;
     this.Material.UAmount = mat.Amount;
     this.Material.UTotalAmount = mat.TotalAmount;
     //this.Material.UAmount = mat.Amount;
@@ -335,7 +335,13 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
     this.project.Remark = '';
     // this.project.RefTranNo = this.MaterialArray[0].RefTranNo;
     this.project.Data = this.MaterialArray;
-    this.project.Data1 = this.OtherExpenseArray;
+    if(this.OtherExpenseArray.length==0){
+      this.project.Data1=[];
+    }
+    else{
+      this.project.Data1 = this.OtherExpenseArray;
+    }
+    
     let ciphertext = this.appService.getEncrypted(this.project);
     this.projectService.post('ManagePurchaseOrder', ciphertext).subscribe((resData: any) => {
       this.loaderbtn = true;
