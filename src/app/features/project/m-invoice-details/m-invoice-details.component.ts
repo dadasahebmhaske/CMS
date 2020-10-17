@@ -14,7 +14,7 @@ export class MInvoiceDetailsComponent implements OnInit, OnDestroy {
   public empInfo: any;
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public project: any = {};
-  public loaderbtn: boolean = true;
+  public loaderbtn: boolean = true;editflag;
   public GRNData: any = []; GRNArray: any[]; MaterialArray: any = []; ProjectData: any; SiteData: any = []; TranExists: any = [];
   public VendorData: any = [];
   constructor(private appService: AppService, private datashare: DatashareService, private allmasterService: AllmasterService, private projectService: ProjectService) {
@@ -45,6 +45,10 @@ export class MInvoiceDetailsComponent implements OnInit, OnDestroy {
     });
   }
   public onSelectProject(RefTranNo) {
+    if(this.project.TranNo==null){
+      this.MaterialArray=[];
+      this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
+    }
     let tranNo = this.project.TranNo == null ? '' : this.project.TranNo;
     this.projectService.getGRNDeatils(tranNo, this.project.ProjectId, RefTranNo).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
@@ -56,7 +60,19 @@ export class MInvoiceDetailsComponent implements OnInit, OnDestroy {
             this.onSelectVendor(); 
           }
         } else {
-          this.MaterialArray = resData.Data.Table;
+          if(this.editflag=='E'){
+            this.VendorData = resData.Data.Table1;
+            this.GRNData = resData.Data.Table2;
+            if (this.project.TranNo != null) {
+              this.onSelectVendor();
+            }
+            this.editflag=='z';
+            }else{
+              this.MaterialArray = resData.Data.Table;
+              // this.AMTypeData = resData.Data.Table;
+              // this.AMData = resData.Data.Table1;
+            }
+          
           let tempArray = [];
           for (let i = 0; i < this.MaterialArray.length; i++) {
             let Material = this.MaterialArray[i];          
@@ -71,6 +87,7 @@ export class MInvoiceDetailsComponent implements OnInit, OnDestroy {
     });
   }
   public getTranData() {
+    this.editflag='E';
     this.projectService.getTransDetails(105, this.project.TranNo).subscribe((resTran: any) => {
       if (resTran.StatusCode != 0) {
         this.TranExists = resTran.Data.Table;

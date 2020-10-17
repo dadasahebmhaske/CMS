@@ -48,12 +48,12 @@ export class GeneratePoListComponent implements OnInit {
                     headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Delete</div>', enableFiltering: false
                   },
                   {
-                    name: 'Select1', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-warning btn-xs"  ng-click="grid.appScope.closeEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">&nbsp;Close&nbsp;</button> '
+                    name: 'Select1', displayName: 'Details', cellTemplate: `<button  style="margin:3px;" class="btn-warning btn-xs"  ng-click="grid.appScope.closeEmployee(row.entity)"  ng-if="row.entity.IsClosed!='Y'">&nbsp;Close&nbsp;</button><button  style="margin:3px;" class="btn-default btn-xs"  ng-if="row.entity.IsClosed=='Y'">&nbsp;Closed&nbsp;</button> `
                     , width: "55",
                     headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Close</div>', enableFiltering: false
                   },
                   {
-                    name: 'Select2', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-success btn-xs"  ng-click="grid.appScope.approveEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">&nbsp;Approve&nbsp;</button> '
+                    name: 'Select2', displayName: 'Details', cellTemplate: `<button  style="margin:3px;" class="btn-success btn-xs"  ng-click="grid.appScope.approveEmployee(row.entity)"  ng-if="row.entity.IsApproved!='Y'">&nbsp;Approve&nbsp;</button><button  style="margin:3px;" class="btn-default btn-xs"  ng-if="row.entity.IsApproved=='Y'">&nbsp;Approved&nbsp;</button>`
                     , width: "74",
                     headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Approve</div>', enableFiltering: false
                   },
@@ -90,7 +90,7 @@ export class GeneratePoListComponent implements OnInit {
                 });
               }
               onApproveFunction = ($event) => {
-                this.projectService.getApprove($event.row.TranNo, 103).subscribe((resData: any) => {
+                this.projectService.getApprove($event.row.TranNo, 103,this.cpInfo.EmpId).subscribe((resData: any) => {
                   if (resData.StatusCode != 0) {
                     this.onLoad();
                     AppComponent.SmartAlert.Success(resData.Message);
@@ -99,7 +99,7 @@ export class GeneratePoListComponent implements OnInit {
                 });
               }
               onCloseFunction = ($event) => {
-                this.projectService.getClose($event.row.TranNo, 103).subscribe((resData: any) => {
+                this.projectService.getClose($event.row.TranNo, 103,this.cpInfo.EmpId).subscribe((resData: any) => {
                   if (resData.StatusCode != 0) {
                    this.onLoad();
                     AppComponent.SmartAlert.Success(resData.Message);

@@ -21,7 +21,7 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
   public StartMindate: Date;
   public maxDate: Date = new Date();
   public mytime: Date = new Date();
-  public GRNData: any = []; GRNArray: any = [];
+  public GRNData: any = []; GRNArray: any = [];editflag;
   public IssueSiteData: any = []; IssueProjectData: any = [];
   public other: any = { OtherExpId: '' };
   public AMTypeData: any = []; project: any = {}; transport: any = {}; ProjectData: any = []; PayTData: any = []; DeliveryTData: any = []; TaxationData: any = [];
@@ -75,8 +75,10 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
     this.GRNArray = this.projectService.filterData(this.GRNData, this.project.VendorId, 'VendorId');
   }
   public getTranData() {
+    this.editflag='E';
     this.projectService.getTransDetails(107, this.project.TranNo).subscribe((resTran: any) => {
       if (resTran.StatusCode != 0) {
+      
         // this.TranExists = resTran.Data.Table;
         // this.Access = this.TranExists.length == 0 ? this.project.IsApproved == 'Y' ? false : true : false;
         this.project = resTran.Data.Table1[0];
@@ -97,6 +99,7 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
         this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
         this.MaterialArray = tempArray;
         this.Material = { TypeId: '', MatId: '' }
+        // this.editflag='z';
       }
     });
   }
@@ -130,7 +133,11 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
 
 
   public onSelectProject(TranNo, RefTranNo) {
-    this.MaterialArray = [];
+    if(this.project.TranNo==null){
+      this.MaterialArray=[];
+      this.Material={};
+      this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
+    }
   
     this.project.TotalAmtCost = null; this.project.TotProjectCost = null;
     this.project.TotIGSTCost = null; this.project.TotCGSTCost = null; this.project.TotSGSTCost = null;
@@ -145,9 +152,22 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
           }
         }
         else {
-          //this.MaterialArray=resData.Data.Table;
-          this.AMTypeData = resData.Data.Table;
-          this.AMData = resData.Data.Table1;
+          if(this.editflag=='E'){
+         // this.MaterialArray=resData.Data.Table;
+          this.AMTypeData = resData.Data.Table3;
+          this.AMData = resData.Data.Table4;
+          this.VendorData = resData.Data.Table1;
+          this.GRNData = resData.Data.Table2;
+          if (this.project.TranNo != null) {
+            this.onSelectVendor();
+          }
+          this.editflag=='z';
+          }else{
+            this.AMTypeData = resData.Data.Table;
+            this.AMData = resData.Data.Table1;
+          }
+         
+          
           for (let i = 0; i < this.MaterialArray.length; i++) {
             this.Material = this.MaterialArray[i];
             let tempArray = [];

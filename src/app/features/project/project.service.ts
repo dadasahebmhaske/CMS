@@ -56,11 +56,11 @@ export class ProjectService {
   public getDeleteTransaction(TranNo,TranType) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetDeleteTransactionData?TranNo=${TranNo}&TranType=${TranType}&TranSubType=1&IsActive=Y`);
   }
-  public getApprove(TranNo,TranType) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetApproveTransaction?TranNo=${TranNo}&TranType=${TranType}&TranSubType=1&IsActive=Y`);
+  public getApprove(TranNo,TranType,UserCode) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetApproveTransaction?TranNo=${TranNo}&TranType=${TranType}&TranSubType=1&IsActive=Y&UserCode=${UserCode}`);
   }
-  public getClose(TranNo,TranType) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetCloseTransaction?TranNo=${TranNo}&TranType=${TranType}&TranSubType=2&IsActive=Y`);
+  public getClose(TranNo,TranType,UserCode) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetCloseTransactionData?TranNo=${TranNo}&TranType=${TranType}&TranSubType=2&IsActive=Y&UserCode=${UserCode}`);
   }
 
   public calculateTotal(project, MaterialArray) {

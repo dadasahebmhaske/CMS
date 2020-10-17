@@ -11,9 +11,14 @@
           </header>
           <div>
             <div class="widget-body">
-              <div class="row" *ngIf="TranExists.length>0">
-                <div class="col-sm-12 text-center">
-                  <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#TransactionModal">Access Denied, Next Transaction Exists </button>
+              <div class="row" >
+                  <div class="col-sm-6" *ngIf="project.TranNo!=null" style="font-size:14px;margin-top: 11px;">
+                    <label style="margin-right:20px;"><strong>Trans No. : <span class="text-primary">{{project.TranNo}}</span></strong></label>
+                    <label><strong>Trans Date : <span class="text-primary">{{project.TranDate}}</span></strong></label>
+                    </div>
+                <div class="col-sm-6 pull-right" *ngIf="TranExists.length>0">
+                  <button type="button" class="btn btn-danger pull-right btn-lg" data-toggle="modal" data-target="#TransactionModal">Access Denied, Next Transaction Exists </button>
+                 
                 </div>
               </div>
               <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
@@ -225,7 +230,7 @@
                       <hr />
                       <a class="pull-right btn btn-default" routerLink="/project/raise-indent-list">
                         <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
-                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn" *ngIf="TranExists.length==0">
+                      <button class="pull-right btn btn-primary marg-right" type="submit"  [disabled]="!loaderbtn || MaterialArray.length==0" *ngIf="TranExists.length==0">
                         <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
                         {{loaderbtn==true? 'Submit':'Loading'}}</button>
                     </div>

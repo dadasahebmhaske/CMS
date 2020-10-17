@@ -18,8 +18,8 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
   public MaterialArray: any = [];
   public OtherExpTypeData: any = [];
   public OtherExpData: any = [];
-  public OtherExpenseArray: any = [];
-  public IndentData: any = [];
+  public OtherExpenseArray: any = [];IndentArray:any=[];
+  public IndentData: any = [];editflag;
   public other: any = { OtherExpId: '' };
   public AMTypeData: any = []; project: any = {}; ProjectData: any = []; PayTData: any = []; DeliveryTData: any = []; TaxationData: any = [];
   VendorData: any = []; ExecutiveData: any = []; AMData: any = []; filterMaterialArray: any = []; TranExists: any = [];
@@ -88,16 +88,20 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
   }
 
   public getTranData() {
+    this.editflag='E';
     this.projectService.getTransDetails(103, this.project.TranNo).subscribe((resTran: any) => {
       if (resTran.StatusCode != 0) {
         this.TranExists = resTran.Data.Table;
         this.Access = this.TranExists.length == 0 ? this.project.IsApproved == 'Y' ? false : true : false;
         this.project = resTran.Data.Table1[0];
+        this.MaterialArray = resTran.Data.Table2;
+        this.OtherExpenseArray = resTran.Data.Table3;
         this.onSelectSite();
         this.onSelectProject(this.project.TranNo, '');
         this.onSelectProject(this.project.TranNo, this.project.RefTranNo);
-        this.MaterialArray = resTran.Data.Table2;
-        this.OtherExpenseArray = resTran.Data.Table3;
+        this.onSelectProjectExecutive();
+         this.MaterialArray = resTran.Data.Table2;
+       
         let tempArray = [];
         for (let i = 0; i < this.MaterialArray.length; i++) {
           this.Material = this.MaterialArray[i];
@@ -239,8 +243,12 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
   }
 
   public onSelectProject(TranNo,RefTranNo) {
-    this.MaterialArray=[];
-    this.Material={};
+    if(this.project.TranNo==null){
+      this.MaterialArray=[];
+      this.Material={};
+      this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
+    }
+   
     this.project.TotalAmtCost=null; this.project.TotProjectCost=null;
     this.project.TotIGSTCost=null;this.project.TotCGSTCost=null;this.project.TotSGSTCost=null;
     let tranNo=this.project.TranNo==null?'':this.project.TranNo;
@@ -249,18 +257,38 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
       if(RefTranNo==''){ 
         this.ExecutiveData = resData.Data.Table;
         this.IndentData=resData.Data.Table1;
+        if (this.project.TranNo != null) {
+          this.onSelectProjectExecutive();
+        }
       }
       else{
-        this.AMTypeData=resData.Data.Table;
-        this.AMData = resData.Data.Table1; 
-        console.log(this.AMTypeData);
-        console.log(this.AMData);
+        // this.AMTypeData=resData.Data.Table;
+        // this.AMData = resData.Data.Table1; 
+        // console.log(this.AMTypeData);
+        // console.log(this.AMData);
+        if(this.editflag=='E'){
+          // this.MaterialArray=resData.Data.Table;
+           this.AMTypeData = resData.Data.Table2;
+           this.AMData = resData.Data.Table3;
+           this.ExecutiveData = resData.Data.Table;
+           this.IndentData = resData.Data.Table1;
+           if (this.project.TranNo != null) {
+             this.onSelectProjectExecutive();
+           }
+           this.editflag=='z';
+           }else{
+             this.AMTypeData = resData.Data.Table;
+             this.AMData = resData.Data.Table1;
+           }
       }
       }
       else { this.ExecutiveData = []; this.AMData = []; this.AMTypeData=[];AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
 
+  onSelectProjectExecutive() {
+    this.IndentArray = this.projectService.filterData(this.IndentData, this.project.ProjectExecutiveId, 'ProjectExecutiveId');
+  }
 
   addMaterial() {
     if (this.Material.index != null) {
@@ -340,7 +368,7 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
     // this.project.RefTranNo = this.MaterialArray[0].RefTranNo;
     this.project.Data = this.MaterialArray;
     if(this.OtherExpenseArray.length==0){
-      this.project.Data1=[];
+      this.project.Data1="";
     }
     else{
       this.project.Data1 = this.OtherExpenseArray;

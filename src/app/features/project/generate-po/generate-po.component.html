@@ -13,9 +13,13 @@
             <div class="widget-body">
               <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
                 ngNativeValidate>
-                <div class="row" *ngIf="TranExists.length>0">
-                  <div class="col-sm-12 text-center">
-                    <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#TransactionModal">Access Denied, Next Transaction Exists </button>
+                <div class="row" >
+                    <div class="col-sm-6" *ngIf="project.TranNo!=null" style="font-size:14px;margin-top: 11px;">
+                        <label style="margin-right:20px;"><strong>Trans No. : <span class="text-primary">{{project.TranNo}}</span></strong></label>
+                        <label><strong>Trans Date : <span class="text-primary">{{project.TranDate}}</span></strong></label>
+                        </div>
+                  <div class="col-sm-6" *ngIf="TranExists.length>0">
+                    <button type="button" class="btn btn-danger pull-right btn-lg" data-toggle="modal" data-target="#TransactionModal">Access Denied, Next Transaction Exists </button>
                   </div>
                 </div>
                 <div class="row">
@@ -59,7 +63,7 @@
                     <div class="form-group">
                       <label for="sel1">Project Executive <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="project.ProjectExecutiveId" name="ProjectExecutiveId"  [disabled]="project.TranNo!=null" required>
+                      <select class="form-control" [(ngModel)]="project.ProjectExecutiveId" name="ProjectExecutiveId"  [disabled]="project.TranNo!=null"  (change)="onSelectProjectExecutive()" required>
                         <option value="" selected hidden> Select Engineer </option>
                         <option [value]="des.ProjectExecutiveId" *ngFor="let des of ExecutiveData">{{des.ExecutiveName}}
                         </option>
@@ -72,7 +76,7 @@
                       </label>
                       <select class="form-control" [(ngModel)]="project.RefTranNo" name="RefTranNo" (change)="onSelectProject('',project.RefTranNo)"  [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Indent </option>
-                        <option [value]="des.TranNo" *ngFor="let des of IndentData">{{des.DispTranNo}}
+                        <option [value]="des.TranNo" *ngFor="let des of IndentArray">{{des.DispTranNo}}
                         </option>
                       </select>
                     </div>
@@ -386,7 +390,7 @@
                       <hr />
                       <a class="pull-right btn btn-default" routerLink="/project/generate-po-list">
                         <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
-                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn" *ngIf="Access">
+                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn || MaterialArray.length==0" *ngIf="Access">
                         <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
                         {{loaderbtn==true? 'Submit & Generate PO':'Loading'}}</button>
                         <button class="pull-left btn btn-danger marg-right" type="submit" *ngIf="!Access">

@@ -11,6 +11,12 @@
           </header>
           <div>
             <div class="widget-body">
+                <div class="row">
+                    <div class="col-sm-12" *ngIf="project.TranNo!=null" style="font-size:14px;margin-top: 11px;">
+                        <label style="margin-right:20px;"><strong>Trans No. : <span class="text-primary">{{project.TranNo}}</span></strong></label>
+                        <label><strong>Trans Date : <span class="text-primary">{{project.TranDate}}</span></strong></label>
+                        </div>
+                </div>
               <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
                 ngNativeValidate>
                 <div class="row">
@@ -103,7 +109,7 @@
                           <label>Qty <span class="errorMessage">*</span>
                           </label>
                           <input type="text" class="form-control" placeholder="Enter Qty " [(ngModel)]="Material.UQty"
-                            name="UQty"  (ngModelChange)="GetCalculate()" saCommonDir dirType="number" required disabled/>
+                            name="UQty"  (ngModelChange)="GetCalculate()" saCommonDir dirType="number" required/>
                         </div>
                       </div>
                       <div class="col-sm-1">
@@ -239,7 +245,7 @@
                       <hr />
                       <a class="pull-right btn btn-default" routerLink="/project/material-issue-slip-list">
                         <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
-                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                      <button class="pull-right btn btn-primary marg-right" type="submit"  [disabled]="!loaderbtn || MaterialArray.length==0">
                         <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
                         {{loaderbtn==true? 'Submit':'Loading'}}</button>
                     </div>

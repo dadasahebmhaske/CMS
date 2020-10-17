@@ -18,7 +18,7 @@ export class GrnComponent implements OnInit, OnDestroy {
             public StartMindate: Date;
             public maxDate: Date = new Date();
             public transport: any = {RoleCode:''};
-            public loaderbtn: boolean = true;
+            public loaderbtn: boolean = true;editflag;
             public project:any={};Material:any={};CompQTY;POArray:any=[]
             public MaterialArray:any=[];AMTypeData:any=[];AMData:any=[];TranExists:any=[];ReceivedlocData:any=[];
 
@@ -63,17 +63,19 @@ export class GrnComponent implements OnInit, OnDestroy {
             }
 
             public getTranData() {
+              this.editflag='E';
               this.projectService.getTransDetails(104, this.project.TranNo).subscribe((resTran: any) => {
                 if (resTran.StatusCode != 0) {
                   this.TranExists = resTran.Data.Table;
                  // this.Access = this.TranExists.length == 0 ? this.project.IsApproved == 'Y' ? false : true : false;
                   this.project = resTran.Data.Table1[0];
+                  this.MaterialArray = resTran.Data.Table2;
                   this.onSelectSite(this.project.SiteId,'S');
                   this.onSelectSite(this.project.ReceivedSiteId,'R');
                 this.onSelectProject('');
+                this.onSelectProject(this.project.RefTranNo);
                 this.onSelectVendor(); 
-              //  this.onSelectProject(this.project.RefTranNo);
-                  this.MaterialArray = resTran.Data.Table2;
+                 
                   let tempArray = [];
                   for (let i = 0; i < this.MaterialArray.length; i++) {
                     this.Material = this.MaterialArray[i];
@@ -92,7 +94,11 @@ export class GrnComponent implements OnInit, OnDestroy {
             }
 
             public onSelectProject(RefTranNo) {
-              this.MaterialArray=[];
+              if(this.project.TranNo==null){
+                this.MaterialArray=[];
+                this.Material={};
+                this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
+              }
               this.project.TotalAmtCost=null; this.project.TotProjectCost=null;
               this.project.TotIGSTCost=null;this.project.TotCGSTCost=null;this.project.TotSGSTCost=null;
               let tranNo=this.project.TranNo==null?'':this.project.TranNo;
@@ -106,7 +112,17 @@ export class GrnComponent implements OnInit, OnDestroy {
                   }
                 }
                 else{
-                  this.MaterialArray=resData.Data.Table;
+                  if(this.editflag=='E'){
+                    this.VendorData = resData.Data.Table1;
+                    this.POData = resData.Data.Table2;
+                    if (this.project.TranNo != null) {
+                      this.onSelectVendor();
+                    }
+                    this.editflag=='z';
+                    }else{
+                      this.MaterialArray = resData.Data.Table;
+                    }
+                  //this.MaterialArray=resData.Data.Table;
                   for (let i = 0; i < this.MaterialArray.length; i++) {
                     this.Material = this.MaterialArray[i];
                     let tempArray = [];
@@ -144,7 +160,7 @@ export class GrnComponent implements OnInit, OnDestroy {
              
               this.CompQTY=parseInt(this.MaterialArray[index].ReceivedQty)+parseInt(this.MaterialArray[index].RejectedQty);
 
-              if(parseInt(this.MaterialArray[index].Qty)<parseInt(this.CompQTY)){
+              if(parseInt(this.MaterialArray[index].Qty)<= parseInt(this.CompQTY)){
                 AppComponent.SmartAlert.Errmsg(`Recevied Qty + Rejected Qty exceeded the PO qauntity`);
                this.MaterialArray[index].RejectedQty=null;
                this.MaterialArray[index].ReceivedQty=null;
