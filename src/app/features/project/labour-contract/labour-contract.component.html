@@ -18,12 +18,10 @@
                     <div class="form-group">
                       <label for="sel1">Site <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.SiteId" name="SiteId" required>
+                      <select class="form-control" [(ngModel)]="project.SiteId" name="SiteId" (change)="onSelectSite(project.SiteId,'S')"
+                        [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Site </option>
-                        <option value=""> Sanskruti </option>
-                        <option value=""> Nirmiti </option>
-                        <option value=""> Akruti </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        <option [value]="des.SiteId" *ngFor="let des of SiteData">{{des.SiteName}}
                         </option>
                       </select>
                     </div>
@@ -32,58 +30,51 @@
                     <div class="form-group">
                       <label for="sel1">Project <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.ProjectId" name="ProjectId" required>
+                      <select class="form-control" [(ngModel)]="project.ProjectId" name="ProjectId"
+                        (change)="onSelectProject('')" [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Project </option>
-                        <option value=""> Samved </option>
-                        <option value=""> Yajurved </option>
-                        <option value=""> Rugved </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        <option [value]="des.ProjectId" *ngFor="let des of ProjectData">{{des.ProjectName}}
                         </option>
                       </select>
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <label>Labour Work  <span class="errorMessage">*</span>
+                      <label for="sel1">Select Labour Work <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
-                        <option value="" selected hidden> Select Work </option>
-                        <option value="">Painting</option>
-                        <option value=""> Centring</option>
-                        <option value=""> Flooring</option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                      <select class="form-control" [(ngModel)]="project.WorkId" name="WorkId"  (change)="onSelectVendor()" [disabled]="project.TranNo!=null" required>
+                        <option value="" selected hidden> Select Labour </option>
+                        <option [value]="des.WorkId" *ngFor="let des of LabourWork">{{des.WorkName}}
                         </option>
                       </select>
-                    </div> 
+                    </div>
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
                       <label for="sel1">Select Contractor <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
+                      <select class="form-control" [(ngModel)]="project.RefTranNo" name="RefTranNo"
+                        (change)="onSelectProject(project.RefTranNo)" [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Contractor </option>
-                        <option value="">S P Traders</option>
-                        <option value=""> Anand Suppliers</option>
-                        <option value=""> Mr.Arjun Reddy brickes work</option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        <option [value]="des.TranNo" *ngFor="let des of ContractorData">{{des.DispTranNo}}
                         </option>
                       </select>
                     </div>
                   </div>
-
                   <div class="col-sm-2">
                     <div class="form-group">
-                      <label>Contarct Date <span class="errorMessage">*</span>
+                      <label>Contract Date <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Contarct Date " [(ngModel)]="transport.INVDate"
-                        name="INVDate" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker
+                        [(ngModel)]="project.ChallanDate" name="ChallanDate" id="startDate" onkeydown="return false"
+                        bsDatepicker [bsConfig]="datePickerConfig" />
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Qty of the work <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Qty of the work" [(ngModel)]="transport.Qty"
+                      <input type="text" class="form-control" placeholder="Enter Qty of the work" [(ngModel)]="project.Qty"
                         name="Qty" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
@@ -91,31 +82,37 @@
                     <div class="form-group">
                       <label>Rate <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Invoice Amount " [(ngModel)]="transport.Amount"
+                      <input type="text" class="form-control" placeholder="Enter Invoice Amount " [(ngModel)]="project.Amount"
                         name="Amount" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
-                  <div class="col-sm-2">
+                  <div class="col-sm-2 col-xs-8">
                     <div class="form-group">
-                      <label>Start Date <span class="errorMessage">*</span>
+                        <label>Start Date <span class="errorMessage">*</span>
+                        </label>
+                      <label class="posticon">
+                        <i class="icon-append fa fa-calendar"></i>
+                        <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="project.StartDate" name="Startdate" id="startDate"
+                           onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Start Date " [(ngModel)]="transport.PODate"
-                        name="PODate" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
-                  <div class="col-sm-2">
+                  <div class="col-sm-2 col-xs-8">
                     <div class="form-group">
-                      <label>End Date <span class="errorMessage">*</span>
+                        <label>End Date <span class="errorMessage">*</span>
+                        </label>
+                      <label class="posticon">
+                        <i class="icon-append fa fa-calendar"></i>
+                        <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="project.EndDate" name="EndDate" onkeydown="return false"
+                          [minDate]="minDate" bsDatepicker [bsConfig]="datePickerConfig" />
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter End Date " [(ngModel)]="transport.PODate"
-                        name="PODate" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Contarct Period <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Period " [(ngModel)]="transport.Period"
+                      <input type="text" class="form-control" placeholder="Enter Period " [(ngModel)]="project.Period"
                         name="Period" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
@@ -125,7 +122,7 @@
                     <div class="form-group">
                       <label>Grace Time  Offered <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Time " [(ngModel)]="transport.GSTAmount"
+                      <input type="text" class="form-control" placeholder="Enter Time " [(ngModel)]="project.GSTAmount"
                         name="Time" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
@@ -133,7 +130,7 @@
                     <div class="form-group">
                       <label>Penalty in Grace Period <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Penalty in Grace Period " [(ngModel)]="transport.PONo"
+                      <input type="text" class="form-control" placeholder="Enter Penalty in Grace Period " [(ngModel)]="project.PONo"
                         name="PONo" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
@@ -141,7 +138,7 @@
                     <div class="form-group">
                       <label>Penalty After Grace Period <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Penalty After Grace Period " [(ngModel)]="transport.PONo"
+                      <input type="text" class="form-control" placeholder="Enter Penalty After Grace Period " [(ngModel)]="project.PONo"
                         name="PONo" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
@@ -149,7 +146,7 @@
                     <div class="form-group">
                       <label>Taxataion  Rate<span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Rate " [(ngModel)]="transport.PONo"
+                      <input type="text" class="form-control" placeholder="Enter Rate " [(ngModel)]="project.PONo"
                         name="PONo" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
@@ -157,7 +154,7 @@
                     <div class="form-group">
                       <label>Retention Percentage <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Percentage " [(ngModel)]="transport.Amount"
+                      <input type="text" class="form-control" placeholder="Enter Percentage " [(ngModel)]="project.Amount"
                         name="Amount" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
@@ -165,23 +162,20 @@
                     <div class="form-group">
                       <label>Retention Period (In Months<span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Period " [(ngModel)]="transport.Amount"
+                      <input type="text" class="form-control" placeholder="Enter Period " [(ngModel)]="project.Amount"
                         name="Amount" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
                   <div class="col-sm-4">
-                    <div class="form-group">
-                      <label for="sel1">Payment Terms <span class="errorMessage">*</span>
-                      </label>
-                      <select class="form-control" [(ngModel)]="transport.PaymentTermId" name="PaymentTermId" required>
-                        <option value="" selected hidden> Select Terms </option>
-                        <option value=""> 100% payment immidiately receiving of material on site.Either cheque / DD or IMPS</option>
-                        
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                        </option>
-                      </select>
+                      <div class="form-group">
+                        <label for="sel1">Payment Terms <span class="errorMessage">*</span>
+                        </label>
+                        <select class="form-control" [(ngModel)]="project.PaymentTermId" name="PaymentTermId" required>
+                          <option value="" selected hidden> Select Terms </option>
+                          <option [value]="des.PayTermId" *ngFor="let des of PayTData">{{des.PayTerm}}</option>
+                        </select>
+                      </div>
                     </div>
-                  </div>
           
                 </div>
            

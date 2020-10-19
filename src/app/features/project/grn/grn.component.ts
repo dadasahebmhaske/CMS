@@ -21,8 +21,8 @@ export class GrnComponent implements OnInit, OnDestroy {
             public loaderbtn: boolean = true;editflag;
             public project:any={};Material:any={};CompQTY;POArray:any=[]
             public MaterialArray:any=[];AMTypeData:any=[];AMData:any=[];TranExists:any=[];ReceivedlocData:any=[];
-
             public SiteData:any=[];VendorData:any=[];ProjectData:any=[];ReceivingSiteData:any=[];POData:any=[];
+            
             constructor(private appService: AppService, private datashare: DatashareService,private allmasterService:AllmasterService,private projectService:ProjectService) {
               this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
              }

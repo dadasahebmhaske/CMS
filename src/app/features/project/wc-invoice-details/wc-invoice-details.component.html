@@ -18,12 +18,10 @@
                     <div class="form-group">
                       <label for="sel1">Site <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.SiteId" name="SiteId" required>
+                      <select class="form-control" [(ngModel)]="project.SiteId" name="SiteId" (change)="onSelectSite(project.SiteId,'S')"
+                        [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Site </option>
-                        <option value=""> Sanskruti </option>
-                        <option value=""> Nirmiti </option>
-                        <option value=""> Akruti </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        <option [value]="des.SiteId" *ngFor="let des of SiteData">{{des.SiteName}}
                         </option>
                       </select>
                     </div>
@@ -32,25 +30,21 @@
                     <div class="form-group">
                       <label for="sel1">Project <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.ProjectId" name="ProjectId" required>
+                      <select class="form-control" [(ngModel)]="project.ProjectId" name="ProjectId"
+                        (change)="onSelectProject('')" [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Project </option>
-                        <option value=""> Samved </option>
-                        <option value=""> Yajurved </option>
-                        <option value=""> Rugved </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        <option [value]="des.ProjectId" *ngFor="let des of ProjectData">{{des.ProjectName}}
                         </option>
                       </select>
                     </div>
                   </div>
                   <div class="col-sm-4">
                     <div class="form-group">
-                      <label for="sel1">Select Work Contract <span class="errorMessage">*</span>
+                      <label for="sel1">Select Work Contract  <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
-                        <option value="" selected hidden> Select Contract </option>
-                        <option value="">CON/PR/01</option>
-                        <option value="">CON/PR/02</option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                      <select class="form-control" [(ngModel)]="project.VendorId" name="VendorId"  (change)="onSelectWorkContract()" [disabled]="project.TranNo!=null" required>
+                        <option value="" selected hidden> Select Work Contract </option>
+                        <option [value]="des.VendorId" *ngFor="let des of InvoiceData">{{des.VendorName}}
                         </option>
                       </select>
                     </div>
@@ -68,7 +62,7 @@
                     <div class="form-group">
                       <label>Invoice Date <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Invoice Date " [(ngModel)]="transport.INVDate"
+                      <input type="text" class="form-control" placeholder="Enter Invoice Date " [(ngModel)]="project.INVDate"
                         name="INVDate" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
