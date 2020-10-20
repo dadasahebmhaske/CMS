@@ -6,6 +6,7 @@ import { MasterService } from '../../../core/custom-services/master.service';
 import { AppService } from '@app/core/custom-services/app.service';
 import { ProjectService } from '../project.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'sa-material-issue-slip-list',
   templateUrl: './material-issue-slip-list.component.html',
@@ -76,14 +77,27 @@ export class MaterialIssueSlipListComponent implements OnInit {
                 }
 
                 onDeleteFunction = ($event) => {
-                  this.datashare.updateShareData($event.row);
-                  this.projectService.getDeleteTransaction($event.row.TranNo, 107).subscribe((resData: any) => {
-                    if (resData.StatusCode != 0) {
-                      this.onLoad();
-                      AppComponent.SmartAlert.Success(resData.Message);
+                  let text = `Do you want to delete this transaction!`
+                  let subText = 'Delete';
+                  Swal.fire({
+                    title: 'Are you sure?',
+                    text: `${text}`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: `Yes, ${subText} it!`,
+                    cancelButtonText: 'No, keep it'
+                  }).then((result) => {
+                    if (result.value) {
+                      this.projectService.getDeleteTransaction($event.row.TranNo, 107).subscribe((resData: any) => {
+                        if (resData.StatusCode != 0) {
+                          this.onLoad();
+                          AppComponent.SmartAlert.Success(resData.Message);
                         }
-                    else {  AppComponent.SmartAlert.Errmsg(resData.Message); }
-                  });
+                        else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+                      });
+                    } else if (result.dismiss === Swal.DismissReason.cancel) { }
+                  })
+              
                 }
 
                 onLoad() {

@@ -6,6 +6,7 @@ import { MasterService } from '../../../core/custom-services/master.service';
 import { AppService } from '@app/core/custom-services/app.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { ProjectService } from '../project.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'sa-payment-details-list',
   templateUrl: './payment-details-list.component.html',
@@ -62,16 +63,33 @@ export class PaymentDetailsListComponent implements OnInit {
     this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/project/payment-details']);
   }
-  onDeleteFunction = ($event) => {
-    this.datashare.updateShareData($event.row);
-    this.projectService.getDeleteTransaction($event.row.TranNo, 106).subscribe((resData: any) => {
-      if (resData.StatusCode != 0) {
-        this.onLoad();
-        AppComponent.SmartAlert.Success(resData.Message);
-          }
-      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
-    });
+  onDeleteFunction = ($event) => {    
+    let text = `Do you want to delete this transaction!`
+    let subText = 'Delete';
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `${text}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: `Yes, ${subText} it!`,
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+        this.projectService.getDeleteTransaction($event.row.TranNo, 106).subscribe((resData: any) => {
+          if (resData.StatusCode != 0) {
+            this.onLoad();
+            AppComponent.SmartAlert.Success(resData.Message);
+              }
+          else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) { }
+    })
+  
   }
+  DispatchOrder(action) {
+    
+  }
+
   onLoad() {
     this.loaderbtn = false;
     this.Filter.StartDate = this.appService.DateToString(this.Filter.StartDate);
