@@ -14,101 +14,114 @@
               <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
                 ngNativeValidate>
                 <div class="row">
-                  <div class="col-sm-3">
-                    <div class="form-group">
-                      <label for="sel1">Site <span class="errorMessage">*</span>
-                      </label>
-                      <select class="form-control" [(ngModel)]="transport.SiteId" name="SiteId" required>
-                        <option value="" selected hidden> Select Site </option>
-                        <option value=""> Sanskruti </option>
-                        <option value=""> Nirmiti </option>
-                        <option value=""> Akruti </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-sm-3">
-                    <div class="form-group">
-                      <label for="sel1">Project <span class="errorMessage">*</span>
-                      </label>
-                      <select class="form-control" [(ngModel)]="transport.ProjectId" name="ProjectId" required>
-                        <option value="" selected hidden> Select Project </option>
-                        <option value=""> Samved </option>
-                        <option value=""> Yajurved </option>
-                        <option value=""> Rugved </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                          <label for="sel1">Site <span class="errorMessage">*</span>
+                          </label>
+                          <select class="form-control" [(ngModel)]="project.SiteId" name="SiteId" (change)="onSelectSite()"  [disabled]="project.TranNo!=null" required>
+                            <option value="" selected hidden> Select Site </option>
+                            <option [value]="des.SiteId" *ngFor="let des of SiteData">{{des.SiteName}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label for="sel1">Project <span class="errorMessage">*</span>
+                          </label>
+                          <select class="form-control" [(ngModel)]="project.ProjectId" name="ProjectId" (change)="onSelectProject('','')"  [disabled]="project.TranNo!=null"  required>
+                            <option value="" selected hidden> Select Project </option>
+                            <option [value]="des.ProjectId" *ngFor="let des of ProjectData">{{des.ProjectName}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
                 </div>
                 <div class="row">
-                   <div class="col-sm-4">
+                   <div class="col-sm-2">
                     <div class="form-group">
                       <label for="sel1">Select Labour <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
+                      <select class="form-control" [(ngModel)]="Material.LabourId" name="LabourId"
+                       [disabled]="Material.index!=null" required >
                         <option value="" selected hidden> Select Labour </option>
-                        <option value="">Kattapa</option>
-                        <option value="">Go reddy</option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
+                        <option [value]="des.LabourId" *ngFor="let des of LabourData">{{des.LabourName}}
                         </option>
                       </select>
                     </div>
                   </div>
-              
-             
+                
                   <div class="col-sm-2">
-                    <div class="form-group">
-                      <label>Date of Work <span class="errorMessage">*</span>
-                      </label>
-                      <input type="text" class="form-control" placeholder="Enter  Date " [(ngModel)]="transport.INVDate"
-                        name="INVDate" saCommonDir dirType="alphanumeric" required />
+                      <div class="form-group">
+                        <label for="sel1">Activity Type<span class="errorMessage">*</span>
+                        </label>
+                        <select class="form-control" [(ngModel)]="Material.TypeId" name="TypeId"
+                        (change)="onSelectActivityMaterial()"   [disabled]="Material.index!=null" required >
+                          <option value="" selected hidden> Select Activity Type </option>
+                          <option [value]="des.TypeId" *ngFor="let des of AMTypeData">{{des.TypeName}}
+                          </option>
+                        </select>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-sm-3">
-                    <div class="form-group">
-                      <label>Labour Work  <span class="errorMessage">*</span>
-                      </label>
-                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
-                        <option value="" selected hidden> Select Work </option>
-                        <option value="">In House Painting</option>
-                        <option value="">In House Gardening</option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                        </option>
-                      </select>
-                    </div> 
-                  </div>
-                  <div class="col-sm-3">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="sel1">Activity / Labour Work <span class="errorMessage">*</span>
+                          </label>
+                          <select class="form-control" [(ngModel)]="Material.WorkId" name="WorkId"
+                          (ngModelChange)="onSelectMaterial()" [disabled]="Material.index!=null" required>
+                            <option value="" selected hidden> Select Activity </option>
+                             <option [value]="des.MatActExpId" *ngFor="let des of filterMaterialArray">{{des.WorkName}}
+                            </option>
+                          </select>
+                        
+                        </div>
+                      </div>  
+                  <div class="col-sm-4">
                     <div class="form-group">
                       <label>Work Done Description<span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Description " [(ngModel)]="transport.InvoiceNo"
+                      <input type="text" class="form-control" placeholder="Enter Description " [(ngModel)]="Material.InvoiceNo"
                         name="InvoiceNo" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
-                  <div class="col-sm-2">
-                    <div class="form-group">
-                      <label>Satrt Date <span class="errorMessage">*</span>
-                      </label>
-                      <input type="text" class="form-control" placeholder="Enter  Date " [(ngModel)]="transport.INVDate"
-                        name="INVDate" saCommonDir dirType="alphanumeric" required />
+                  <div class="col-sm-2 col-xs-8">
+                      <div class="form-group">
+                          <label>Date Of Work  <span class="errorMessage">*</span>
+                          </label>
+                        <label class="posticon">
+                          <i class="icon-append fa fa-calendar"></i>
+                          <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="Material.StartDate" name="StartDate" id="startDate"
+                             onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
+                        </label>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div class="form-group">
-                      <label>End Date <span class="errorMessage">*</span>
-                      </label>
-                      <input type="text" class="form-control" placeholder="Enter  Date " [(ngModel)]="transport.INVDate"
-                        name="INVDate" saCommonDir dirType="alphanumeric" required />
-                    </div>
-                  </div>
+                    <div class="col-sm-2 col-xs-8">
+                        <div class="form-group">
+                            <label>Start Date <span class="errorMessage">*</span>
+                            </label>
+                          <label class="posticon">
+                            <i class="icon-append fa fa-calendar"></i>
+                            <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="Material.StartDate" name="StartDate" id="startDate"
+                               onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-2 col-xs-8">
+                        <div class="form-group">
+                            <label>End Date <span class="errorMessage">*</span>
+                            </label>
+                          <label class="posticon">
+                            <i class="icon-append fa fa-calendar"></i>
+                            <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="Material.EndDate" name="EndDate" onkeydown="return false"
+                              [minDate]="minDate" bsDatepicker [bsConfig]="datePickerConfig" />
+                          </label>
+                        </div>
+                      </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>In Time <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter  Time" [(ngModel)]="transport.Amount"
+                      <input type="text" class="form-control" placeholder="Enter  Time" [(ngModel)]="Material.Amount"
                         name="Amount" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
@@ -116,7 +129,7 @@
                     <div class="form-group">
                       <label>Out Time <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter  Time" [(ngModel)]="transport.Amount"
+                      <input type="text" class="form-control" placeholder="Enter  Time" [(ngModel)]="Material.Amount"
                         name="Amount" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
@@ -124,7 +137,7 @@
                     <div class="form-group">
                       <label>Payment Amount<span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="transport.ChequeNo"
+                      <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="Material.ChequeNo"
                         name="ChequeNo" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
@@ -193,7 +206,7 @@
                   <div class="col-sm-6">
                     <label>
                       <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive"
-                        [(ngModel)]='transport.IsActive' /> Is Active </label>
+                        [(ngModel)]='Material.IsActive' /> Is Active </label>
                   </div>
                 </div>
                 <footer>
