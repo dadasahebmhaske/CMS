@@ -1,112 +1,120 @@
 <!-- MAIN CONTENT -->
 <div id="content">
   <sa-widgets-grid>
-      <div class="row">
-          <article class="col-sm-8 col-sm-offset-2">
-              <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
-                  <header class="text-center">
-                      <h2>
-                          <i class="fa fa-database"></i> Company Master</h2>
-                  </header>
-                  <div>
-                      <div class="widget-body">
-                          <form name="companyForm" #companyForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
-                              <div class="row">
-                                
-                                <div class="col-sm-3">
-                                  <div class="form-group">
-                                    <label for="sel1">Company Type <span class="errorMessage">*</span>
-                                    </label>
-                                    <select class="form-control" [(ngModel)]="company.CompanyTypeId" name="CompanyTypeId" required>
-                                      <option value="" selected hidden> Select Type </option>
-                                      <option [value]="des.TypeId" *ngFor="let des of CompanyTypeData">{{des.TypeName}}
-                                      </option>
-                                    </select>
-                                  </div>
-                                </div>
-                                  <div class="col-sm-5">
-                                      <div class="form-group">
-                                          <label>Company Name <span class="errorMessage">*</span>
-                                          </label>
-                                          <input type="text" class="form-control" placeholder="Enter Company " [(ngModel)]="company.CompanyName" name="CompanyName" saCommonDir
-                                              dirType="alphanumeric" required />
-                                      </div>
-                                  </div>
-                                  <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Company Phone No. <span class="errorMessage">*</span>
-                                        </label>
-                                        <input type="text" class="form-control" placeholder="Enter Phone No. ( +91-0222-1234567 ) " [(ngModel)]="company.CompanyPhoneNo" name="CompanyPhoneNo" saCommonDir
-                                        pattern="^[\+][9]{1}[1]{1}-[0-9]\d{3,4}-[0-9]\d{6,8}$"
-                                        title="Example: +91-0222-1234567"  required />
-                                    </div>
-                                </div>
-                                  <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <label>Address <span class="errorMessage">*</span>
-                                        </label>
-                                        <input type="text" class="form-control" placeholder="Enter Address " [(ngModel)]="company.Address" name="Address" saCommonDir
-                                            dirType="alphanumeric" required />
-                                    </div>
-                                </div>
-                             
-                              <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Contact Person Name <span class="errorMessage">*</span>
-                                    </label>
-                                    <input type="text" class="form-control" placeholder="Enter Person Name " [(ngModel)]="company.ContactPersonName" name="ContactPersonName" saCommonDir
-                                        dirType="alphaonly" required />
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                              <div class="form-group">
-                                  <label>Contact Person Phone No. <span class="errorMessage">*</span>
-                                  </label>
-                                  <input type="text" class="form-control" placeholder="Enter Phone No. ( +91-0222-1234567 ) " [(ngModel)]="company.ContactPersonPhoneNo" name="ContactPersonPhoneNo" saCommonDir
-                                  pattern="^[\+][9]{1}[1]{1}-[0-9]\d{3,4}-[0-9]\d{6,8}$"
-                                  title="Example: +91-0222-1234567"  required />
-                              </div>
-                          </div>
-                                <div class="col-sm-4">
-                                  <div class="form-group">
-                                    <label for="sel1">GSTN 
-                                    </label>
-                                    <input type="text" class="form-control" placeholder="Enter GSTN "  title="Example: 27AABCU9603R1Z2" [(ngModel)]="company.GSTNo" name="GSTNo"
-                                    pattern="([0-9]{1}[1-9]{1})|([1-9]{1}[0-9]{1})[a-zA-Z]{5}\d{4}[a-zA-Z]{1}\d{1}[a-zA-Z]{1}[a-zA-Z0-9]{1}"    />
-                                  </div>
-                                </div>
-                                <div class="col-sm-4">
-                                  <div class="form-group">
-                                    <label for="sel1">PAN <span class="errorMessage">*</span>
-                                    </label>
-                                    <input type="text" class="form-control" placeholder="Enter PAN " [(ngModel)]="company.PANNo" name="PANNo"
-                                    title="Example: COZXM8987B"  pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" saCommonDir dirType="alphanumericupper"  required />
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                          
-                                <div class="col-sm-6">
-                                      <label>
-                                          <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='company.IsActive' /> Is Active </label>
-                                  </div>
-                              </div>
-                              <footer>
-                                  <div class="row">
-                                      <div class="col-sm-12 ">
-                                          <hr />
-                                          <a class="pull-right btn btn-default" routerLink="/master/company-master">
-                                              <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
-                                          <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
-                                              <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Submit':'Loading'}}</button>
-                                      </div>
-                                  </div>
-                              </footer>
-                          </form>
-                      </div>
+    <div class="row">
+      <article class="col-sm-8 col-sm-offset-2">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true"
+          minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2>
+              <i class="fa fa-database"></i> Company Master</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <form name="companyForm" #companyForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
+                ngNativeValidate>
+                <div class="row">
+
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="sel1">Company Type <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="company.CompanyTypeId" name="CompanyTypeId" required>
+                        <option value="" selected hidden> Select Type </option>
+                        <option [value]="des.TypeId" *ngFor="let des of CompanyTypeData">{{des.TypeName}}
+                        </option>
+                      </select>
+                    </div>
                   </div>
-              </div>
-          </article>
-      </div>
+                  <div class="col-sm-5">
+                    <div class="form-group">
+                      <label>Company Name <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Company "
+                        [(ngModel)]="company.CompanyName" name="CompanyName" saCommonDir dirType="alphanumeric"
+                        required />
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label>Company Contact No. <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Contact No. "
+                        [(ngModel)]="company.CompanyPhoneNo" name="CompanyPhoneNo" saCommonDir dirType="number"
+                        required />
+                    </div>
+                  </div>
+                  <div class="col-sm-8">
+                    <div class="form-group">
+                      <label>Address <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Address " [(ngModel)]="company.Address"
+                        name="Address" saCommonDir dirType="alphanumeric" required />
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label>Contact Person Name <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Person Name "
+                        [(ngModel)]="company.ContactPersonName" name="ContactPersonName" saCommonDir dirType="alphaonly"
+                        required />
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label>Contact Person Contact No. <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Contact No. "
+                        [(ngModel)]="company.ContactPersonPhoneNo" name="ContactPersonPhoneNo" saCommonDir
+                        dirType="number" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label for="sel1">GSTN
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter GSTN " title="Example: 27AABCU9603R1Z2"
+                        [(ngModel)]="company.GSTNo" name="GSTNo"
+                        pattern="([0-9]{1}[1-9]{1})|([1-9]{1}[0-9]{1})[a-zA-Z]{5}\d{4}[a-zA-Z]{1}\d{1}[a-zA-Z]{1}[a-zA-Z0-9]{1}" />
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label for="sel1">PAN <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter PAN " [(ngModel)]="company.PANNo"
+                        name="PANNo" title="Example: COZXM8987B" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" saCommonDir
+                        dirType="alphanumericupper" required />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+
+                  <div class="col-sm-6">
+                    <label>
+                      <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive"
+                        [(ngModel)]='company.IsActive' /> Is Active </label>
+                  </div>
+                </div>
+                <footer>
+                  <div class="row">
+                    <div class="col-sm-12 ">
+                      <hr />
+                      <a class="pull-right btn btn-default" routerLink="/master/company-master">
+                        <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
+                        {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                    </div>
+                  </div>
+                </footer>
+              </form>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
   </sa-widgets-grid>
 </div>
