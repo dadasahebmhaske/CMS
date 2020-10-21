@@ -158,9 +158,10 @@
                           <tr align="center" class="text-center">
                             <th class="text-center">#</th>
                             <th class="text-center">Labour </th>
-                            <th class="text-center">Date of Work </th>
-                            <th class="text-center">Labour work </th>
+                            <th class="text-center">Activity Type </th>
+                            <th class="text-center">Ativity </th>
                             <th class="text-center">Work Description </th>
+                            <th class="text-center">Date of Work </th>
                             <th class="text-center">Start Date</th>
                             <th class="text-center">End Date</th>
                             <th class="text-center">In Time</th>
@@ -170,29 +171,18 @@
 
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>1</td>
+                            <tr *ngFor="let mat of MaterialArray;index as i">
+                            <td class="text-center"><span (onload)="check(i)">{{i+1}}.</span></td>
                             <td>Amir Khan</td>
-                            <td class="text-center">1/Sep/2020</td>
-                            <td>Plantation</td>
-                            <td >Around the wall compond</td>
-                            <td class="text-center">1/Sep/2020</td>
-                            <td class="text-center">1/Sep/2020</td>
-                            <td class="text-center">10 am</td>
-                            <td class="text-center">6 pm</td>
-                            <td class="text-center">500</td>
-                          </tr>
-                          <tr>
-                            <td>2</td>
-                            <td>Rocky Kumar</td>
-                            <td class="text-center">1/Sep/2020</td>
-                            <td>Plantation</td>
-                            <td >Around the wall compond</td>
-                            <td class="text-center">1/Sep/2020</td>
-                            <td class="text-center">1/Sep/2020</td>
-                            <td class="text-center">10 am</td>
-                            <td class="text-center">6 pm</td>
-                            <td class="text-center">500</td>
+                            <td ><strong *ngIf="mat.show">{{mat.TypeName}}</strong></td>  
+                            <td>{{mat.WorkName}}</td>
+                            <td class="text-center">{{mat.Desc}}</td>
+                            <td class="text-center">{{mat.Datework}}</td>
+                            <td class="text-center">{{mat.StartDate}}</td>
+                            <td class="text-center">{{mat.EndDate}}</td>
+                            <td class="text-center">{{mat.InTime}}</td>
+                            <td class="text-center">{{mat.OutTime}}</td>
+                            <td class="text-center">{{mat.PaymentAmount}}</td>
                           </tr>
 
 

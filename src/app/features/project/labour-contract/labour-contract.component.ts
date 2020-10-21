@@ -82,8 +82,8 @@ export class LabourContractComponent implements OnInit, OnDestroy {
                     this.project = resTran.Data.Table1[0];
                     this.MaterialArray = resTran.Data.Table2;
                     this.onSelectSite(this.project.SiteId,'S');
-                   this.onSelectProject('','');
-                  // this.onSelectProject(this.project.RefTranNo);
+                   this.onSelectProject('');
+                   this.onSelectProject(this.project.RefTranNo);
                   // this.onSelectVendor(); 
                    
                     let tempArray = [];
@@ -109,7 +109,7 @@ export class LabourContractComponent implements OnInit, OnDestroy {
                 });
               }
 
-              public onSelectProject(TranNo,RefTranNo) {
+              public onSelectProject(RefTranNo) {
                 if(this.project.TranNo==null){
                   this.MaterialArray=[];
                   this.Material={};
@@ -121,7 +121,7 @@ export class LabourContractComponent implements OnInit, OnDestroy {
                 let tranNo=this.project.TranNo==null?'':this.project.TranNo;
                 this.projectService.getContractorLabourWork(tranNo,this.project.ProjectId,'').subscribe((resData: any) => {
                   if (resData.StatusCode != 0) {
-                  if(tranNo==''){ 
+                  if(RefTranNo==''){ 
                     this.AMTypeData = resData.Data.Table1;
                     this.AMData = resData.Data.Table2;
                   }
