@@ -43,10 +43,10 @@
                     <div class="form-group">
                       <label for="sel1">Select Contractor <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="project.RefTranNo" name="RefTranNo"
+                      <select class="form-control" [(ngModel)]="project.ContractorId" name="ContractorId"
                         (change)="onSelectProject(project.RefTranNo)" [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Contractor </option>
-                        <option [value]="des.TranNo" *ngFor="let des of ContractorData">{{des.DispTranNo}}
+                        <option [value]="des.CompanyId" *ngFor="let des of ContractorData">{{des.ContactPersonName}}
                         </option>
                       </select>
                     </div>
@@ -56,7 +56,7 @@
                       <label>Contract Date <span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker
-                        [(ngModel)]="project.ChallanDate" name="ChallanDate" id="startDate" onkeydown="return false"
+                        [(ngModel)]="project.ContractDate" name="ContractDate" id="startDate" onkeydown="return false"
                         bsDatepicker [bsConfig]="datePickerConfig" />
                     </div>
                   </div>
@@ -66,7 +66,7 @@
                         </label>
                       <label class="posticon">
                         <i class="icon-append fa fa-calendar"></i>
-                        <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="project.StartDate" name="Startdate" id="startDate"
+                        <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="project.StartDate" name="StartDate" id="startDate"
                            onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
                       </label>
                     </div>
@@ -86,30 +86,45 @@
                     <div class="form-group">
                       <label>Contarct Period (In days)<span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Period " [(ngModel)]="project.Period"
-                        name="Period" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Period " [(ngModel)]="project.ContarctPeriod"
+                        name="ContarctPeriod" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
                 </div>
                 <form name="materialForm" #materialForm="ngForm" (ngSubmit)="addMaterial()" autocomplete="off"
                 ngNativeValidate>
                 <div class="row">
-                  <div class="col-sm-3">
-                    <div class="form-group">
-                      <label for="sel1">Select Labour Work <span class="errorMessage">*</span>
-                      </label>
-                      <select class="form-control" [(ngModel)]="project.WorkId" name="WorkId"  (change)="onSelectVendor()" [disabled]="project.TranNo!=null" required>
-                        <option value="" selected hidden> Select Labour </option>
-                        <option [value]="des.WorkId" *ngFor="let des of LabourWork">{{des.WorkName}}
-                        </option>
-                      </select>
-                    </div>
-                  </div> <div class="col-sm-1">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="sel1">Activity Type<span class="errorMessage">*</span>
+                          </label>
+                          <select class="form-control" [(ngModel)]="Material.TypeId" name="TypeId"
+                          (change)="onSelectActivityMaterial()"   [disabled]="Material.index!=null" required >
+                            <option value="" selected hidden> Select Activity Type </option>
+                            <option [value]="des.TypeId" *ngFor="let des of AMTypeData">{{des.TypeName}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-2">
+                          <div class="form-group">
+                            <label for="sel1">Activity / Labour Work <span class="errorMessage">*</span>
+                            </label>
+                            <select class="form-control" [(ngModel)]="Material.WorkId" name="WorkId"
+                            (ngModelChange)="onSelectMaterial()" [disabled]="Material.index!=null" required>
+                              <option value="" selected hidden> Select Activity </option>
+                               <option [value]="des.MatActExpId" *ngFor="let des of filterMaterialArray">{{des.WorkName}}
+                              </option>
+                            </select>
+                          
+                          </div>
+                        </div>  
+                  <div class="col-sm-1">
                     <div class="form-group">
                       <label>Qty of Work<span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder="Enter Qty " [(ngModel)]="Material.UQty"
-                        name="UQty"  (ngModelChange)="GetCalculate()" saCommonDir dirType="number" required />
+                        name="UQty"  (ngModelChange)="GetCalculate()"  saCommonDir dirType="number" required />
                     </div>
                   </div>
                   <div class="col-sm-1">
@@ -125,7 +140,7 @@
                       <label>Rate <span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder=" Rate " [(ngModel)]="Material.URate"
-                        name="URate"  (ngModelChange)="GetCalculate()" saCommonDir dirType="decimal" required />
+                        name="URate"  (ngModelChange)="GetCalculate()"  saCommonDir dirType="decimal" required />
                     </div>
                   </div>
                   <div class="col-sm-1">
@@ -207,7 +222,7 @@
                           <thead>
                             <tr align="center" class="text-center">
                               <th class="text-center">#</th>
-                              <!-- <th>Material Type</th> -->
+                              <th>Material Type</th>
                               <th>Labour Work </th>
                               <th class="text-center">Quantity</th>
                               <th class="text-center">Unit</th>
@@ -227,8 +242,8 @@
                           <tbody>
                             <tr *ngFor="let mat of MaterialArray;index as i">
                               <td class="text-center"><span (onload)="check(i)">{{i+1}}.</span></td>
-                              <!-- <td ><strong *ngIf="mat.show">{{mat.TypeName}}</strong></td>                          -->
-                              <td>{{mat.MatName}}</td>
+                             <td ><strong *ngIf="mat.show">{{mat.TypeName}}</strong></td>  
+                              <td>{{mat.WorkName}}</td>
                               <td class="text-center">{{mat.Qty==0?'':mat.Qty}}</td>
                               <td class="text-center">{{mat.UOM}}</td>
                               <td class="text-center">{{mat.Rate}}</td>
@@ -246,9 +261,9 @@
                               </td>
                             </tr>  
                             <tr>
-                              <td colspan="5" class="text-right"><strong>TOTAL</strong></td>
+                              <td colspan="6" class="text-right"><strong>TOTAL</strong></td>
                               <td class="text-center"><strong>{{project.TotalAmtCost}}</strong>  </td>
-                              <td></td>    <td></td>    <td></td>
+                              <td></td>    <td></td>    <td></td> 
                               <td class="text-center"><strong>{{project.TotIGSTCost}}</strong>  </td>
                               <td class="text-center"><strong>{{project.TotSGSTCost}}</strong>  </td>
                               <td class="text-center"><strong>{{project.TotCGSTCost}}</strong>  </td>
@@ -265,24 +280,24 @@
                     <div class="form-group">
                       <label>Grace Time  Offered (In days) <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Time " [(ngModel)]="project.GSTAmount"
-                        name="Time" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Time " [(ngModel)]="project.GraceTimeOffered"
+                        name="GraceTimeOffered" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
                       <label>Penalty Amount in Grace Period <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Penalty Amount in Grace Period " [(ngModel)]="project.PONo"
-                        name="PONo" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Penalty Amount in Grace Period " [(ngModel)]="project.PenaltyGracePeriod"
+                        name="PenaltyGracePeriod" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
                       <label>Penalty Amount After Grace Period <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Penalty Amount After Grace Period " [(ngModel)]="project.PONo"
-                        name="PONo" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Penalty Amount After Grace Period " [(ngModel)]="project.PenaltyAfterGracePeriod"
+                        name="PenaltyAfterGracePeriod" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
             
@@ -290,19 +305,19 @@
                     <div class="form-group">
                       <label>Retention Percentage <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Percentage " [(ngModel)]="project.Amount"
-                        name="Amount" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Percentage " [(ngModel)]="project.RetentionPercentage"
+                        name="RetentionPercentage" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Retention Period (In Months)<span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Period " [(ngModel)]="project.Amount"
-                        name="Amount" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Period " [(ngModel)]="project.RetentionPeriod"
+                        name="RetentionPeriod" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
-                  <div class="col-sm-5">
+                  <div class="col-sm-4">
                       <div class="form-group">
                         <label for="sel1">Payment Terms <span class="errorMessage">*</span>
                         </label>
@@ -316,8 +331,8 @@
                       <div class="form-group">
                         <label>Remark
                         </label>
-                        <input type="text" class="form-control" placeholder="Enter Remark " [(ngModel)]="project.Amount"
-                          name="Amount" saCommonDir dirType="alphanumeric"  />
+                        <input type="text" class="form-control" placeholder="Enter Remark " [(ngModel)]="project.Remark"
+                          name="Remark" saCommonDir dirType="alphanumeric"  />
                       </div>
                     </div>
           

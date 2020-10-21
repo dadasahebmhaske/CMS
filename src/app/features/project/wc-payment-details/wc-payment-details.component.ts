@@ -88,7 +88,7 @@ export class WcPaymentDetailsComponent implements OnInit, OnDestroy {
   }
   public getTranData() {
     this.editflag='E';
-    this.projectService.getTransDetails(106, this.project.TranNo).subscribe((resTran: any) => {
+    this.projectService.getTransDetails(111, this.project.TranNo).subscribe((resTran: any) => {
       if (resTran.StatusCode != 0) { 
         this.TranExists = resTran.Data.Table;
        this.project = resTran.Data.Table1[0];

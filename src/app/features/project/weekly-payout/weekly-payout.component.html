@@ -14,49 +14,44 @@
               <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
                 ngNativeValidate>
                 <div class="row">
-                  <div class="col-sm-2">
-                    <div class="form-group">
-                      <label for="sel1">Site <span class="errorMessage">*</span>
-                      </label>
-                      <select class="form-control" [(ngModel)]="transport.SiteId" name="SiteId" required>
-                        <option value="" selected hidden> Select Site </option>
-                        <option value=""> Sanskruti </option>
-                        <option value=""> Nirmiti </option>
-                        <option value=""> Akruti </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div class="form-group">
-                      <label for="sel1">Project <span class="errorMessage">*</span>
-                      </label>
-                      <select class="form-control" [(ngModel)]="transport.ProjectId" name="ProjectId" required>
-                        <option value="" selected hidden> Select Project </option>
-                        <option value=""> Samved </option>
-                        <option value=""> Yajurved </option>
-                        <option value=""> Rugved </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div class="form-group">
-                      <label for="sel1">Select Labour<span class="errorMessage">*</span>
-                      </label>
-                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
-                        <option value="" selected hidden> Select Labour </option>
-                        <option value="">Makrand Puri</option>
-                        <option value="">Honey Singh</option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                          <label for="sel1">Site <span class="errorMessage">*</span>
+                          </label>
+                          <select class="form-control" [(ngModel)]="project.SiteId" name="SiteId" (change)="onSelectSite(project.SiteId)"
+                            [disabled]="project.TranNo!=null" required>
+                            <option value="" selected hidden> Select Site </option>
+                            <option [value]="des.SiteId" *ngFor="let des of SiteData">{{des.SiteName}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label for="sel1">Project <span class="errorMessage">*</span>
+                          </label>
+                          <select class="form-control" [(ngModel)]="project.ProjectId" name="ProjectId"
+                            (change)="onSelectProject('')" [disabled]="project.TranNo!=null" required>
+                            <option value="" selected hidden> Select Project </option>
+                            <option [value]="des.ProjectId" *ngFor="let des of ProjectData">{{des.ProjectName}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                          <div class="form-group">
+                            <label for="sel1">Select Work Labour<span class="errorMessage">*</span>
+                            </label>
+                            <select class="form-control" [(ngModel)]="project.RefTranNo" name="RefTranNo"
+                              (change)="onSelectProject(project.RefTranNo)" [disabled]="project.TranNo!=null" required>
+                              <option value="" selected hidden> Select PO </option>
+                              <option [value]="des.TranNo" *ngFor="let des of POArray">{{des.DispTranNo}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
 
-                  <div class="col-sm-2">
+                  <!-- <div class="col-sm-2">
                     <div class="form-group">
                       <label>Start Date <span class="errorMessage">*</span>
                       </label>
@@ -80,7 +75,7 @@
                         <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
                         {{loaderbtn==true? 'Get Details':'Loading'}}</button>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="col-sm-6">
                     <div class="table-responsive">
                       <table class="table table-hover">

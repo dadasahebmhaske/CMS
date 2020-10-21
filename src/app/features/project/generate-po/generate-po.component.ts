@@ -43,12 +43,6 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
       }
       else { this.SiteData = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
     });
-    // this.projectService.getAMType(2).subscribe((resMaterial: any) => {
-    //   if (resMaterial.StatusCode != 0) {
-    //     this.AMTypeData = resMaterial.Data; 
-    //   }
-    //   else { this.AMTypeData = []; AppComponent.SmartAlert.Errmsg(resMaterial.Message); }
-    // });
 
     this.allmasterService.getPayTerm('Y').subscribe((resPData: any) => {
       if (resPData.StatusCode != 0) {
