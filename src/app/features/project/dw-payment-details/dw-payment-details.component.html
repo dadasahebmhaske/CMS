@@ -14,65 +14,55 @@
               <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
                 ngNativeValidate>
                 <div class="row">
-                  <div class="col-sm-3">
-                    <div class="form-group">
-                      <label for="sel1">Site <span class="errorMessage">*</span>
-                      </label>
-                      <select class="form-control" [(ngModel)]="transport.SiteId" name="SiteId" required>
-                        <option value="" selected hidden> Select Site </option>
-                        <option value=""> Sanskruti </option>
-                        <option value=""> Nirmiti </option>
-                        <option value=""> Akruti </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-sm-3">
-                    <div class="form-group">
-                      <label for="sel1">Project <span class="errorMessage">*</span>
-                      </label>
-                      <select class="form-control" [(ngModel)]="transport.ProjectId" name="ProjectId" required>
-                        <option value="" selected hidden> Select Project </option>
-                        <option value=""> Samved </option>
-                        <option value=""> Yajurved </option>
-                        <option value=""> Rugved </option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-sm-3">
-                    <div class="form-group">
-                      <label for="sel1">Project Executive <span class="errorMessage">*</span>
-                      </label>
-                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
-                        <option value="" selected hidden> Select Executive </option>
-                        <option value="">Executive 1</option>
-                        <option value="">Executive 2</option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-sm-3">
-                    <div class="form-group">
-                      <label for="sel1">Weekly Pyaout <span class="errorMessage">*</span>
-                      </label>
-                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
-                        <option value="" selected hidden> Select Pyaout </option>
-                        <option value="">payout/109</option>
-                        <option value="">payout/107</option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                          <label for="sel1">Site <span class="errorMessage">*</span>
+                          </label>
+                          <select class="form-control" [(ngModel)]="project.SiteId" name="SiteId" (change)="onSelectSite()"  [disabled]="project.TranNo!=null" required>
+                            <option value="" selected hidden> Select Site </option>
+                            <option [value]="des.SiteId" *ngFor="let des of SiteData">{{des.SiteName}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label for="sel1">Project <span class="errorMessage">*</span>
+                          </label>
+                          <select class="form-control" [(ngModel)]="project.ProjectId" name="ProjectId" (change)="onSelectProject('','')"  [disabled]="project.TranNo!=null"  required>
+                            <option value="" selected hidden> Select Project </option>
+                            <option [value]="des.ProjectId" *ngFor="let des of ProjectData">{{des.ProjectName}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                          <div class="form-group">
+                            <label for="sel1">Project Executive <span class="errorMessage">*</span>
+                            </label>
+                            <select class="form-control" [(ngModel)]="project.ProjectExecutiveId" name="ProjectExecutiveId"  [disabled]="project.TranNo!=null"  (change)="onSelectProjectExecutive()" required>
+                              <option value="" selected hidden> Select Engineer </option>
+                              <option [value]="des.ProjectExecutiveId" *ngFor="let des of ExecutiveData">{{des.ExecutiveName}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="form-group">
+                            <label for="sel1">Weekly Payout <span class="errorMessage">*</span>
+                            </label>
+                            <select class="form-control" [(ngModel)]="project.RefTranNo" name="RefTranNo" (change)="onSelectProject('',project.RefTranNo)"  [disabled]="project.TranNo!=null" required>
+                              <option value="" selected hidden> Select Weekly Payout </option>
+                              <option [value]="des.TranNo" *ngFor="let des of WeeklyPayoutArray">{{des.DispTranNo}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Payment Date <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Payment Date " [(ngModel)]="transport.PayDate"
+                      <input type="text" class="form-control" placeholder="Enter Payment Date " [(ngModel)]="project.PayDate"
                         name="PayDate" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
@@ -80,7 +70,7 @@
                     <div class="form-group">
                       <label>Payment Amount <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Payment Amount " [(ngModel)]="transport.Amount"
+                      <input type="text" class="form-control" placeholder="Enter Payment Amount " [(ngModel)]="project.Amount"
                         name="Amount" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
@@ -88,7 +78,7 @@
                     <div class="form-group">
                       <label for="sel1">Payment Mode <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
+                      <select class="form-control" [(ngModel)]="project.PManageId" name="PManageId" required>
                         <option value="" selected hidden> Select Mode </option>
                         <option value="">Cheque</option>
                         <option value="">RTGS  Number</option>
@@ -101,7 +91,7 @@
                     <div class="form-group">
                       <label>Cheque <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Cheque No. " [(ngModel)]="transport.ChequeNo"
+                      <input type="text" class="form-control" placeholder="Enter Cheque No. " [(ngModel)]="project.ChequeNo"
                         name="ChequeNo" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
@@ -109,7 +99,7 @@
                     <div class="form-group">
                       <label>RTGS  No. <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter RTGS  No." [(ngModel)]="transport.ChequeNo"
+                      <input type="text" class="form-control" placeholder="Enter RTGS  No." [(ngModel)]="project.ChequeNo"
                         name="ChequeNo" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
@@ -119,7 +109,7 @@
                   <div class="col-sm-6">
                     <label>
                       <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive"
-                        [(ngModel)]='transport.IsActive' /> Is Active </label>
+                        [(ngModel)]='project.IsActive' /> Is Active </label>
                   </div>
                 </div>
                 <footer>
