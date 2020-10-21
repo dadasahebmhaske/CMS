@@ -93,7 +93,7 @@ export class MInvoiceDetailsComponent implements OnInit, OnDestroy {
         this.TranExists = resTran.Data.Table;
        this.project = resTran.Data.Table1[0];
         this.onSelectSite();
-        this.onSelectProject('');
+        this.onSelectProject(this.project.RefTranNo);
         this.onSelectVendor();      
         this.MaterialArray = resTran.Data.Table2;
         let tempArray = [];

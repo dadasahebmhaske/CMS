@@ -47,8 +47,15 @@ export class ProjectService {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetDataForTransactions?TranNo=${TranNo}&RefTranNo=${RefTranNo}&TranType=105&TranSubType=1&Id=${ProjectId}&TypeId=&MainTypeId=&IsActive=Y`);
 
   }
+
   public getInvoiceDeatils(TranNo,ProjectId,RefTranNo) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetDataForTransactions?TranNo=${TranNo}&RefTranNo=${RefTranNo}&TranType=106&TranSubType=1&Id=${ProjectId}&TypeId=&MainTypeId=&IsActive=Y`);
+  }
+  public getWorkContractDeatils(TranNo,ProjectId,RefTranNo) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetDataForTransactions?TranNo=${TranNo}&RefTranNo=${RefTranNo}&TranType=110&TranSubType=1&Id=${ProjectId}&TypeId=&MainTypeId=&IsActive=Y`);
+  }
+  public getWCInvoiceDeatils(TranNo,ProjectId,RefTranNo) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetDataForTransactions?TranNo=${TranNo}&RefTranNo=${RefTranNo}&TranType=111&TranSubType=1&Id=${ProjectId}&TypeId=&MainTypeId=&IsActive=Y`);
   }
   public getTransactionlist(TranType,filter) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetTransactionList?TranType=${TranType}&TranSubType=1&FromDate=${filter.StartDate}&ToDate=${filter.EndDate}&UserCode=101&IsActive=Y`);

@@ -11,14 +11,20 @@
           </header>
           <div>
             <div class="widget-body">
-              <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
+              <div class="row">
+                  <div class="col-sm-12" *ngIf="project.TranNo!=null" style="font-size:14px;margin-top: 11px;">
+                      <label style="margin-right:20px;"><strong>Trans No. : <span class="text-primary">{{project.DispTranNo}}</span></strong></label>
+                      <label><strong>Trans Date : <span class="text-primary">{{project.TranDate}}</span></strong></label>
+                      </div>
+              </div>
+              <form name="paymentForm" #paymentForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
                 ngNativeValidate>
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group">
                       <label for="sel1">Site <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="project.SiteId" name="SiteId" (change)="onSelectSite(project.SiteId,'S')"
+                      <select class="form-control" [(ngModel)]="project.SiteId" name="SiteId" (change)="onSelectSite()"
                         [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Site </option>
                         <option [value]="des.SiteId" *ngFor="let des of SiteData">{{des.SiteName}}
@@ -40,93 +46,168 @@
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <label for="sel1">SelectInvoice  <span class="errorMessage">*</span>
+                      <label for="sel1">Contractor <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="project.VendorId" name="VendorId"  (change)="onSelectVendor()" [disabled]="project.TranNo!=null" required>
-                        <option value="" selected hidden> Select Invoice </option>
-                        <option [value]="des.VendorId" *ngFor="let des of InvoiceData">{{des.VendorName}}
+                      <select class="form-control" [(ngModel)]="project.VendorId" name="VendorId"
+                        (change)="onSelectVendor()"  [disabled]="project.TranNo!=null" required>
+                        <option value="" selected hidden> Select Contractor </option>
+                        <option [value]="des.VendorId" *ngFor="let des of VendorData">{{des.VendorName}}
                         </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="sel1">Select Invoice <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="project.RefTranNo" name="RefTranNo"
+                        (change)="onSelectInvoice();onSelectProject(project.RefTranNo)"  [disabled]="project.TranNo!=null" required>
+                        <option value="" selected hidden> Select Invoice </option>
+                        <option [value]="des.TranNo" *ngFor="let des of InvoiceArray">{{des.DispTranNo}}
                       </select>
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
-                      <label>Invoice  No. <span class="errorMessage">*</span>
+                      <label>Invoice No. <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Invoice No. " [(ngModel)]="transport.InvoiceNo"
-                        name="InvoiceNo" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Invoice No. " disabled
+                        [(ngModel)]="project. VendorInvoiceNo" name="VendorInvoiceNo" saCommonDir dirType="alphanumeric"
+                        required />
                     </div>
                   </div>
-             
+
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Invoice Date <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Invoice Date " [(ngModel)]="transport.INVDate"
-                        name="INVDate" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Invoice Date"
+                        [(ngModel)]="project.InvoiceDate" id="InvoiceDate" name="InvoiceDate" onkeydown="return false"
+                        bsDatepicker [bsConfig]="datePickerConfig" disabled required />
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Payment Date <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Payment Date " [(ngModel)]="transport.PayDate"
-                        name="PayDate" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Payment Date"
+                        [(ngModel)]="project.PaymentDate" id="PaymentDate" name="PaymentDate" onkeydown="return false"
+                        bsDatepicker [bsConfig]="datePickerConfig" required />
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Payment Amount <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Payment Amount " [(ngModel)]="transport.Amount"
-                        name="Amount" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Payment Amount " disabled
+                        [(ngModel)]="project.TotAmount" name="TotAmount" saCommonDir dirType="decimal" required />
                     </div>
                   </div>
-                  <div class="col-sm-4">
+                  <div class="col-sm-2">
                     <div class="form-group">
                       <label for="sel1">Payment Mode <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="transport.PManageId" name="PManageId" required>
+                      <select class="form-control" [(ngModel)]="project.PayMode" name="PayMode" required>
                         <option value="" selected hidden> Select Mode </option>
-                        <option value="">Cheque</option>
-                        <option value="">RTGS  Number</option>
-                        <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}
-                        </option>
+                        <option value="101">Cheque</option>
+                        <option value="102">RTGS </option>
                       </select>
                     </div>
                   </div>
-                  <div class="col-sm-2">
+                  <div class="col-sm-2" *ngIf="project.PayMode==101">
                     <div class="form-group">
                       <label>Cheque <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Cheque No. " [(ngModel)]="transport.ChequeNo"
+                      <input type="text" class="form-control" placeholder="Enter Cheque No. "
+                        [(ngModel)]="project.ChequeNo" name="ChequeNo" saCommonDir dirType="number" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-2" *ngIf="project.PayMode==102">
+                    <div class="form-group">
+                      <label>RTGS No. <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter RTGS  No." [(ngModel)]="project.RTGSNo"
                         name="ChequeNo" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
-                  <div class="col-sm-2">
+                  <div class="col-sm-12" >
                     <div class="form-group">
-                      <label>RTGS  No. <span class="errorMessage">*</span>
+                      <label>Remark
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter RTGS  No." [(ngModel)]="transport.ChequeNo"
-                        name="ChequeNo" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Remark" [(ngModel)]="project.Remark"
+                        name="Remark"  />
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr align="center" class="text-center">
+                            <th  class="text-center">#</th>
+                            <th >Material Type</th>
+                            <th >Material</th>
+                            <th  class="text-center">Quantity</th>
+                            <th class="text-center">Unit</th>
+                            <th  class="text-center">Rate</th>
+                            <th class="text-center">Amount</th>
+                            <th class="text-center">IGST %</th>
+                            <th class="text-center">SGST %</th>
+                            <th class="text-center">CGST %</th>
+                            <th class="text-center">IGST Amount</th>
+                            <th class="text-center">SGST Amount</th>
+                            <th class="text-center">CGST Amount</th>
+                            <th class="text-center">Total Amount </th> 
+                          </tr>
+
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let mat of MaterialArray;index as i">
+                            <td class="text-center">{{i+1}}.</td>
+                            <td ><strong *ngIf="mat.show">{{mat.TypeName}}</strong></td>                         
+                            <td>{{mat.MatName}}</td>
+                            <td class="text-center">{{mat.Qty==0?'':mat.Qty}}</td>
+                                                        <td class="text-center">{{mat.UOM}}</td>
+                            <td class="text-center">{{mat.Rate}}</td>
+                            <td class="text-center">{{mat.Amount}}</td>
+                            <td class="text-center">{{mat.IGST}}</td>
+                            <td class="text-center">{{mat.SGST}}</td>
+                            <td class="text-center">{{mat.CGST}}</td>
+                            <td class="text-center">{{mat.IGSTAmount}}</td>
+                            <td class="text-center">{{mat.SGSTAmount}}</td>
+                            <td class="text-center">{{mat.CGSTAmount}}</td>
+                            <td class="text-center">{{mat.TotalAmount}}</td>
+                        
+                          </tr>
+                          
+                          <tr>
+                            <td colspan="6" class="text-right"><strong>TOTAL</strong></td>
+                            <td class="text-center"><strong>{{project.TotalAmtCost}}</strong>  </td>
+                            <td></td>    <td></td>    <td></td>
+                            <td class="text-center"><strong>{{project.TotIGSTCost}}</strong>  </td>
+                            <td class="text-center"><strong>{{project.TotSGSTCost}}</strong>  </td>
+                            <td class="text-center"><strong>{{project.TotCGSTCost}}</strong>  </td>
+                            <td class="text-center"><strong>{{project.TotProjectCost}}</strong>  </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
-           
-                <div class="row">
+
+                <!-- <div class="row">
                   <div class="col-sm-6">
                     <label>
                       <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive"
-                        [(ngModel)]='transport.IsActive' /> Is Active </label>
+                        [(ngModel)]='project.IsActive' /> Is Active </label>
                   </div>
-                </div>
+                </div> -->
                 <footer>
                   <div class="row">
                     <div class="col-sm-12 ">
                       <hr />
                       <a class="pull-right btn btn-default" routerLink="/project/wc-payment-details-list">
                         <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
-                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                      <button class="pull-right btn btn-primary marg-right" type="submit"  [disabled]="!loaderbtn || MaterialArray.length==0">
                         <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
                         {{loaderbtn==true? 'Submit':'Loading'}}</button>
                     </div>

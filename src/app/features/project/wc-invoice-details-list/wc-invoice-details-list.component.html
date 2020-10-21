@@ -9,46 +9,47 @@
           </header>
           <div>
             <div class="widget-body"> 
-                <div class="row ">
-                    <form name="orderDeliveredForm" #orderDeliveredForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
-                
-                        <div class="col-sm-2 col-xs-8">
-                          <div class="form-group">
-                            <label class="posticon">
-                              <i class="icon-append fa fa-calendar"></i>
-                              <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="Filter.StartDate" name="Startdate" id="startDate"
-                                (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
-                            </label>
-                          </div>
-                        </div>
-                        <div class="col-sm-2 col-xs-8">
-                          <div class="form-group">
-                            <label class="posticon">
-                              <i class="icon-append fa fa-calendar"></i>
-                              <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="Filter.EndDate" name="EndDate" onkeydown="return false"
-                                [minDate]="minDate" bsDatepicker [bsConfig]="datePickerConfig" />
-                            </label>
-                          </div>
-                        </div>
-                        <div class="col-sm-1 col-xs-4">
-                          <div class="form-group">
-                            <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
-                              <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
-                          </div>
-                        </div>
-                      </form>
-                    <div class="col-sm-7">
-                        <div class="form-group  pull-right">
-                            <a routerLink="/project/wc-invoice-details" class="btn btn-block btn-warning ">
-                                <i class="glyphicon glyphicon-plus"></i>
-                                Add Invoice
-                            </a>
-                        </div>
+              <div class="row ">
+                <form name="orderDeliveredForm" #orderDeliveredForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
+              
+                  <div class="col-sm-2 col-xs-8">
+                    <div class="form-group">
+                      <label class="posticon">
+                        <i class="icon-append fa fa-calendar"></i>
+                        <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="Filter.StartDate" name="Startdate" id="startDate"
+                          (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
+                      </label>
                     </div>
-                    <div class="col-sm-12 table-responsive">
-                        <ui-grid [data]="WcInvoiceData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                  </div>
+                  <div class="col-sm-2 col-xs-8">
+                    <div class="form-group">
+                      <label class="posticon">
+                        <i class="icon-append fa fa-calendar"></i>
+                        <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="Filter.EndDate" name="EndDate" onkeydown="return false"
+                          [minDate]="minDate" bsDatepicker [bsConfig]="datePickerConfig" />
+                      </label>
                     </div>
-                </div>
+                  </div>
+                  <div class="col-sm-1 col-xs-4">
+                    <div class="form-group">
+                      <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
+                    </div>
+                  </div>
+                </form>
+     
+                  <div class="col-sm-7">
+                      <div class="form-group  pull-right">
+                          <a routerLink="/project/wc-invoice-details" class="btn btn-block btn-warning ">
+                              <i class="glyphicon glyphicon-plus"></i>
+                              Add Invoice
+                          </a>
+                      </div>
+                  </div>
+                  <div class="col-sm-12 table-responsive">
+                      <ui-grid [data]="InvoiceData" [gridOptions]="gridOptions" (onDelete)="onDeleteFunction($event)" (onEdit)="onEditFunction($event)"></ui-grid>
+                  </div>
+              </div>
             </div>
           </div>
         </div>
