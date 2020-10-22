@@ -75,7 +75,7 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
                           this.Material.show = tempArray.some(obj => parseInt(obj.TypeId) === parseInt(this.Material.TypeId)) ? false : true;
                           tempArray.push(this.Material);
                         }
-                        this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
+                        this.project = this.projectService.calculateDailyWorkLabourAnount(this.project, this.MaterialArray);
                         this.MaterialArray = tempArray;
                         this.Material = { TypeId: '', MatActExpId: '' }
                       }
@@ -188,7 +188,7 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
                       this.MaterialArray[this.Material.index].CGST = this.Material.CGST;
                       this.MaterialArray[this.Material.index].SGST = this.Material.SGST;
 
-                    //  this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
+                      this.project = this.projectService.calculateDailyWorkLabourAnount(this.project, this.MaterialArray);
                 
                     } else if (this.MaterialArray.some(obj => (parseInt(obj.TypeId) === parseInt(this.Material.TypeId) && parseInt(obj.WorkId) === parseInt(this.Material.WorkId)))) {
                       AppComponent.SmartAlert.Errmsg("Material already added in list.");
@@ -206,7 +206,7 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
                     
                       this.Material.show = this.MaterialArray.some(obj => parseInt(obj.TypeId) === parseInt(this.Material.TypeId)) ? false : true;
                       this.MaterialArray.push(this.Material);
-                    //  this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
+                      this.project = this.projectService.calculateDailyWorkLabourAnount(this.project, this.MaterialArray);
                       this.MaterialArray.sort((a, b) => `${a.MainTypeId}`.localeCompare(`${b.MainTypeId}`) || a.TypeName.localeCompare(b.TypeName));
                     } this.Material = { TypeId: '', MatId: '' }
                     //this.OtherExp = false;
@@ -215,7 +215,7 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
 
                   onRemoveMaterial(data, index) {
                     this.MaterialArray.splice(index, 1);
-                    this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
+                    this.project = this.projectService.calculateDailyWorkLabourAnount(this.project, this.MaterialArray);
                   }
 
                   onEdit(mat, i) {
@@ -249,10 +249,6 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
                     this.project.TranDate = new Date();
                     this.project.RefTranNo = this.MaterialArray[0].RefTranNo;
                     this.project.RefSrNo = this.MaterialArray[0].RefSrNo;
-                   // this.project.ContractDate= this.appService.DateToString(this.project.ContractDate);
-                  //  this.project.StartDate= this.appService.DateToString(this.project.StartDate);
-                   // this.project.EndDate= this.appService.DateToString(this.project.EndDate);
-                   
                     this.project.Data = this.MaterialArray;
                     let ciphertext = this.appService.getEncrypted(this.project);
                     this.projectService.post('ManageLabourWorkWages', ciphertext).subscribe((resData: any) => {

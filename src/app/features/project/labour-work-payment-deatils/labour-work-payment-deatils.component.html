@@ -218,7 +218,11 @@
                                  <a class="btn btn-xs btn-primary action-btn" (click)=onEdit(mat,i)>Edit</a>
                               </td>
                           </tr>
-
+                          <tr>
+                            <td colspan="11" class="text-right"><strong>TOTAL</strong></td>
+                            
+                            <td colspan="2" class="text-center"><strong>{{project.TotProjectCost}}</strong>  </td>
+                          </tr>
 
                         </tbody>
                       </table>
@@ -294,6 +298,7 @@
                          <td >{{pr.CreatedByName}}</td>
                           <td >{{pr.UpdatedByName}}</td>
                         </tr>
+                     
                       </tbody>
                     </table>
                   </div>

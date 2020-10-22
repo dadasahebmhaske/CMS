@@ -111,6 +111,19 @@ export class ProjectService {
     return project;
   }
 
+  
+
+  public calculateDailyWorkLabourAnount(project, MaterialArray) {
+
+    project.TotProjectCost = 0;
+    if (MaterialArray.length != 0)
+      for (let i = 0; i < MaterialArray.length; i++) {
+        project.TotProjectCost = parseFloat(project.TotProjectCost) + parseFloat(MaterialArray[i].Amount);
+        
+      }
+    return project;
+  }
+
 }
 
 
