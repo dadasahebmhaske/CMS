@@ -26,7 +26,7 @@ export class WeeklyPayoutComponent implements OnInit, OnDestroy {
                     }
                     ngOnInit() {
                       this.datashare.GetSharedData.subscribe(data => {
-                        this.project = data == null ? { IsActive: 'Y', SiteId: '',  ProjectId: '',ContractorId:'',RefTranNo:''} : data;
+                        this.project = data == null ? { IsActive: 'Y', SiteId: '',  ProjectId: '',RefTranNo:''} : data;
                        
                         // if (this.project.TranNo != null)
                         //  this.getTranData();
@@ -156,7 +156,7 @@ export class WeeklyPayoutComponent implements OnInit, OnDestroy {
                      // this.project.RefTranNo = this.MaterialArray[0].RefTranNo;
                       this.project.Data = this.MaterialArray;
                       let ciphertext = this.appService.getEncrypted(this.project);
-                      this.projectService.post('ManageGRN', ciphertext).subscribe((resData: any) => {
+                      this.projectService.post('ManageLabourPaymentList', ciphertext).subscribe((resData: any) => {
                         this.loaderbtn = true;
                         if (resData.StatusCode != 0) {
                           AppComponent.SmartAlert.Success(resData.Message);

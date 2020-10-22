@@ -69,9 +69,7 @@ export class ProjectService {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetDataForTransactions?TranNo=${TranNo}&RefTranNo=${RefTranNo}&TranType=113&TranSubType=1&Id=${ProjectId}&TypeId=&MainTypeId=&IsActive=Y`);
   }
 
-  public getDWprojectexweeklypayout(TranNo,ProjectId,RefTranNo) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetDataForTransactions?TranNo=${TranNo}&RefTranNo=${RefTranNo}&TranType=114&TranSubType=1&Id=${ProjectId}&TypeId=&MainTypeId=&IsActive=Y`);
-  }
+
   public getDWWeekyPayoutDeatils(TranNo,ProjectId,RefTranNo) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/GetDataForTransactions?TranNo=${TranNo}&RefTranNo=${RefTranNo}&TranType=114&TranSubType=1&Id=${ProjectId}&TypeId=&MainTypeId=&IsActive=Y`);
   }

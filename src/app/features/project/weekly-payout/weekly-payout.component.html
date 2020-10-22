@@ -40,11 +40,11 @@
                       </div>
                       <div class="col-sm-3">
                           <div class="form-group">
-                            <label for="sel1">Select Work Labour<span class="errorMessage">*</span>
+                            <label for="sel1">Select  Labour Work Payment<span class="errorMessage">*</span>
                             </label>
                             <select class="form-control" [(ngModel)]="project.RefTranNo" name="RefTranNo"
                               (change)="onSelectProject(project.RefTranNo)" [disabled]="project.TranNo!=null" required>
-                              <option value="" selected hidden> Select PO </option>
+                              <option value="" selected hidden> Select Labour Work Payment</option>
                               <option [value]="des.TranNo" *ngFor="let des of WorkLabourD">{{des.DispTranNo}}
                               </option>
                             </select>
