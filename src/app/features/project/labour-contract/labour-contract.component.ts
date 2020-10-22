@@ -21,16 +21,16 @@ export class LabourContractComponent implements OnInit, OnDestroy {
               public maxDate: Date = new Date();
               public transport: any = {RoleCode:''};
               public loaderbtn: boolean = true;editflag;AMTypeData:any=[];AMData:any=[];
-              public project:any={};Material:any={};MaterialArray:any=[];PayTData:any=[];filterMaterialArray:any=[];
+              public project:any={};Material:any={TypeId:'',WorkId:''};MaterialArray:any=[];PayTData:any=[];filterMaterialArray:any=[];
               public SiteData:any=[];VendorData:any=[];ProjectData:any=[];LabourWork:any=[];ContractorData:any=[];
 
               constructor(private appService: AppService, private datashare: DatashareService,private allmasterService:AllmasterService,private projectService:ProjectService) {
-                this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
+                this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
                }
 
               ngOnInit() {
                 this.datashare.GetSharedData.subscribe(data => {
-                  this.project = data == null ? { IsActive: 'Y', SiteId: '',  ProjectId: '',ContractorId:'',RefTranNo:''} : data;
+                  this.project = data == null ? { IsActive: 'Y', SiteId: '',  ProjectId: '',PaymentTermId:'', ContractorId:'',RefTranNo:''} : data;
                  
                   if (this.project.TranNo != null)
                    this.getTranData();

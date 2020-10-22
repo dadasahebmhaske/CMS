@@ -177,6 +177,10 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
                     var d = new Date(this.Material.EndTime);
                     this.Material.DispEndTime = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 
+                    let obj;
+                    obj = this.projectService.filterData(this.LabourData, this.Material.LabourId, 'LabourId');
+                    this.Material.LabourName = obj[0].LabourName;
+
                     if (this.Material.index != null) {
                       this.MaterialArray[this.Material.index].Rate = this.Material.URate;
                       this.MaterialArray[this.Material.index].Qty = this.Material.UQty;
