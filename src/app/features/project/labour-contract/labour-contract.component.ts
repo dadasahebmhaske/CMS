@@ -96,9 +96,10 @@ export class LabourContractComponent implements OnInit, OnDestroy {
                     }
                     this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
                     this.MaterialArray = tempArray;
-                    this.Material = { TypeId: '', MatActExpId: '' }
+                    this.Material={TypeId:'',WorkId:''};
                   }
                 });
+                this.Material={TypeId:'',WorkId:''};
               }
   
 
@@ -309,6 +310,14 @@ export class LabourContractComponent implements OnInit, OnDestroy {
                   }
                   else { AppComponent.SmartAlert.Errmsg(resData.Message); }
                 });
+              }
+              resetEndDate(val) {
+                this.minDate = val;
+                if (val != undefined && val != null && this.project.EndDate != null) {
+                  if ((new Date(this.project.EndDate).getTime()) < (new Date(val).getTime())) {
+                    this.project.EndDate = '';
+                  }
+                }
               }
               ngOnDestroy() {
                 this.datashare.updateShareData(null);

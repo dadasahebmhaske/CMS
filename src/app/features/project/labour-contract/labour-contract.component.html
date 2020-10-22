@@ -76,7 +76,7 @@
                       <label class="posticon">
                         <i class="icon-append fa fa-calendar"></i>
                         <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="project.StartDate" name="StartDate" id="startDate"
-                           onkeydown="return false" bsDatepicker [bsConfig]="{ containerClass: 'theme-orange',dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true }" />
+                        (bsValueChange)="resetEndDate($event)"   onkeydown="return false" bsDatepicker [bsConfig]="{ containerClass: 'theme-orange',dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true }" />
                       </label>
                     </div>
                   </div>
@@ -87,7 +87,7 @@
                       <label class="posticon">
                         <i class="icon-append fa fa-calendar"></i>
                         <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="project.EndDate" name="EndDate" onkeydown="return false"
-                          [minDate]="project.StartDate"  bsDatepicker [bsConfig]="datePickerConfig" />
+                        [minDate]="minDate"  bsDatepicker [bsConfig]="datePickerConfig" />
                       </label>
                     </div>
                   </div>

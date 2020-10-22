@@ -77,7 +77,7 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
                         }
                         this.project = this.projectService.calculateDailyWorkLabourAnount(this.project, this.MaterialArray);
                         this.MaterialArray = tempArray;
-                        this.Material = { TypeId: '', MatActExpId: '' }
+                        this.Material = {  LabourId: '', TypeId: '' ,WorkId:''}
                       }
                     });
                   }
