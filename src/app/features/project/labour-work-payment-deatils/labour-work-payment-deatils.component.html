@@ -14,6 +14,15 @@
               <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
                 ngNativeValidate>
                 <div class="row">
+                  <div class="col-sm-6" *ngIf="project.TranNo!=null" style="font-size:14px;margin-top: 11px;">
+                      <label style="margin-right:20px;"><strong>Trans No. : <span class="text-primary">{{project.DispTranNo}}</span></strong></label>
+                      <label><strong>Trans Date : <span class="text-primary">{{project.TranDate}}</span></strong></label>
+                      </div>
+                <div class="col-sm-6" *ngIf="TranExists.length>0">
+                  <button type="button" class="btn btn-danger pull-right btn-lg" data-toggle="modal" data-target="#TransactionModal">Access Denied, Next Transaction Exists </button>
+                </div>
+              </div>
+                <div class="row">
                     <div class="col-sm-3">
                         <div class="form-group">
                           <label for="sel1">Site <span class="errorMessage">*</span>
@@ -37,6 +46,8 @@
                         </div>
                       </div>
                 </div>
+                <form name="materialForm" #materialForm="ngForm" (ngSubmit)="addMaterial()" autocomplete="off"
+                ngNativeValidate>
                 <div class="row">
                    <div class="col-sm-2">
                     <div class="form-group">
@@ -76,28 +87,41 @@
                         
                         </div>
                       </div>  
+                      <div class="col-sm-1">
+                        <div class="form-group">
+                          <label>Qty <span class="errorMessage">*</span>
+                          </label>
+                          <input type="text" class="form-control" placeholder="Enter Qty " [(ngModel)]="Material.UQty"
+                            name="UQty" (ngModelChange)="GetCalculate()"  saCommonDir dirType="number" required />
+                        </div>
+                      </div>
+                      <!-- <div class="col-sm-1">
+                        <div class="form-group">
+                          <label>Unit <span class="errorMessage">*</span>
+                          </label>
+                          <input type="text" class="form-control" placeholder="Enter Unit " [(ngModel)]="Material.UOM"
+                            name="UOM" saCommonDir dirType="alphanumeric" required disabled/>
+                        </div>
+                      </div> -->
+                      <div class="col-sm-1">
+                        <div class="form-group">
+                          <label>Rate <span class="errorMessage">*</span>
+                          </label>
+                          <input type="text" class="form-control" placeholder=" Rate " [(ngModel)]="Material.URate"
+                            name="URate"  (ngModelChange)="GetCalculate()"  saCommonDir dirType="decimal" required />
+                        </div>
+                      </div>
                   <div class="col-sm-4">
                     <div class="form-group">
                       <label>Work Done Description<span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Description " [(ngModel)]="Material.InvoiceNo"
-                        name="InvoiceNo" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Description " [(ngModel)]="Material.UWorkDescription"
+                        name="UWorkDescription" saCommonDir dirType="alphanumeric" required />
                     </div>
                   </div>
-                  <div class="col-sm-2 col-xs-8">
-                      <div class="form-group">
-                          <label>Date Of Work  <span class="errorMessage">*</span>
-                          </label>
-                        <label class="posticon">
-                          <i class="icon-append fa fa-calendar"></i>
-                          <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="Material.StartDate" name="StartDate" id="startDate"
-                             onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
-                        </label>
-                      </div>
-                    </div>
                     <div class="col-sm-2 col-xs-8">
                         <div class="form-group">
-                            <label>Start Date <span class="errorMessage">*</span>
+                            <label>Start Date and In Time<span class="errorMessage">*</span>
                             </label>
                           <label class="posticon">
                             <i class="icon-append fa fa-calendar"></i>
@@ -108,16 +132,14 @@
                       </div>
                       <div class="col-sm-2">
                           <div class="form-group">
-                            <label>In Time <span class="errorMessage">*</span>
-                            </label>
-                            <!-- <input type="text" class="form-control" placeholder="Enter  Time" [(ngModel)]="Material.Amount"
-                              name="Amount" saCommonDir dirType="alphanumeric" required /> -->
-                            <timepicker [(ngModel)]="project.InTime" name="InTime"></timepicker>
+                            <!-- <label>In Time <span class="errorMessage">*</span> -->
+                            <!-- </label> -->
+                            <timepicker [(ngModel)]="Material.StartTime" name="StartTime" required></timepicker>
                           </div>
                         </div>
                       <div class="col-sm-2 col-xs-8">
                         <div class="form-group">
-                            <label>End Date <span class="errorMessage">*</span>
+                            <label>End Date and Out Time <span class="errorMessage">*</span>
                             </label>
                           <label class="posticon">
                             <i class="icon-append fa fa-calendar"></i>
@@ -128,19 +150,19 @@
                       </div>
                   <div class="col-sm-2">
                     <div class="form-group">
-                      <label>Out Time <span class="errorMessage">*</span>
-                      </label>
+                      <!-- <label>Out Time <span class="errorMessage">*</span> -->
+                      <!-- </label> -->
                       <!-- <input type="text" class="form-control" placeholder="Enter  Time" [(ngModel)]="Material.Amount"
                         name="Amount" saCommonDir dirType="alphanumeric" required /> -->
-                         <timepicker [(ngModel)]="project.OutTime" name="OutTime"></timepicker> 
+                         <timepicker [(ngModel)]="Material.EndTime" name="EndTime" required></timepicker> 
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Payment Amount<span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="Material.ChequeNo"
-                        name="ChequeNo" saCommonDir dirType="alphanumeric" required />
+                      <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="Material.UAmount"
+                        name="UAmount" saCommonDir dirType="alphanumeric" disabled required />
                     </div>
                   </div>
                       <div class="col-sm-1 col-xs-4">
@@ -159,11 +181,13 @@
                         <thead>
                           <tr align="center" class="text-center">
                             <th class="text-center">#</th>
-                            <th class="text-center">Labour </th>
-                            <th class="text-center">Activity Type </th>
-                            <th class="text-center">Ativity </th>
-                            <th class="text-center">Work Description </th>
-                            <th class="text-center">Date of Work </th>
+                            <th >Labour </th>
+                            <th >Activity Type </th>
+                            <th>Ativity </th>
+                            <th class="text-center">Qty </th>
+                            <th class="text-center">Rate </th>
+                            <th >Work Description </th>
+                           
                             <th class="text-center">Start Date</th>
                             <th class="text-center">In Time</th>
                             <th class="text-center">End Date</th>
@@ -177,16 +201,18 @@
                         <tbody>
                             <tr *ngFor="let mat of MaterialArray;index as i">
                             <td class="text-center"><span (onload)="check(i)">{{i+1}}.</span></td>
-                            <td>Amir Khan</td>
-                            <td ><strong *ngIf="mat.show">{{mat.TypeName}}</strong></td>  
+                            <td><strong>{{mat.LabourName}}</strong></td>
+                            <td ><span *ngIf="mat.show">{{mat.TypeName}}</span></td>  
                             <td>{{mat.WorkName}}</td>
-                            <td class="text-center">{{mat.Desc}}</td>
-                            <td class="text-center">{{mat.Datework}}</td>
+                            <td class="text-center">{{mat.Qty==0?'':mat.Qty}}</td>
+                            <td class="text-center">{{mat.Rate}}</td>
+                            <td >{{mat.WorkDescription}}</td>
+                            
                             <td class="text-center">{{mat.StartDate}}</td>
-                            <td class="text-center">{{mat.InTime}}</td>
+                            <td class="text-center">{{mat.DispStartTime}}</td>
                             <td class="text-center">{{mat.EndDate}}</td>
-                            <td class="text-center">{{mat.OutTime}}</td>
-                            <td class="text-center">{{mat.PaymentAmount}}</td>
+                            <td class="text-center">{{mat.DispEndTime}}</td>
+                            <td class="text-center">{{mat.Amount}}</td>
                             <td class="text-center">
                                 <a class="btn btn-xs btn-danger action-btn" (click)=onRemoveMaterial(mat,i)>Remove</a>
                                  <a class="btn btn-xs btn-primary action-btn" (click)=onEdit(mat,i)>Edit</a>
@@ -200,22 +226,25 @@
                    
                   </div>
                 </div>
-                <div class="row">
+              </form>
+                <!-- <div class="row">
                   <div class="col-sm-6">
                     <label>
                       <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive"
                         [(ngModel)]='Material.IsActive' /> Is Active </label>
                   </div>
-                </div>
+                </div> -->
                 <footer>
                   <div class="row">
                     <div class="col-sm-12 ">
                       <hr />
                       <a class="pull-right btn btn-default" routerLink="/project/labour-work-payment-details-list">
                         <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
-                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn || MaterialArray.length==0" *ngIf="Access">
                         <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
                         {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                        <button class="pull-left btn btn-danger marg-right" type="submit" *ngIf="!Access">
+                          Labour Work Payment Details Approved, Can't Modify</button>
                     </div>
                   </div>
                 </footer>
@@ -226,4 +255,60 @@
       </article>
     </div>
   </sa-widgets-grid>
+</div>
+
+
+<!-- Modal -->
+<div class=" modal fade" id="TransactionModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Transaction Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+          <div class="refill">
+              <div class="row">
+                         <div class="col-sm-12">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Transaction No.</th>
+                          <th>Transaction Date</th>
+                          <th>Transaction Name</th>
+                          <th>Created By</th>
+                          <th>Updated By</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let pr of TranExists;index as i">
+                          <td>{{i+1}}</td>
+                          <td>{{pr.DispTranNo}}</td>
+                          <td>{{pr.TranDate}}</td>
+                          <td>{{pr.TranShortName}}</td>
+                         <td >{{pr.CreatedByName}}</td>
+                          <td >{{pr.UpdatedByName}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+            
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+       <!-- <button type="button" *ngIf="stock.IsDispatch == 'Y' && stock.OrderStage!='CA' && stock.OrderStage!='RJ'" (click)="DispatchOrder('AC')" class="btn btn-success">Accept</button>
+        <button type="button" *ngIf="stock.IsDispatch == 'Y' && stock.OrderStage!='CA' && stock.OrderStage!='RJ'" (click)="DispatchOrder('RJ')" class="btn btn-danger">Reject</button> -->
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>

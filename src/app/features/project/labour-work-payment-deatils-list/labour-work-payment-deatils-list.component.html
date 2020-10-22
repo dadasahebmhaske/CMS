@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div class="col-sm-12 table-responsive">
-                        <ui-grid [data]="LabourWorkPaymentData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                        <ui-grid [data]="LabourWorkPaymentData" [gridOptions]="gridOptions" (onDelete)="onDeleteFunction($event)" (onEdit)="onEditFunction($event)" (onApprove)="onApproveFunction($event)"></ui-grid>
                     </div>
                 </div>
             </div>

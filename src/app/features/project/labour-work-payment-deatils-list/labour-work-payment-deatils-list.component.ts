@@ -47,8 +47,20 @@ export class LabourWorkPaymentDeatilsListComponent implements OnInit {
                         , width: "57",
                         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Delete</div>', enableFiltering: false
                       },
-                      { name: 'VehicleTypeId', displayName: 'Vehicle Type Id', width: "*", cellTooltip: true, filterCellFiltered: true },
-                      { name: 'VehicleType', displayName: 'Transport', width: "*", cellTooltip: true, filterCellFiltered: true },
+                      {
+                        name: 'Select2', displayName: 'Details', cellTemplate: `<button  style="margin:3px;" class="btn-success btn-xs"  ng-click="grid.appScope.approveEmployee(row.entity)"  ng-if="row.entity.IsApproved!='Y'&& row.entity.IsActive!=null"">&nbsp;Approve&nbsp;</button><button  style="margin:3px;" class="btn-default btn-xs"  ng-if="row.entity.IsApproved=='Y'">&nbsp;Approved&nbsp;</button>`
+                        , width: "74",
+                        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Approve</div>', enableFiltering: false
+                      },
+                     
+                      { name: 'DispTranNo', displayName: 'Trans No.', width: "*", cellTooltip: true, cellClass: 'text-center', filterCellFiltered: true },
+                      { name: 'TranDate', displayName: 'Trans Date', width: "*", cellTooltip: true, cellClass: 'text-center', filterCellFiltered: true },
+                
+                      { name: 'SiteName', displayName: 'Site Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+                      { name: 'ProjectName', displayName: 'Project Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+                
+                      { name: 'TotAmount', displayName: 'Total Amount', width: "*", cellClass: 'text-right', cellTooltip: true, filterCellFiltered: true },
+                     // { name: 'VendorName', displayName: 'Vendor Name', width: "*", cellTooltip: true, filterCellFiltered: true },
                       { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
                     ]
                     this.gridOptions.columnDefs = columnDefs;
@@ -121,7 +133,7 @@ export class LabourWorkPaymentDeatilsListComponent implements OnInit {
                       this.loaderbtn=true;
                       if (resData.StatusCode != 0) {
                         this.LabourWorkPaymentData = resData.Data.Table; 
-                        console.log( this.LabourContractData);
+                        console.log( this.LabourWorkPaymentData);
                         AppComponent.SmartAlert.Success(resData.Message);
                       }
                       else { this.LabourWorkPaymentData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }

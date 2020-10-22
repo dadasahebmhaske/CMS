@@ -13,6 +13,15 @@
             <div class="widget-body">
               <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
                 ngNativeValidate>
+                <div class="row" >
+                  <div class="col-sm-6" *ngIf="project.TranNo!=null" style="font-size:14px;margin-top: 11px;">
+                      <label style="margin-right:20px;"><strong>Trans No. : <span class="text-primary">{{project.DispTranNo}}</span></strong></label>
+                      <label><strong>Trans Date : <span class="text-primary">{{project.TranDate}}</span></strong></label>
+                      </div>
+                <div class="col-sm-6" *ngIf="TranExists.length>0">
+                  <button type="button" class="btn btn-danger pull-right btn-lg" data-toggle="modal" data-target="#TransactionModal">Access Denied, Next Transaction Exists </button>
+                </div>
+              </div>
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group">
@@ -351,9 +360,11 @@
                       <hr />
                       <a class="pull-right btn btn-default" routerLink="/project/labour-contract-list">
                         <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
-                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn || MaterialArray.length==0" *ngIf="Access">
                         <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
                         {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                        <button class="pull-left btn btn-danger marg-right" type="submit" *ngIf="!Access">
+                          Labour Contract Approved, Can't Modify</button>
                     </div>
                   </div>
                 </footer>
@@ -364,4 +375,59 @@
       </article>
     </div>
   </sa-widgets-grid>
+</div>
+
+<!-- Modal -->
+<div class=" modal fade" id="TransactionModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Transaction Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+          <div class="refill">
+              <div class="row">
+                         <div class="col-sm-12">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Transaction No.</th>
+                          <th>Transaction Date</th>
+                          <th>Transaction Name</th>
+                          <th>Created By</th>
+                          <th>Updated By</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let pr of TranExists;index as i">
+                          <td>{{i+1}}</td>
+                          <td>{{pr.DispTranNo}}</td>
+                          <td>{{pr.TranDate}}</td>
+                          <td>{{pr.TranShortName}}</td>
+                         <td >{{pr.CreatedByName}}</td>
+                          <td >{{pr.UpdatedByName}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+            
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+       <!-- <button type="button" *ngIf="stock.IsDispatch == 'Y' && stock.OrderStage!='CA' && stock.OrderStage!='RJ'" (click)="DispatchOrder('AC')" class="btn btn-success">Accept</button>
+        <button type="button" *ngIf="stock.IsDispatch == 'Y' && stock.OrderStage!='CA' && stock.OrderStage!='RJ'" (click)="DispatchOrder('RJ')" class="btn btn-danger">Reject</button> -->
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>

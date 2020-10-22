@@ -12,6 +12,8 @@ import { BsDatepickerConfig } from 'ngx-bootstrap';
   styleUrls: ['./labour-contract.component.css']
 })
 export class LabourContractComponent implements OnInit, OnDestroy {
+               public Access: boolean = true;
+               TranExists: any = [];
               public cpInfo: any;empInfo;
               public datePickerConfig: Partial<BsDatepickerConfig>;
               public minDate: Date;
@@ -77,8 +79,8 @@ export class LabourContractComponent implements OnInit, OnDestroy {
               public getTranData() {
                 this.projectService.getTransDetails(109, this.project.TranNo).subscribe((resTran: any) => {
                   if (resTran.StatusCode != 0) {
-                    //this.TranExists = resTran.Data.Table;
-                   // this.Access = this.TranExists.length == 0 ? this.project.IsApproved == 'Y' ? false : true : false;
+                    this.TranExists = resTran.Data.Table;
+                    this.Access = this.TranExists.length == 0 ? this.project.IsApproved == 'Y' ? false : true : false;
                     this.project = resTran.Data.Table1[0];
                     this.MaterialArray = resTran.Data.Table2;
                     this.onSelectSite(this.project.SiteId,'S');
