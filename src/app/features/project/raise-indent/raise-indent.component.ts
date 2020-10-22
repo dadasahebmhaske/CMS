@@ -84,6 +84,7 @@ export class RaiseIndentComponent implements OnInit, OnDestroy {
     this.Material.MatName = obj[0].MatName;
     this.Material.UOMId = obj[0].UOMId;
     this.Material.UOM = obj[0].UOM;
+    this.Material.RefSrNo = obj[0].RefSrNo;
     if(this.Material.index==null)
     this.Material.RemainBudgetQty = obj[0].RemainBudgetQty;
     this.Material.RefTranNo = obj[0].RefTranNo;
