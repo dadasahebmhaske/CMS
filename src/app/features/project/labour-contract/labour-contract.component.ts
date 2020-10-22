@@ -119,7 +119,7 @@ export class LabourContractComponent implements OnInit, OnDestroy {
                 this.project.TotalAmtCost=null; this.project.TotProjectCost=null;
                 this.project.TotIGSTCost=null;this.project.TotCGSTCost=null;this.project.TotSGSTCost=null;
                 let tranNo=this.project.TranNo==null?'':this.project.TranNo;
-                this.projectService.getContractorLabourWork(tranNo,this.project.ProjectId,'').subscribe((resData: any) => {
+                this.projectService.getContractorLabourWork(tranNo,this.project.ProjectId,RefTranNo).subscribe((resData: any) => {
                   if (resData.StatusCode != 0) {
                   if(RefTranNo==''){ 
                     this.AMTypeData = resData.Data.Table1;

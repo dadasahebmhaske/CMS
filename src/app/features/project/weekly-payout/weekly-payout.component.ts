@@ -16,7 +16,7 @@ export class WeeklyPayoutComponent implements OnInit, OnDestroy {
                     public minDate: Date;
                     public StartMindate: Date;
                     public maxDate: Date = new Date();
-                    public WorkContractData:any=[];
+                    public WorkContractData:any=[];WorkLabourD:any=[];
                     public loaderbtn: boolean = true;editflag;AMTypeData:any=[];AMData:any=[];
                     public project:any={};Material:any={};MaterialArray:any=[];PayTData:any=[];filterMaterialArray:any=[];
                     public SiteData:any=[];VendorData:any=[];ProjectData:any=[];LabourWork:any=[];ContractorData:any=[];
@@ -60,22 +60,11 @@ export class WeeklyPayoutComponent implements OnInit, OnDestroy {
                           }
                           else { this.PayTData = []; AppComponent.SmartAlert.Errmsg(resPData.Message); }
                         });
-                    
-                   
-                      this.projectService.getVendorContractor(101).subscribe((resVData: any) => {
-                        if (resVData.StatusCode != 0) {
-                          this.ContractorData = resVData.Data;
-                          let obj;
-                          obj = this.projectService.filterData(this.ContractorData, 101 , 'CompanyTypeId');
-                          this.ContractorData = obj;
-                        }
-                        else { this.ContractorData = []; AppComponent.SmartAlert.Errmsg(resVData.Message); }
-                      });
                     }
 
                     public getTranData() {
                       this.editflag='E';
-                      this.projectService.getTransDetails(104, this.project.TranNo).subscribe((resTran: any) => {
+                      this.projectService.getTransDetails(113, this.project.TranNo).subscribe((resTran: any) => {
                         if (resTran.StatusCode != 0) {
                          this.project = resTran.Data.Table1[0];
                           this.MaterialArray = resTran.Data.Table2;
@@ -114,11 +103,11 @@ export class WeeklyPayoutComponent implements OnInit, OnDestroy {
                       // this.project.TotIGSTCost=null;this.project.TotCGSTCost=null;this.project.TotSGSTCost=null;
                      
                       let tranNo=this.project.TranNo==null?'':this.project.TranNo;
-                      this.projectService.getProjectVendorPO(tranNo,this.project.ProjectId,RefTranNo).subscribe((resData: any) => {
+                      this.projectService.getDWworklabour(tranNo,this.project.ProjectId,RefTranNo).subscribe((resData: any) => {
                         if (resData.StatusCode != 0) {
                         if(RefTranNo==''){ 
                          // this.VendorData = resData.Data.Table1;
-                          this.WorkContractData=resData.Data.Table1;
+                          this.WorkLabourD=resData.Data.Table1;
                           // if(this.project.TranNo!=null){
                           //   this.onSelectVendor(); 
                           // }
@@ -126,7 +115,7 @@ export class WeeklyPayoutComponent implements OnInit, OnDestroy {
                         else{
                           if(this.editflag=='E'){
                            // this.VendorData = resData.Data.Table1;
-                            this.WorkContractData = resData.Data.Table1;
+                            this.WorkLabourD = resData.Data.Table1;
                             // if (this.project.TranNo != null) {
                             //   this.onSelectVendor();
                             // }

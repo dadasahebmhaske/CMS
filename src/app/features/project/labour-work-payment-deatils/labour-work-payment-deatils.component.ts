@@ -20,6 +20,7 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
                   public maxDate: Date = new Date();
                    public loaderbtn: boolean = true;
                   public SiteData: any = [];
+                  public mytime: Date = new Date();
                   public Material: any = { TypeId: '', MatId: '' };
                   public MaterialArray: any = [];LabourData:any=[];
                   public AMTypeData: any = []; project: any = {}; ProjectData: any = []; PayTData: any = []; DeliveryTData: any = []; TaxationData: any = [];
@@ -73,9 +74,9 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
                     }
 
                     let tranNo=this.project.TranNo==null?'':this.project.TranNo;
-                    this.projectService.getContractorLabourWork(tranNo,this.project.ProjectId,'').subscribe((resData: any) => {
+                    this.projectService.getDWactivityworklabour(tranNo,this.project.ProjectId,RefTranNo).subscribe((resData: any) => {
                       if (resData.StatusCode != 0) {
-                      if(tranNo==''){ 
+                      if(RefTranNo==''){ 
                         this.AMTypeData = resData.Data.Table1;
                         this.AMData = resData.Data.Table2;
                       }
@@ -103,20 +104,9 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
                     let obj;
                     obj = this.projectService.filterData(this.AMData, this.Material.MatId, 'MatActExpId');
                     this.Material.MatName = obj[0].MatName;
-                    this.Material.UOMId = obj[0].UOMId;
-                    this.Material.UOM = obj[0].UOM;
-                    this.Material.UQty = obj[0].Qty;
-                    this.Material.RQty = obj[0].RemainBudgetQty;
-                    this.Material.URate = obj[0].Rate;
-                    this.Material.URate = obj[0].Rate;
-                    this.Material.UAmount = obj[0].Amount;
                     this.Material.UTotalAmount = obj[0].TotalAmount;
                     this.Material.RefTranNo = obj[0].RefTranNo;
                     this.Material.RefSrNo = obj[0].RefSrNo;
-                    // if (this.Material.UQty != null && this.Material.URate != null) {
-                    //   this.Material.UAmount = parseFloat(this.Material.URate == undefined || this.Material.URate == '' ? 0 : this.Material.URate) * parseFloat(this.Material.UQty == undefined || this.Material.UQty == '' ? 0 : this.Material.UQty);
-                    //   this.Material.UAmount = this.Material.UAmount.toFixed(2);
-                    // }
                 
                   }
 
@@ -149,10 +139,6 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
                     //this.OtherExp = false;
                 
                   }
-    
-                
-
-
 
                   public onSubmit() {
                     this.loaderbtn = false;

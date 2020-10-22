@@ -63,7 +63,7 @@
                       <select class="form-control" [(ngModel)]="project.RefTranNo" name="RefTranNo"
                         (change)="onSelectInvoice();onSelectProject(project.RefTranNo)"  [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Payout </option>
-                        <option [value]="des.TranNo" *ngFor="let des of InvoiceArray">{{des.DispTranNo}}
+                        <option [value]="des.TranNo" *ngFor="let des of InvoiceData">{{des.DispTranNo}}
                       </select>
                     </div>
                   </div>

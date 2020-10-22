@@ -45,7 +45,7 @@
                             <select class="form-control" [(ngModel)]="project.RefTranNo" name="RefTranNo"
                               (change)="onSelectProject(project.RefTranNo)" [disabled]="project.TranNo!=null" required>
                               <option value="" selected hidden> Select PO </option>
-                              <option [value]="des.TranNo" *ngFor="let des of POArray">{{des.DispTranNo}}
+                              <option [value]="des.TranNo" *ngFor="let des of WorkLabourD">{{des.DispTranNo}}
                               </option>
                             </select>
                           </div>
@@ -76,75 +76,60 @@
                         {{loaderbtn==true? 'Get Details':'Loading'}}</button>
                     </div>
                   </div> -->
-                  <div class="col-sm-6">
+                  <div class="col-sm-12">
                     <div class="table-responsive">
-                      <table class="table table-hover">
-                        <thead>
-                          <tr align="center" class="text-center">
-                            <th class="text-center">#</th>
-                            <th class="text-center">Start Date</th>
-                            <th class="text-center">End Date</th>
-                            <th class="text-center">Days</th>
-                            <th class="text-center">Amount</th>
-                          </tr>
-
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td class="text-center">1/Sep/2020</td>
-                            <td class="text-center">1/Sep/2020</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">500</td>
-                          </tr>
-                          <tr>
-                            <td>2</td>
-                            <td class="text-center">2/Sep/2020</td>
-                            <td class="text-center">2/Sep/2020</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">500</td>
-                          </tr>
-                          <tr>
-                            <td>3</td>
-                            <td class="text-center">3/Sep/2020</td>
-                            <td class="text-center">3/Sep/2020</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">500</td>
-                          </tr>
-                          <tr>
-                            <td>4</td>
-                            <td class="text-center">4/Sep/2020</td>
-                            <td class="text-center">4/Sep/2020</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">500</td>
-                          </tr>
-                          <tr>
-                            <td>5</td>
-                            <td class="text-center">5/Sep/2020</td>
-                            <td class="text-center">5/Sep/2020</td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">500</td>
-                          </tr>
-                          <tr>
-                            <td><strong>Total</strong></td>
-                            <td class="text-center"><strong>1/Sep/2020</strong></td>
-                            <td class="text-center"><strong>5/Sep/2020</strong></td>
-                            <td class="text-center"><strong>5</strong></td>
-                            <td class="text-center"><strong>2500</strong></td>
-                          </tr>
-
-
-                        </tbody>
-                      </table>
+                        <table class="table table-hover">
+                            <thead>
+                              <tr align="center" class="text-center">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Labour </th>
+                                <th class="text-center">Activity Type </th>
+                                <th class="text-center">Ativity </th>
+                                <th class="text-center">Work Description </th>
+                                <th class="text-center">Date of Work </th>
+                                <th class="text-center">Start Date</th>
+                                <th class="text-center">In Time</th>
+                                <th class="text-center">End Date</th>
+                               
+                                <th class="text-center">Out Time</th>
+                                <th class="text-center">Amount</th>
+                                <th class="text-center">Days</th>
+                                <th class="text-center">Action</th>
+                              </tr>
+    
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let mat of MaterialArray;index as i">
+                                <td class="text-center"><span (onload)="check(i)">{{i+1}}.</span></td>
+                                <td>Amir Khan</td>
+                                <td ><strong *ngIf="mat.show">{{mat.TypeName}}</strong></td>  
+                                <td>{{mat.WorkName}}</td>
+                                <td class="text-center">{{mat.Desc}}</td>
+                                <td class="text-center">{{mat.Datework}}</td>
+                                <td class="text-center">{{mat.StartDate}}</td>
+                                <td class="text-center">{{mat.InTime}}</td>
+                                <td class="text-center">{{mat.EndDate}}</td>
+                                <td class="text-center">{{mat.OutTime}}</td>
+                                <td class="text-center">{{mat.PaymentAmount}}</td>
+                                <td class="text-center">{{mat.days}}</td>
+                                <td class="text-center">
+                                    <a class="btn btn-xs btn-danger action-btn" (click)=onRemoveMaterial(mat,i)>Remove</a>
+                                     <a class="btn btn-xs btn-primary action-btn" (click)=onEdit(mat,i)>Edit</a>
+                                  </td>
+                              </tr>
+    
+    
+                            </tbody>
+                          </table>
                     </div>
-                    <div class="form-group  pull-right">
+                    <!-- <div class="form-group  pull-right">
                       <button class="btn btn-block btn-warning ">
                           <i class="glyphicon glyphicon-plus"></i>
                           Add For Weekly Payout
                       </button>
+                  </div> -->
                   </div>
-                  </div>
-                  <div class="col-sm-6">
+                  <!-- <div class="col-sm-6">
                     <div class="table-responsive">
                       <table class="table table-hover">
                         <thead>
@@ -205,7 +190,7 @@
                         </tbody>
                       </table>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
 
                 <footer>

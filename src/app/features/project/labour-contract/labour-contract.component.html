@@ -44,9 +44,9 @@
                       <label for="sel1">Select Contractor <span class="errorMessage">*</span>
                       </label>
                       <select class="form-control" [(ngModel)]="project.ContractorId" name="ContractorId"
-                        (change)="onSelectProject(project.RefTranNo)" [disabled]="project.TranNo!=null" required>
+                        (change)="onSelectProject('')" [disabled]="project.TranNo!=null" required>
                         <option value="" selected hidden> Select Contractor </option>
-                        <option [value]="des.CompanyId" *ngFor="let des of ContractorData">{{des.ContactPersonName}}
+                        <option [value]="des.CompanyId" *ngFor="let des of ContractorData">{{des.CompanyName}}
                         </option>
                       </select>
                     </div>
@@ -87,7 +87,7 @@
                       <label>Contarct Period (In days)<span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder="Enter Period " [(ngModel)]="project.ContarctPeriod"
-                        name="ContarctPeriod" saCommonDir dirType="alphanumeric" required />
+                        name="ContarctPeriod" saCommonDir dirType="number" required />
                     </div>
                   </div>
                 </div>
@@ -281,7 +281,7 @@
                       <label>Grace Time  Offered (In days) <span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder="Enter Time " [(ngModel)]="project.GraceTimeOffered"
-                        name="GraceTimeOffered" saCommonDir dirType="alphanumeric" required />
+                        name="GraceTimeOffered" saCommonDir dirType="number" required />
                     </div>
                   </div>
                   <div class="col-sm-3">
@@ -289,7 +289,7 @@
                       <label>Penalty Amount in Grace Period <span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder="Enter Penalty Amount in Grace Period " [(ngModel)]="project.PenaltyGracePeriod"
-                        name="PenaltyGracePeriod" saCommonDir dirType="alphanumeric" required />
+                        name="PenaltyGracePeriod" saCommonDir dirType="number" required />
                     </div>
                   </div>
                   <div class="col-sm-3">
@@ -297,7 +297,7 @@
                       <label>Penalty Amount After Grace Period <span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder="Enter Penalty Amount After Grace Period " [(ngModel)]="project.PenaltyAfterGracePeriod"
-                        name="PenaltyAfterGracePeriod" saCommonDir dirType="alphanumeric" required />
+                        name="PenaltyAfterGracePeriod" saCommonDir dirType="number" required />
                     </div>
                   </div>
             
@@ -306,7 +306,7 @@
                       <label>Retention Percentage <span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder="Enter Percentage " [(ngModel)]="project.RetentionPercentage"
-                        name="RetentionPercentage" saCommonDir dirType="alphanumeric" required />
+                        name="RetentionPercentage" saCommonDir dirType="number" required />
                     </div>
                   </div>
                   <div class="col-sm-2">
@@ -314,7 +314,7 @@
                       <label>Retention Period (In Months)<span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder="Enter Period " [(ngModel)]="project.RetentionPeriod"
-                        name="RetentionPeriod" saCommonDir dirType="alphanumeric" required />
+                        name="RetentionPeriod" saCommonDir dirType="number" required />
                     </div>
                   </div>
                   <div class="col-sm-4">

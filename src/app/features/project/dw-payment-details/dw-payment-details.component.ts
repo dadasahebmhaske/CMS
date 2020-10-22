@@ -50,23 +50,23 @@ export class DwPaymentDetailsComponent implements OnInit, OnDestroy {
       this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
     }
     let tranNo = this.project.TranNo == null ? '' : this.project.TranNo;
-    this.projectService.getWCInvoiceDeatils(tranNo, this.project.ProjectId, RefTranNo).subscribe((resData: any) => {
+    this.projectService.getDWWeekyPayoutDeatils(tranNo, this.project.ProjectId, RefTranNo).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         console.log(resData);
         if (RefTranNo == '') {
           this.VendorData = resData.Data.Table1;
           this.InvoiceData = resData.Data.Table2;
           if(this.project.TranNo!=null){
-            this.onSelectVendor();  
+           // this.onSelectVendor();  
         this.onSelectInvoice(); 
           }
         } else {
           if(this.editflag=='E'){
             this.VendorData = resData.Data.Table1;
             this.InvoiceData = resData.Data.Table2;
-            if (this.project.TranNo != null) {
-              this.onSelectVendor();
-            }
+            // if (this.project.TranNo != null) {
+            //   this.onSelectVendor();
+            // }
             this.editflag=='z';
             }else{
               this.MaterialArray = resData.Data.Table;
@@ -96,16 +96,16 @@ export class DwPaymentDetailsComponent implements OnInit, OnDestroy {
         this.onSelectSite();
         this.onSelectProject('');
        this.onSelectProject(this.project.RefTranNo);
-        this.onSelectVendor();  
+       // this.onSelectVendor();  
         this.onSelectInvoice();    
        
   
             }
     });
   }
-  onSelectVendor() {
-    this.InvoiceArray = this.projectService.filterData(this.InvoiceData, this.project.VendorId, 'VendorId');
-  }
+  // onSelectVendor() {
+  //   this.InvoiceArray = this.projectService.filterData(this.InvoiceData, this.project.VendorId, 'VendorId');
+  // }
   onSelectInvoice(){
     let obj;
     obj = this.projectService.filterData(this.InvoiceArray, this.project.RefTranNo, 'TranNo');
@@ -125,7 +125,7 @@ export class DwPaymentDetailsComponent implements OnInit, OnDestroy {
     //this.project.Remark = '';
     //this.project.Data = this.MaterialArray;
     let ciphertext = this.appService.getEncrypted(this.project);
-    this.projectService.post('ManageWorkContractPayment', ciphertext).subscribe((resData: any) => {
+    this.projectService.post('ManageLabourPayment', ciphertext).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         AppComponent.SmartAlert.Success(resData.Message);

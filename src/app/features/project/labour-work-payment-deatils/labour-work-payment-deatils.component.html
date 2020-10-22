@@ -106,6 +106,15 @@
                           </label>
                         </div>
                       </div>
+                      <div class="col-sm-2">
+                          <div class="form-group">
+                            <label>In Time <span class="errorMessage">*</span>
+                            </label>
+                            <!-- <input type="text" class="form-control" placeholder="Enter  Time" [(ngModel)]="Material.Amount"
+                              name="Amount" saCommonDir dirType="alphanumeric" required /> -->
+                            <timepicker [(ngModel)]="project.InTime" name="InTime"></timepicker>
+                          </div>
+                        </div>
                       <div class="col-sm-2 col-xs-8">
                         <div class="form-group">
                             <label>End Date <span class="errorMessage">*</span>
@@ -119,18 +128,11 @@
                       </div>
                   <div class="col-sm-2">
                     <div class="form-group">
-                      <label>In Time <span class="errorMessage">*</span>
-                      </label>
-                      <input type="text" class="form-control" placeholder="Enter  Time" [(ngModel)]="Material.Amount"
-                        name="Amount" saCommonDir dirType="alphanumeric" required />
-                    </div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div class="form-group">
                       <label>Out Time <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter  Time" [(ngModel)]="Material.Amount"
-                        name="Amount" saCommonDir dirType="alphanumeric" required />
+                      <!-- <input type="text" class="form-control" placeholder="Enter  Time" [(ngModel)]="Material.Amount"
+                        name="Amount" saCommonDir dirType="alphanumeric" required /> -->
+                         <timepicker [(ngModel)]="project.OutTime" name="OutTime"></timepicker> 
                     </div>
                   </div>
                   <div class="col-sm-2">
@@ -163,10 +165,12 @@
                             <th class="text-center">Work Description </th>
                             <th class="text-center">Date of Work </th>
                             <th class="text-center">Start Date</th>
-                            <th class="text-center">End Date</th>
                             <th class="text-center">In Time</th>
+                            <th class="text-center">End Date</th>
+                           
                             <th class="text-center">Out Time</th>
                             <th class="text-center">Amount</th>
+                            <th class="text-center">Action</th>
                           </tr>
 
                         </thead>
@@ -179,10 +183,14 @@
                             <td class="text-center">{{mat.Desc}}</td>
                             <td class="text-center">{{mat.Datework}}</td>
                             <td class="text-center">{{mat.StartDate}}</td>
-                            <td class="text-center">{{mat.EndDate}}</td>
                             <td class="text-center">{{mat.InTime}}</td>
+                            <td class="text-center">{{mat.EndDate}}</td>
                             <td class="text-center">{{mat.OutTime}}</td>
                             <td class="text-center">{{mat.PaymentAmount}}</td>
+                            <td class="text-center">
+                                <a class="btn btn-xs btn-danger action-btn" (click)=onRemoveMaterial(mat,i)>Remove</a>
+                                 <a class="btn btn-xs btn-primary action-btn" (click)=onEdit(mat,i)>Edit</a>
+                              </td>
                           </tr>
 
 
