@@ -86,10 +86,6 @@ export class DwPaymentDetailsListComponent implements OnInit {
     })
   
   }
-  DispatchOrder(action) {
-    
-  }
-
   onLoad() {
     this.loaderbtn = false;
     this.Filter.StartDate = this.appService.DateToString(this.Filter.StartDate);

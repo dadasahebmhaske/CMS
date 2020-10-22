@@ -165,10 +165,8 @@
                             <td class="text-center">{{i+1}}.</td>
                             <td ><strong *ngIf="mat.show">{{mat.TypeName}}</strong></td>                         
                             <td>{{mat.WorkName}}</td>
-                            <!-- <td class="text-center">{{mat.Qty==0?'':mat.Qty}}</td> -->
-                            <td> <input type="text" class="form-control" style="width: 60px;" placeholder=" Qty "
-                              [(ngModel)]="mat.Qty" #nameControl="ngModel" name="Qty_{{i}}" (ngModelChange)="onQtyChange(mat,i)"
-                              required /> </td>
+                            <td class="text-center">{{mat.Qty==0?'':mat.Qty}}</td>
+                         
                             <td class="text-center">{{mat.UOM}}</td>
                             <td class="text-center">{{mat.Rate}}</td>
                             <td class="text-center">{{mat.Amount}}</td>
