@@ -58,7 +58,7 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
           this.InvoiceData = resData.Data.Table2;
           if(this.project.TranNo!=null){
             this.onSelectVendor();  
-        this.onSelectInvoice(); 
+        //this.onSelectInvoice(); 
           }
         } else {
           if(this.editflag=='E'){
@@ -66,6 +66,7 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
             this.InvoiceData = resData.Data.Table2;
             if (this.project.TranNo != null) {
               this.onSelectVendor();
+              this.onSelectInvoice();
             }
             this.editflag=='z';
             }else{
@@ -97,7 +98,7 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
        // this.onSelectProject('');
         this.onSelectProject(this.project.RefTranNo);
         this.onSelectVendor();  
-        this.onSelectInvoice();    
+      //  this.onSelectInvoice();    
        
   
             }

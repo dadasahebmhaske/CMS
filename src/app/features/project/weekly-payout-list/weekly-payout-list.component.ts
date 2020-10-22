@@ -52,9 +52,9 @@ export class WeeklyPayoutListComponent implements OnInit {
             { name: 'SiteName', displayName: 'Site Name', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'ProjectName', displayName: 'Project Name', width: "*", cellTooltip: true, filterCellFiltered: true },
       // { name: 'ManagerName', displayName: 'Manager Name', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'TotAmount', displayName: 'Payment Amount', width: "*", cellClass: 'text-center', cellTooltip: true, filterCellFiltered: true },
-      { name: 'PaymentDate', displayName: 'Payment Date', cellClass: 'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'PayModeName', displayName: 'Payment Mode', cellClass: 'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotAmount', displayName: 'Payment Amount', width: "*", cellClass: 'text-right', cellTooltip: true, filterCellFiltered: true },
+//{ name: 'PaymentDate', displayName: 'Payment Date', cellClass: 'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
+     // { name: 'PayModeName', displayName: 'Payment Mode', cellClass: 'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
   //{ name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;

@@ -144,8 +144,8 @@
                         <thead>
                           <tr align="center" class="text-center">
                             <th  class="text-center">#</th>
-                            <th >Material Type</th>
-                            <th >Material</th>
+                            <th >Activity Type</th>
+                            <th >Work Contract/Activity</th>
                             <th  class="text-center">Quantity</th>
                             <th class="text-center">Unit</th>
                             <th  class="text-center">Rate</th>
@@ -156,7 +156,7 @@
                             <th class="text-center">IGST Amount</th>
                             <th class="text-center">SGST Amount</th>
                             <th class="text-center">CGST Amount</th>
-                            <th class="text-center">Total Amount </th> 
+                            <th class="text-center">Total Amount </th>
                           </tr>
 
                         </thead>
@@ -164,9 +164,12 @@
                           <tr *ngFor="let mat of MaterialArray;index as i">
                             <td class="text-center">{{i+1}}.</td>
                             <td ><strong *ngIf="mat.show">{{mat.TypeName}}</strong></td>                         
-                            <td>{{mat.MatName}}</td>
-                            <td class="text-center">{{mat.Qty==0?'':mat.Qty}}</td>
-                                                        <td class="text-center">{{mat.UOM}}</td>
+                            <td>{{mat.WorkName}}</td>
+                            <!-- <td class="text-center">{{mat.Qty==0?'':mat.Qty}}</td> -->
+                            <td> <input type="text" class="form-control" style="width: 60px;" placeholder=" Qty "
+                              [(ngModel)]="mat.Qty" #nameControl="ngModel" name="Qty_{{i}}" (ngModelChange)="onQtyChange(mat,i)"
+                              required /> </td>
+                            <td class="text-center">{{mat.UOM}}</td>
                             <td class="text-center">{{mat.Rate}}</td>
                             <td class="text-center">{{mat.Amount}}</td>
                             <td class="text-center">{{mat.IGST}}</td>
@@ -176,7 +179,7 @@
                             <td class="text-center">{{mat.SGSTAmount}}</td>
                             <td class="text-center">{{mat.CGSTAmount}}</td>
                             <td class="text-center">{{mat.TotalAmount}}</td>
-                        
+                     
                           </tr>
                           
                           <tr>

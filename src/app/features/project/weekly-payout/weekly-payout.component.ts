@@ -16,7 +16,7 @@ export class WeeklyPayoutComponent implements OnInit, OnDestroy {
                     public minDate: Date;
                     public StartMindate: Date;
                     public maxDate: Date = new Date();
-                    public WorkContractData:any=[];WorkLabourD:any=[];
+                    public WorkContractData:any=[];WorkLabourD:any=[];TranExists:any=[];
                     public loaderbtn: boolean = true;editflag;AMTypeData:any=[];AMData:any=[];
                     public project:any={};Material:any={};MaterialArray:any=[];PayTData:any=[];filterMaterialArray:any=[];
                     public SiteData:any=[];VendorData:any=[];ProjectData:any=[];LabourWork:any=[];ContractorData:any=[];
@@ -28,8 +28,8 @@ export class WeeklyPayoutComponent implements OnInit, OnDestroy {
                       this.datashare.GetSharedData.subscribe(data => {
                         this.project = data == null ? { IsActive: 'Y', SiteId: '',  ProjectId: '',RefTranNo:''} : data;
                        
-                        // if (this.project.TranNo != null)
-                        //  this.getTranData();
+                        if (this.project.TranNo != null)
+                         this.getTranData();
                       }); 
                       this.appService.getAppData().subscribe(data => { this.empInfo = data });
         
@@ -66,6 +66,7 @@ export class WeeklyPayoutComponent implements OnInit, OnDestroy {
                       this.editflag='E';
                       this.projectService.getTransDetails(113, this.project.TranNo).subscribe((resTran: any) => {
                         if (resTran.StatusCode != 0) {
+                          this.TranExists=resTran.Data.Table;
                          this.project = resTran.Data.Table1[0];
                           this.MaterialArray = resTran.Data.Table2;
                           this.onSelectSite(this.project.SiteId);
@@ -141,7 +142,9 @@ export class WeeklyPayoutComponent implements OnInit, OnDestroy {
                         else { this.VendorData = []; this.AMData = []; this.AMTypeData=[];AppComponent.SmartAlert.Errmsg(resData.Message); }
                       });
                     }
-
+                    onRemoveMaterial(data, index) {
+                      this.MaterialArray.splice(index, 1);
+                  }
                  
                     public onSubmit() {
                       this.loaderbtn = false;
@@ -160,7 +163,7 @@ export class WeeklyPayoutComponent implements OnInit, OnDestroy {
                         this.loaderbtn = true;
                         if (resData.StatusCode != 0) {
                           AppComponent.SmartAlert.Success(resData.Message);
-                          AppComponent.Router.navigate(['/project/grn-list']);
+                          AppComponent.Router.navigate(['/project/weekly-payout-list']);
                         }
                         else { AppComponent.SmartAlert.Errmsg(resData.Message); }
                       });

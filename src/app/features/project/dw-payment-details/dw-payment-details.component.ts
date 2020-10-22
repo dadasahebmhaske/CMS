@@ -54,19 +54,19 @@ export class DwPaymentDetailsComponent implements OnInit, OnDestroy {
       if (resData.StatusCode != 0) {
         console.log(resData);
         if (RefTranNo == '') {
-          this.VendorData = resData.Data.Table1;
-          this.InvoiceData = resData.Data.Table2;
+          //this.VendorData = resData.Data.Table1;
+          this.InvoiceData = resData.Data.Table1;
           if(this.project.TranNo!=null){
            // this.onSelectVendor();  
-        this.onSelectInvoice(); 
+       // this.onSelectInvoice(); 
           }
         } else {
           if(this.editflag=='E'){
-            this.VendorData = resData.Data.Table1;
-            this.InvoiceData = resData.Data.Table2;
-            // if (this.project.TranNo != null) {
-            //   this.onSelectVendor();
-            // }
+           // this.VendorData = resData.Data.Table1;
+            this.InvoiceData = resData.Data.Table1;
+            if (this.project.TranNo != null) {
+              this.onSelectInvoice();
+            }
             this.editflag=='z';
             }else{
               this.MaterialArray = resData.Data.Table;
@@ -94,10 +94,10 @@ export class DwPaymentDetailsComponent implements OnInit, OnDestroy {
        this.project = resTran.Data.Table1[0];
        this.MaterialArray = resTran.Data.Table2;
         this.onSelectSite();
-        this.onSelectProject('');
+       // this.onSelectProject('');
        this.onSelectProject(this.project.RefTranNo);
        // this.onSelectVendor();  
-        this.onSelectInvoice();    
+        //this.onSelectInvoice();    
        
   
             }
@@ -108,7 +108,7 @@ export class DwPaymentDetailsComponent implements OnInit, OnDestroy {
   // }
   onSelectInvoice(){
     let obj;
-    obj = this.projectService.filterData(this.InvoiceArray, this.project.RefTranNo, 'TranNo');
+    obj = this.projectService.filterData(this.InvoiceData, this.project.RefTranNo, 'TranNo');
     this.project.InvoiceDate=obj[0].InvoiceDate;
     this.project.VendorInvoiceNo=obj[0].VendorInvoiceNo;
     this.project.TotAmount=obj[0].TotAmount;

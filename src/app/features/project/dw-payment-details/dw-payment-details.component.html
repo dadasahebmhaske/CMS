@@ -67,7 +67,7 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-sm-2">
+                  <!-- <div class="col-sm-2">
                     <div class="form-group">
                       <label>Invoice No. <span class="errorMessage">*</span>
                       </label>
@@ -75,7 +75,7 @@
                         [(ngModel)]="project. VendorInvoiceNo" name="VendorInvoiceNo" saCommonDir dirType="alphanumeric"
                         required />
                     </div>
-                  </div>
+                  </div> -->
 
                   <div class="col-sm-2">
                     <div class="form-group">
@@ -140,57 +140,50 @@
                   </div>
                   <div class="col-sm-12">
                     <div class="table-responsive">
-                      <table class="table table-hover">
-                        <thead>
-                          <tr align="center" class="text-center">
-                            <th  class="text-center">#</th>
-                            <th >Material Type</th>
-                            <th >Material</th>
-                            <th  class="text-center">Quantity</th>
-                            <th class="text-center">Unit</th>
-                            <th  class="text-center">Rate</th>
-                            <th class="text-center">Amount</th>
-                            <th class="text-center">IGST %</th>
-                            <th class="text-center">SGST %</th>
-                            <th class="text-center">CGST %</th>
-                            <th class="text-center">IGST Amount</th>
-                            <th class="text-center">SGST Amount</th>
-                            <th class="text-center">CGST Amount</th>
-                            <th class="text-center">Total Amount </th> 
-                          </tr>
-
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let mat of MaterialArray;index as i">
-                            <td class="text-center">{{i+1}}.</td>
-                            <td ><strong *ngIf="mat.show">{{mat.TypeName}}</strong></td>                         
-                            <td>{{mat.MatName}}</td>
-                            <td class="text-center">{{mat.Qty==0?'':mat.Qty}}</td>
-                                                        <td class="text-center">{{mat.UOM}}</td>
-                            <td class="text-center">{{mat.Rate}}</td>
-                            <td class="text-center">{{mat.Amount}}</td>
-                            <td class="text-center">{{mat.IGST}}</td>
-                            <td class="text-center">{{mat.SGST}}</td>
-                            <td class="text-center">{{mat.CGST}}</td>
-                            <td class="text-center">{{mat.IGSTAmount}}</td>
-                            <td class="text-center">{{mat.SGSTAmount}}</td>
-                            <td class="text-center">{{mat.CGSTAmount}}</td>
-                            <td class="text-center">{{mat.TotalAmount}}</td>
-                        
-                          </tr>
-                          
-                          <tr>
-                            <td colspan="6" class="text-right"><strong>TOTAL</strong></td>
-                            <td class="text-center"><strong>{{project.TotalAmtCost}}</strong>  </td>
-                            <td></td>    <td></td>    <td></td>
-                            <td class="text-center"><strong>{{project.TotIGSTCost}}</strong>  </td>
-                            <td class="text-center"><strong>{{project.TotSGSTCost}}</strong>  </td>
-                            <td class="text-center"><strong>{{project.TotCGSTCost}}</strong>  </td>
-                            <td class="text-center"><strong>{{project.TotProjectCost}}</strong>  </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                        <table class="table table-hover">
+                            <thead>
+                              <tr align="center" class="text-center">
+                                <th class="text-center">#</th>
+                                <th>Labour Name</th>
+                                <th>Activity Type </th>
+                                <th>Ativity </th>
+                                <th>Work Description </th>
+                                <th class="text-center">Start Date</th>
+                                <th class="text-center">In Time</th>
+                                <th class="text-center">End Date</th>                               
+                                <th class="text-center">Out Time</th>
+                                <th class="text-center">Qty</th>
+                                <th class="text-center">Rate</th>
+                                <th class="text-center">Amount</th>
+                              </tr>
+    
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let mat of MaterialArray;index as i">
+                                <td class="text-center"><span (onload)="check(i)">{{i+1}}.</span></td>
+                                <td><strong>{{mat.LabourName}}</strong></td>
+                                <td ><span *ngIf="mat.show">{{mat.TypeName}}</span></td>  
+                                <td>{{mat.WorkName}}</td>
+                                <td >{{mat.WorkDescription}}</td>
+                                <td class="text-center">{{mat.StartDate}}</td>
+                                <td class="text-center">{{mat.DispStartTime}}</td>
+                                <td class="text-center">{{mat.EndDate}}</td>
+                                <td class="text-center">{{mat.DispEndTime}}</td>
+                                <td class="text-center">{{mat.Qty}}</td>
+                                <td class="text-center">{{mat.Rate}}</td>
+                                <td class="text-center">{{mat.TotalAmount}}</td>
+                                                        </tr>
+    
+    
+                            </tbody>
+                          </table>
                     </div>
+                    <!-- <div class="form-group  pull-right">
+                      <button class="btn btn-block btn-warning ">
+                          <i class="glyphicon glyphicon-plus"></i>
+                          Add For Weekly Payout
+                      </button>
+                  </div> -->
                   </div>
                 </div>
 
