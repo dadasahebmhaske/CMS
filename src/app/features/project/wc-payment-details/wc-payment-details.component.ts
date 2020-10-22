@@ -95,7 +95,7 @@ export class WcPaymentDetailsComponent implements OnInit, OnDestroy {
        this.MaterialArray = resTran.Data.Table2;
         this.onSelectSite();
         this.onSelectProject('');
-       // this.onSelectProject(this.project.RefTranNo);
+       this.onSelectProject(this.project.RefTranNo);
         this.onSelectVendor();  
         this.onSelectInvoice();    
        
