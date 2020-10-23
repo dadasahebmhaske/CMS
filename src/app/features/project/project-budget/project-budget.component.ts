@@ -11,11 +11,11 @@ import { ProjectService } from '../project.service';
 })
 export class ProjectBudgetComponent implements OnInit, OnDestroy {
   public empInfo: any;
-  public project: any = { };
+  public project: any = {};
   public loaderbtn: boolean = true;
   public OtherExp: Boolean = false;
   public Material: any = { BudgetHeadType: '', BudgetHead: '' };
-  public AMTypeData: any = []; AMData: any = []; ExecutiveData: any; MaterialArray: any = []; PMData: any; ProjectData: any; SiteData: any;TranExists:any=[];
+  public AMTypeData: any = []; AMData: any = []; ExecutiveData: any; MaterialArray: any = []; RespMaterialArray: any = []; PMData: any; ProjectData: any; SiteData: any; TranExists: any = [];
 
   constructor(private appService: AppService, private datashare: DatashareService, private allmasterService: AllmasterService, private projectService: ProjectService) { }
   ngOnInit() {
@@ -49,19 +49,19 @@ export class ProjectBudgetComponent implements OnInit, OnDestroy {
     });
     this.projectService.getAMType(2).subscribe((resMaterial: any) => {
       if (resMaterial.StatusCode != 0) {
-        this.AMTypeData = this.AMTypeData.concat(resMaterial.Data); console.log(resMaterial.Data);
+        this.AMTypeData = this.AMTypeData.concat(resMaterial.Data);
       }
       else { this.AMTypeData = []; AppComponent.SmartAlert.Errmsg(resMaterial.Message); }
     });
     this.projectService.getAMType(3).subscribe((resActivity: any) => {
       if (resActivity.StatusCode != 0) {
-        this.AMTypeData = this.AMTypeData.concat(resActivity.Data); console.log(resActivity.Data);
+        this.AMTypeData = this.AMTypeData.concat(resActivity.Data);
       }
       else { AppComponent.SmartAlert.Errmsg(resActivity.Message); }
     });
     this.projectService.getAMType(4).subscribe((resOtherExp: any) => {
       if (resOtherExp.StatusCode != 0) {
-        this.AMTypeData = this.AMTypeData.concat(resOtherExp.Data); 
+        this.AMTypeData = this.AMTypeData.concat(resOtherExp.Data);
       }
       else { AppComponent.SmartAlert.Errmsg(resOtherExp.Message); }
     });
@@ -74,7 +74,7 @@ export class ProjectBudgetComponent implements OnInit, OnDestroy {
     this.OtherExp = obj[0].MainTypeId == 4 ? true : false;
     this.projectService.getAM(obj[0].MainTypeId).subscribe((resAData: any) => {
       if (resAData.StatusCode != 0) {
-        this.AMData = resAData.Data.Table; console.log(resAData.Data.Table);
+        this.AMData = resAData.Data.Table;
       }
       else { this.AMData = []; AppComponent.SmartAlert.Errmsg(resAData.Message); }
     });
@@ -104,7 +104,7 @@ export class ProjectBudgetComponent implements OnInit, OnDestroy {
       this.MaterialArray[this.Material.index].Rate = this.Material.URate;
       this.MaterialArray[this.Material.index].Qty = this.Material.UQty;
       this.MaterialArray[this.Material.index].Amount = this.Material.UAmount;
-      if ( this.MaterialArray[this.Material.index].MainTypeId == 4) {
+      if (this.MaterialArray[this.Material.index].MainTypeId == 4) {
         this.MaterialArray[this.Material.index].Rate = this.MaterialArray[this.Material.index].Amount
       }
       this.project = this.projectService.calculateTotal(this.project, this.MaterialArray);
@@ -114,10 +114,10 @@ export class ProjectBudgetComponent implements OnInit, OnDestroy {
       this.Material.Rate = this.Material.URate; this.Material.Qty = this.Material.UQty; this.Material.Amount = this.Material.UAmount;
       if (this.Material.MainTypeId == 4) {
         this.Material.Rate = this.Material.Amount;
-      
+
       }
       this.Material.show = this.MaterialArray.some(obj => parseInt(obj.BudgetHeadType) === parseInt(this.Material.BudgetHeadType)) ? false : true;
-      this.MaterialArray.push(this.Material); console.log(this.MaterialArray);
+      this.MaterialArray.push(this.Material);
       this.MaterialArray.sort((a, b) => `${a.MainTypeId}`.localeCompare(`${b.MainTypeId}`) || a.BudgetHeadTypeName.localeCompare(b.BudgetHeadTypeName));
       this.project = this.projectService.calculateTotal(this.project, this.MaterialArray);
     } this.Material = { BudgetHeadType: '', BudgetHead: '' }
@@ -131,6 +131,12 @@ export class ProjectBudgetComponent implements OnInit, OnDestroy {
     // }
     this.MaterialArray.splice(index, 1);
     this.project = this.projectService.calculateTotal(this.project, this.MaterialArray);
+    // if (this.TranExists.length == 0)
+    //   for (let j = 0; j < this.RespMaterialArray.length; j++) {
+    //     if (data.SrNo == this.RespMaterialArray[j].SrNo) {
+    //       this.RespMaterialArray.splice(j, 1);
+    //     }
+    //   }
   }
   onEdit(mat, i) {
     mat.index = i;
@@ -138,40 +144,66 @@ export class ProjectBudgetComponent implements OnInit, OnDestroy {
     this.Material.URate = mat.Rate;
     this.Material.UQty = mat.Qty;
     this.Material.UAmount = mat.Amount;
-    if(this.Material.MainTypeId==4){this.Material.UAmount =mat.Rate }
+    if (this.Material.MainTypeId == 4) { this.Material.UAmount = mat.Rate }
     this.onSelectActivityMaterial();
   }
 
   public getTranData() {
-    this.projectService.getTransDetails(101,this.project.TranNo).subscribe((resTran: any) => {
+    this.projectService.getTransDetails(101, this.project.TranNo).subscribe((resTran: any) => {
       if (resTran.StatusCode != 0) {
-        this.TranExists= resTran.Data.Table;
+        this.TranExists = resTran.Data.Table;
         let amt = this.project.TotProjectCost;
         this.project = resTran.Data.Table1[0];
         this.project.TotProjectCost = amt;
         this.onSelectSite();
+        this.RespMaterialArray = resTran.Data.Table2;
         this.MaterialArray = resTran.Data.Table2;
         let tempArray = [];
         for (let i = 0; i < this.MaterialArray.length; i++) {
           this.Material = this.MaterialArray[i];
           this.Material.show = tempArray.some(obj => parseInt(obj.BudgetHeadType) === parseInt(this.Material.BudgetHeadType)) ? false : true;
           tempArray.push(this.Material);
+         
         }
         this.MaterialArray = tempArray;
+        this.MaterialArray.sort((a, b) => `${a.MainTypeId}`.localeCompare(`${b.MainTypeId}`) || a.BudgetHeadTypeName.localeCompare(b.BudgetHeadTypeName));
         this.Material = { BudgetHeadType: '', BudgetHead: '' }
       }
     });
   }
+  public ManipulateMateriaArray() {
+    for (let i = 0; i < this.MaterialArray.length; i++) {
+      if (this.MaterialArray[i].SrNo == null || this.MaterialArray[i].SrNo == undefined) {
+        if (this.RespMaterialArray.some(obj => (parseInt(obj.BudgetHeadType) === parseInt(this.MaterialArray[i].BudgetHeadType) && parseInt(obj.BudgetHead) === parseInt(this.MaterialArray[i].BudgetHead)))) {
+          //AppComponent.SmartAlert.Errmsg("Material / Activity is already added in list.");
+        } else { this.RespMaterialArray.push(this.MaterialArray[i]); }
+      }
+      for (let j = 0; j < this.RespMaterialArray.length; j++) {
+        if (this.MaterialArray[i].SrNo == this.RespMaterialArray[j].SrNo) {
+          if (this.MaterialArray[i].Qty != this.RespMaterialArray[j].Qty || this.MaterialArray[i].Rate != this.RespMaterialArray[j].Rate) {
+            this.RespMaterialArray[j].Qty = this.MaterialArray[i].Qty;
+            this.RespMaterialArray[j].Rate = this.MaterialArray[i].Rate;
+          }
+        }
+      }
+    }
+    return this.RespMaterialArray
+  }
   public onSubmit() {
     this.loaderbtn = false;
+    if (this.TranExists.length == 0) { this.project.Data = this.MaterialArray; console.log(this.MaterialArray); } else {
+      this.project.Data = this.ManipulateMateriaArray();   
+    }
+    
+
     this.project.Flag = this.project.TranNo == null || this.project.TranNo == '' ? 'IN' : 'UP';
     this.project.TranDate = new Date();
     this.project.UserCode = this.empInfo.EmpId;
     this.project.TranNo = this.project.TranNo == null ? '' : this.project.TranNo;
     this.project.ProjectStatus = 1;
-    this.project.TranType=101;
-    this.project.TranSubType=1;
-    this.project.Data = this.MaterialArray;
+    this.project.TranType = 101;
+    this.project.TranSubType = 1;
+
     let ciphertext = this.appService.getEncrypted(this.project);
     this.projectService.post('ManageProjectBudget', ciphertext).subscribe((resData: any) => {
       this.loaderbtn = true;

@@ -92,7 +92,7 @@ export class ProjectBudgetListComponent implements OnInit {
     this.projectService.getTransactionlist(101, this.Filter).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
-        this.projectBudgetData = resData.Data.Table; console.log(resData.Data);
+        this.projectBudgetData = resData.Data.Table; 
         AppComponent.SmartAlert.Success(resData.Message);
       }
       else { this.projectBudgetData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
