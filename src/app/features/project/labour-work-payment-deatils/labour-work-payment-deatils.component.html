@@ -95,14 +95,14 @@
                             name="UQty" (ngModelChange)="GetCalculate()"  saCommonDir dirType="number" required />
                         </div>
                       </div>
-                      <!-- <div class="col-sm-1">
+                      <div class="col-sm-1">
                         <div class="form-group">
                           <label>Unit <span class="errorMessage">*</span>
                           </label>
                           <input type="text" class="form-control" placeholder="Enter Unit " [(ngModel)]="Material.UOM"
                             name="UOM" saCommonDir dirType="alphanumeric" required disabled/>
                         </div>
-                      </div> -->
+                      </div>
                       <div class="col-sm-1">
                         <div class="form-group">
                           <label>Rate <span class="errorMessage">*</span>
@@ -111,12 +111,12 @@
                             name="URate"  (ngModelChange)="GetCalculate()"  saCommonDir dirType="decimal" required />
                         </div>
                       </div>
-                  <div class="col-sm-4">
+                  <div class="col-sm-3">
                     <div class="form-group">
-                      <label>Work Done Description<span class="errorMessage">*</span>
+                      <label>Work Done Description
                       </label>
                       <input type="text" class="form-control" placeholder="Enter Description " [(ngModel)]="Material.UWorkDescription"
-                        name="UWorkDescription" saCommonDir dirType="alphanumeric" required />
+                        name="UWorkDescription" saCommonDir dirType="alphanumeric"  />
                     </div>
                   </div>
                     <div class="col-sm-2 col-xs-8">
@@ -126,7 +126,7 @@
                           <label class="posticon">
                             <i class="icon-append fa fa-calendar"></i>
                             <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="Material.StartDate" name="StartDate" id="startDate"
-                               onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
+                            (bsValueChange)="resetEndDate($event)"  onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
                           </label>
                         </div>
                       </div>
@@ -185,6 +185,7 @@
                             <th >Activity Type </th>
                             <th>Ativity </th>
                             <th class="text-center">Qty </th>
+                            <th class="text-center">Unit</th>
                             <th class="text-center">Rate </th>
                             <th >Work Description </th>
                            
@@ -205,6 +206,7 @@
                             <td ><span *ngIf="mat.show">{{mat.TypeName}}</span></td>  
                             <td>{{mat.WorkName}}</td>
                             <td class="text-center">{{mat.Qty==0?'':mat.Qty}}</td>
+                            <td class="text-center">{{mat.UOM}}</td>
                             <td class="text-center">{{mat.Rate}}</td>
                             <td >{{mat.WorkDescription}}</td>
                             

@@ -264,6 +264,15 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
                       else { AppComponent.SmartAlert.Errmsg(resData.Message); }
                     });
                   }
+                  resetEndDate(val) {
+                    this.minDate = val;
+                    if (val != undefined && val != null && this.Material.EndDate != null) {
+                      if ((new Date(this.Material.EndDate).getTime()) < (new Date(val).getTime())) {
+                        this.Material.EndDate = '';
+                      }
+                    }
+                  }
+                
                   ngOnDestroy() {
                     this.datashare.updateShareData(null);
                   }
