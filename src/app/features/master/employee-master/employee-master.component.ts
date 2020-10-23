@@ -24,7 +24,7 @@ export class EmployeeMasterComponent implements OnInit {
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.configureGrid();
-    this.getDesignations();
+   // this.getDesignations();
   }
   configureGrid() {
     this.gridOptions = <IGridoption>{}
@@ -59,13 +59,13 @@ export class EmployeeMasterComponent implements OnInit {
     this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/master/employee']);
   }
-  getDesignations() {
-    this.masterService.getDesignation(AppComponent.DeptId).subscribe((res: any) => {
-      if (res.StatusCode != 0)
-        this.designationData = res.Data;
-      this.designationData.unshift({ RoleCode: "ALL", RoleDesc: "ALL" });
-    });
-  }
+  // getDesignations() {
+  //   this.masterService.getDesignation(AppComponent.DeptId).subscribe((res: any) => {
+  //     if (res.StatusCode != 0)
+  //       this.designationData = res.Data;
+  //     this.designationData.unshift({ RoleCode: "ALL", RoleDesc: "ALL" });
+  //   });
+  // }
   onLoad() {
     this.loaderbtn=false;
     this.allmasterService.getEmployees('').subscribe((resData: any) => {
