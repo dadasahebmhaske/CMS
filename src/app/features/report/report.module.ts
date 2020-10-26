@@ -4,7 +4,8 @@ import { SharedModule } from '@app/shared/shared.module';
 import { UigridreportDirective } from '../../core/directive/uigridreport.directive';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { RoleAccessGuard } from '@app/core/guards/roleAccess.guard';
-
+import { ProjectService } from '../project/project.service';
+import { AllmasterService } from '../master/allmaster.service';
 import { routing,componentArray } from './report-routing.module';
 
 
@@ -19,7 +20,7 @@ import { routing,componentArray } from './report-routing.module';
     BsDatepickerModule.forRoot(),
   ],
   exports:[UigridreportDirective],
-  providers:[RoleAccessGuard]
+  providers:[RoleAccessGuard,ProjectService,AllmasterService]
 })
 export class ReportModule { }
 

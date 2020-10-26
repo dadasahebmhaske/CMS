@@ -5,6 +5,9 @@ import { AppService } from '@app/core/custom-services/app.service';
 import { DatashareService } from '@app/core/custom-services/datashare.service';
 import { MasterService } from '@app/core/custom-services/master.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
+import { AllmasterService } from '@app/features/master/allmaster.service';
+import { ProjectService } from '../../../features/project/project.service';
+
 @Component({
   selector: 'sa-pending-indents',
   templateUrl: './pending-indents.component.html',
@@ -23,8 +26,9 @@ export class PendingIndentsComponent implements OnInit {
       public minDate: Date;
       public StartMindate: Date;
       public maxDate: Date = new Date();
+      public SiteData:any=[];ProjectData:any=[];
      // public ProductArray: any = [];
-      constructor(private appService: AppService, private masterService: MasterService) {
+      constructor(private appService: AppService, private masterService: MasterService,private projectService:ProjectService,private allmasterService:AllmasterService) {
         this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
       }
       ngOnInit() {
@@ -34,16 +38,21 @@ export class PendingIndentsComponent implements OnInit {
         this.configureGrid(); //this.DeliveredOrderData = [{}];
       }
       allOnLoad() {
-        // this.masterService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
-        //   if (resCP.StatusCode != 0)
-        //     this.chantype = resCP.Data;
-        //     this.chantype.unshift(  {CPCode: this.cpInfo.CPCode,CPName: this.cpInfo.CPName});
-        // });
-      
-        // this.masterService.getEmpoyeeDelBoy(this.cpInfo.CPCode).subscribe((respD: any) => {
-        //   if (respD.StatusCode != 0)
-        //     this.delBoyData = respD.Data;
-        // });
+        this.allmasterService.getSite('Y').subscribe((resSData: any) => {
+          if (resSData.StatusCode != 0) {
+            this.SiteData = resSData.Data;
+          }
+          else { this.SiteData = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
+        });
+      }
+
+      public onSelectSite(id) {
+        this.projectService.getProject(id).subscribe((resSData: any) => {
+          if (resSData.StatusCode != 0) {
+              this.ProjectData = resSData.Data;
+            }
+          else { this.ProjectData = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
+        });
       }
       configureGrid() {
         this.gridOptions = <IGridoption>{}
@@ -72,22 +81,23 @@ export class PendingIndentsComponent implements OnInit {
           //{ name: 'ProdValueUC', displayName: 'Value of Payments Under Clearing', cellClass: 'cell-right', width: "260", cellTooltip: true, filterCellFiltered: true },
         ]
         this.gridOptions.columnDefs = columnDefs;
-        //this.onLoad();
+        this.onLoad();
       }
       onEditFunction = (event) => {
   
       }
       onLoad() {
         this.loaderbtn=false;
-        // this.deliverFilter = this.customerService.checkCustOrMobNo(this.deliverFilter);
-        // this.customerService.getCustomerWiseTransactionDetails(this.deliverFilter.CPCode,this.deliverFilter, this.appService.DateToString(this.deliverFilter.StartDate), this.appService.DateToString(this.deliverFilter.EndDate)).subscribe((resData: any) => {
-        //   this.loaderbtn=true;
-        //   if (resData.StatusCode != 0) {
-        //     this.DeliveredOrderData = resData.Data;
-        //     AppComponent.SmartAlert.Success(resData.Message);
-        //   }
-        //   else { this.DeliveredOrderData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
-        // });
+        this.deliverFilter.StartDate = this.appService.DateToString(this.deliverFilter.StartDate);
+        this.deliverFilter.EndDate = this.appService.DateToString(this.deliverFilter.EndDate)
+        this.projectService.getTransactionlist(104, this.deliverFilter).subscribe((resData: any) => {
+          this.loaderbtn = true;
+          if (resData.StatusCode != 0) {
+            this.DeliveredOrderData = resData.Data.Table; console.log(resData.Data);
+            AppComponent.SmartAlert.Success(resData.Message);
+          }
+          else { this.DeliveredOrderData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
+        });
       }
       resetEndDate(val) {
         this.minDate = val;
