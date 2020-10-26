@@ -95,8 +95,8 @@
                       <div class="form-group">
                         <label>Qty <span class="errorMessage">*</span>
                         </label>
-                        <input type="text" class="form-control" placeholder="Enter Qty " [(ngModel)]="Material.UQty"
-                        (ngModelChange)="onSelectMaterial()" name="UQty" saCommonDir dirType="number" required />
+                        <input type="text" class="form-control" placeholder="Enter Qty " [(ngModel)]="Material.Qty"
+                        (ngModelChange)="onSelectMaterial()" name="Qty" saCommonDir dirType="number" required />
                       </div>
                     </div>
                     <div class="col-sm-1" *ngIf="!OtherExp">
@@ -112,8 +112,8 @@
                       <div class="form-group">
                         <label>Rate <span class="errorMessage">*</span>
                         </label>
-                        <input type="text" class="form-control" placeholder=" Rate " [(ngModel)]="Material.URate"
-                        (ngModelChange)="onSelectMaterial()" name="URate" saCommonDir dirType="decimal"   required />
+                        <input type="text" class="form-control" placeholder=" Rate " [(ngModel)]="Material.Rate"
+                        (ngModelChange)="onSelectMaterial()" name="Rate" saCommonDir dirType="decimal"   required />
                       </div>
                     </div>
 
@@ -121,8 +121,8 @@
                       <div class="form-group">
                         <label>Amount<span class="errorMessage">*</span>
                         </label>
-                        <input type="text" class="form-control" placeholder=" Amount " [(ngModel)]="Material.UAmount"
-                          name="UAmount" saCommonDir dirType="decimal" [disabled]="!OtherExp" required />
+                        <input type="text" class="form-control" placeholder=" Amount " [(ngModel)]="Material.Amount"
+                          name="Amount" saCommonDir dirType="decimal" [disabled]="!OtherExp" required />
                       </div>
                     </div>
                     <div class="col-sm-1">

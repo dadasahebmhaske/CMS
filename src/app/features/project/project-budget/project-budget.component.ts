@@ -93,17 +93,22 @@ export class ProjectBudgetComponent implements OnInit, OnDestroy {
     this.Material.BudgetHeadName = obj[0].Name;
     this.Material.UOMId = obj[0].UOMId;
     this.Material.UOM = obj[0].UOM;
-    if (this.Material.UQty != null && this.Material.URate != null) {
-      this.Material.UAmount = parseFloat(this.Material.URate == undefined || this.Material.URate == '' ? 0 : this.Material.URate) * parseFloat(this.Material.UQty == undefined || this.Material.UQty == '' ? 0 : this.Material.UQty);
-      this.Material.UAmount = this.Material.UAmount.toFixed(2);
+    // if (this.Material.UQty != null && this.Material.URate != null) {
+    //   this.Material.UAmount = parseFloat(this.Material.URate == undefined || this.Material.URate == '' ? 0 : this.Material.URate) * parseFloat(this.Material.UQty == undefined || this.Material.UQty == '' ? 0 : this.Material.UQty);
+    //   this.Material.UAmount = this.Material.UAmount.toFixed(2);
+    // }
+       if (this.Material.Qty != null && this.Material.Rate != null) {
+      this.Material.Amount = parseFloat(this.Material.Rate == undefined || this.Material.Rate == '' ? 0 : this.Material.Rate) * parseFloat(this.Material.Qty == undefined || this.Material.Qty == '' ? 0 : this.Material.Qty);
+      this.Material.Amount = this.Material.Amount.toFixed(2);
     }
   }
 
   addMaterial() {
     if (this.Material.index != null) {
-      this.MaterialArray[this.Material.index].Rate = this.Material.URate;
-      this.MaterialArray[this.Material.index].Qty = this.Material.UQty;
-      this.MaterialArray[this.Material.index].Amount = this.Material.UAmount;
+      this.MaterialArray[this.Material.index]=Object.assign(this.MaterialArray[this.Material.index],this.Material);
+      // this.MaterialArray[this.Material.index].Rate = this.Material.URate;
+      // this.MaterialArray[this.Material.index].Qty = this.Material.UQty;
+      // this.MaterialArray[this.Material.index].Amount = this.Material.UAmount;
       if (this.MaterialArray[this.Material.index].MainTypeId == 4) {
         this.MaterialArray[this.Material.index].Rate = this.MaterialArray[this.Material.index].Amount
       }
@@ -111,7 +116,7 @@ export class ProjectBudgetComponent implements OnInit, OnDestroy {
     } else if (this.MaterialArray.some(obj => (parseInt(obj.BudgetHeadType) === parseInt(this.Material.BudgetHeadType) && parseInt(obj.BudgetHead) === parseInt(this.Material.BudgetHead)))) {
       AppComponent.SmartAlert.Errmsg("Material / Activity is already added in list.");
     } else {
-      this.Material.Rate = this.Material.URate; this.Material.Qty = this.Material.UQty; this.Material.Amount = this.Material.UAmount;
+    //  this.Material.Rate = this.Material.URate; this.Material.Qty = this.Material.UQty; this.Material.Amount = this.Material.UAmount;
       if (this.Material.MainTypeId == 4) {
         this.Material.Rate = this.Material.Amount;
 
@@ -140,11 +145,14 @@ export class ProjectBudgetComponent implements OnInit, OnDestroy {
   }
   onEdit(mat, i) {
     mat.index = i;
-    this.Material = mat;
-    this.Material.URate = mat.Rate;
-    this.Material.UQty = mat.Qty;
-    this.Material.UAmount = mat.Amount;
-    if (this.Material.MainTypeId == 4) { this.Material.UAmount = mat.Rate }
+    this.Material=Object.assign(this.Material,mat);
+    // this.Material = mat;
+    // this.Material.URate = mat.Rate;
+    // this.Material.UQty = mat.Qty;
+    // this.Material.UAmount = mat.Amount;
+    //if (this.Material.MainTypeId == 4) { this.Material.UAmount = mat.Rate }
+
+    if (this.Material.MainTypeId == 4) { this.Material.Amount = mat.Rate }
     this.onSelectActivityMaterial();
   }
 
