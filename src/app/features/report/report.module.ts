@@ -7,6 +7,7 @@ import { RoleAccessGuard } from '@app/core/guards/roleAccess.guard';
 import { ProjectService } from '../project/project.service';
 import { AllmasterService } from '../master/allmaster.service';
 import { routing,componentArray } from './report-routing.module';
+import { ReportService } from '../report/report.service';
 
 
 
@@ -20,7 +21,7 @@ import { routing,componentArray } from './report-routing.module';
     BsDatepickerModule.forRoot(),
   ],
   exports:[UigridreportDirective],
-  providers:[RoleAccessGuard,ProjectService,AllmasterService]
+  providers:[RoleAccessGuard,ProjectService,AllmasterService,ReportService]
 })
 export class ReportModule { }
 

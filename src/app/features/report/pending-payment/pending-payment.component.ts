@@ -7,6 +7,7 @@ import { MasterService } from '@app/core/custom-services/master.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { AllmasterService } from '@app/features/master/allmaster.service';
 import { ProjectService } from '../../../features/project/project.service';
+import { ReportService } from '../../report/report.service';
 @Component({
   selector: 'sa-pending-payment',
   templateUrl: './pending-payment.component.html',
@@ -14,11 +15,11 @@ import { ProjectService } from '../../../features/project/project.service';
 })
 export class PendingPaymentComponent implements OnInit {
 
-      public cpInfo: any = {};
+     public empInfo: any = {};
       public datePickerConfig: Partial<BsDatepickerConfig>;
       public DeliveredOrderData: any = [];
     
-      public deliverFilter: any = { DelUserCode: '',CustTypeId:'' };
+      public deliverFilter: any = { SiteId: '',ProjectId:'',Type:''};
       public gridOptions: IGridoption;
       public loaderbtn: boolean = true;
       public minDate: Date;
@@ -26,11 +27,11 @@ export class PendingPaymentComponent implements OnInit {
       public maxDate: Date = new Date();
       public SiteData:any=[];ProjectData:any=[];
          // public ProductArray: any = [];
-         constructor(private appService: AppService, private masterService: MasterService,private projectService:ProjectService,private allmasterService:AllmasterService) {
+         constructor(private reportService:ReportService,private appService: AppService, private masterService: MasterService,private projectService:ProjectService,private allmasterService:AllmasterService) {
           this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
         }
           ngOnInit() {
-            this.appService.getAppData().subscribe(data => { this.cpInfo = data;this.deliverFilter.CPCode= this.cpInfo.CPCode; });
+            this.appService.getAppData().subscribe(data => { this.empInfo = data; });
        this.deliverFilter.StartDate =this.deliverFilter.EndDate = new Date();
         this.allOnLoad();
         this.configureGrid(); //this.DeliveredOrderData = [{}];
@@ -89,7 +90,7 @@ export class PendingPaymentComponent implements OnInit {
             this.loaderbtn=false;
             this.deliverFilter.StartDate = this.appService.DateToString(this.deliverFilter.StartDate);
             this.deliverFilter.EndDate = this.appService.DateToString(this.deliverFilter.EndDate)
-            this.projectService.getTransactionlist(104, this.deliverFilter).subscribe((resData: any) => {
+            this.reportService.GetInvoiceAndPaymentStatus(this.deliverFilter).subscribe((resData: any) => {
               this.loaderbtn = true;
               if (resData.StatusCode != 0) {
                 this.DeliveredOrderData = resData.Data.Table; console.log(resData.Data);

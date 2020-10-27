@@ -7,6 +7,8 @@ import { MasterService } from '@app/core/custom-services/master.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { AllmasterService } from '@app/features/master/allmaster.service';
 import { ProjectService } from '../../../features/project/project.service';
+import { ReportService } from '../../report/report.service';
+
 @Component({
   selector: 'sa-pending-material',
   templateUrl: './pending-material.component.html',
@@ -14,22 +16,22 @@ import { ProjectService } from '../../../features/project/project.service';
 })
 export class PendingMaterialComponent implements OnInit {
       
-            public cpInfo: any = {};
+            public empInfo: any = {};
             public datePickerConfig: Partial<BsDatepickerConfig>;
             public DeliveredOrderData: any = [];
 
-            public deliverFilter: any = { DelUserCode: '',CustTypeId:'' };
+            public deliverFilter: any = {SiteId: '',ProjectId:''};
             public gridOptions: IGridoption;
             public loaderbtn: boolean = true;
             public minDate: Date;
             public StartMindate: Date;
             public maxDate: Date = new Date();
             public SiteData:any=[];ProjectData:any=[];
-            constructor(private appService: AppService, private masterService: MasterService,private projectService:ProjectService,private allmasterService:AllmasterService) {
+            constructor(private reportService:ReportService,private appService: AppService, private masterService: MasterService,private projectService:ProjectService,private allmasterService:AllmasterService) {
               this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
             }
         ngOnInit() {
-          this.appService.getAppData().subscribe(data => { this.cpInfo = data;this.deliverFilter.CPCode= this.cpInfo.CPCode; });
+          this.appService.getAppData().subscribe(data => { this.empInfo = data; });
           this.deliverFilter.StartDate =this.deliverFilter.EndDate = new Date();
            this.allOnLoad();
            this.configureGrid(); 
@@ -64,40 +66,30 @@ export class PendingMaterialComponent implements OnInit {
             //   , width: "71", exporterSuppressExport: true,
             //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
             // },
-            { name: 'CustType', displayName: 'Customer Type', width: "220", cellTooltip: true, filterCellFiltered: true },
-            { name: 'CustName', displayName: 'Customer Name', width: "220", cellTooltip: true, filterCellFiltered: true }, 
-            { name: 'AreaName', displayName: 'Area', width: "220", cellTooltip: true, filterCellFiltered: true }, 
-            { name: 'SubAreaName', displayName: 'Sub Area', width: "220", cellTooltip: true, filterCellFiltered: true }, 
-            { name: 'PinCode', displayName: 'Pincode', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true }, 
-    
-          { name: 'ProdSeg', displayName: 'Product Segment', width: "220", cellTooltip: true, filterCellFiltered: true }, 
-            { name: 'Product', displayName: 'Product', width: "200", cellTooltip: true, filterCellFiltered: true },
-            { name: 'ProdQty', displayName: 'Qty of Product', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
-            { name: 'ProdValue', displayName: 'Value of Product', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
-            { name: 'ProdValuePaid', displayName: 'Value of Product Paid', cellClass: 'cell-right', width: "180", cellTooltip: true, filterCellFiltered: true },
-            { name: 'ProdValueOs', displayName: 'Value of Product O/S', cellClass: 'cell-right', width: "180", cellTooltip: true, filterCellFiltered: true },
-            //{ name: 'ProdValueUC', displayName: 'Value of Payments Under Clearing', cellClass: 'cell-right', width: "260", cellTooltip: true, filterCellFiltered: true },
+            { name: 'SiteName', displayName: 'Site Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+            { name: 'ProjectName', displayName: 'Project Name', width: "*", cellTooltip: true, filterCellFiltered: true }, 
+            { name: 'MatName', displayName: 'Material Name', width: "*", cellTooltip: true, filterCellFiltered: true }, 
+            { name: 'ReceivedQty', displayName: 'Received Qty', width: "250", cellTooltip: true, filterCellFiltered: true }, 
+           
           ]
           this.gridOptions.columnDefs = columnDefs;
-          //this.onLoad();
+          this.onLoad();
         }
-        onEditFunction = (event) => {
-    
-        }
+       
 
-         onLoad() {
-            this.loaderbtn=false;
-            this.deliverFilter.StartDate = this.appService.DateToString(this.deliverFilter.StartDate);
-            this.deliverFilter.EndDate = this.appService.DateToString(this.deliverFilter.EndDate)
-            this.projectService.getTransactionlist(104, this.deliverFilter).subscribe((resData: any) => {
-              this.loaderbtn = true;
-              if (resData.StatusCode != 0) {
-                this.DeliveredOrderData = resData.Data.Table; console.log(resData.Data);
-                AppComponent.SmartAlert.Success(resData.Message);
-              }
-              else { this.DeliveredOrderData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
-            });
-          }
+        onLoad() {
+          this.loaderbtn=false;
+          this.deliverFilter.StartDate = this.appService.DateToString(this.deliverFilter.StartDate);
+          this.deliverFilter.EndDate = this.appService.DateToString(this.deliverFilter.EndDate)
+          this.reportService.GetMaterialStatus(this.deliverFilter).subscribe((resData: any) => {
+            this.loaderbtn = true;
+            if (resData.StatusCode != 0) {
+              this.DeliveredOrderData = resData.Data.Table; console.log(resData.Data);
+              AppComponent.SmartAlert.Success(resData.Message);
+            }
+            else { this.DeliveredOrderData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
+          });
+        }
           
         resetEndDate(val) {
           this.minDate = val;
