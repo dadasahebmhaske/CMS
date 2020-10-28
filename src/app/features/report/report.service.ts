@@ -17,12 +17,12 @@ export class ReportService {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/Reports/GetIndentStatus?SiteId=${deliverFilter.SiteId}&ProjectId=${deliverFilter.ProjectId}&StartDate=${deliverFilter.StartDate}&EndDate=${deliverFilter.EndDate}&IsActive=Y`);
   }
   public GetPOStatus(deliverFilter) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/Reports/GetPurchaseOrderStatus?SiteId=${deliverFilter.SiteId}&ProjectId=${deliverFilter.ProjectId}&Status=${deliverFilter.Status}&StartDate=${deliverFilter.StartDate}&EndDate=${deliverFilter.EndDate}&IsActive=Y`);
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/Reports/GetPurchaseOrderStatus?SiteId=${deliverFilter.SiteId}&ProjectId=${deliverFilter.ProjectId}&PartyId=${deliverFilter.PartyId}&Status=${deliverFilter.Status}&StartDate=${deliverFilter.StartDate}&EndDate=${deliverFilter.EndDate}&IsActive=Y`);
     
   }
 
   public GetInvoiceAndPaymentStatus(deliverFilter) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/Reports/GetInvoicePaymentStatus?SiteId=${deliverFilter.SiteId}&ProjectId=${deliverFilter.ProjectId}&Type=${deliverFilter.Type}&StartDate=${deliverFilter.StartDate}&EndDate=${deliverFilter.EndDate}&PartyId=1001&IsActive=Y`);
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/Reports/GetInvoicePaymentStatus?SiteId=${deliverFilter.SiteId}&ProjectId=${deliverFilter.ProjectId}&Type=${deliverFilter.Type}&StartDate=${deliverFilter.StartDate}&EndDate=${deliverFilter.EndDate}&PartyId=${deliverFilter.PartyId}&IsActive=Y`);
     
   }
   public GetMaterialStatus(deliverFilter) {

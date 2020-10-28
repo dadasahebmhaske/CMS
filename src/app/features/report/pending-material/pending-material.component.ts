@@ -58,7 +58,7 @@ export class PendingMaterialComponent implements OnInit {
           this.gridOptions = <IGridoption>{}
           this.gridOptions.exporterMenuPdf = false;
           this.gridOptions.selectionRowHeaderWidth = 0;
-          this.gridOptions.exporterExcelFilename = 'Customer Wise Transaction Details.xlsx';
+          this.gridOptions.exporterExcelFilename = 'Material Status.xlsx';
           let columnDefs = [];
           columnDefs = [
             // {
@@ -69,7 +69,7 @@ export class PendingMaterialComponent implements OnInit {
             { name: 'SiteName', displayName: 'Site Name', width: "*", cellTooltip: true, filterCellFiltered: true },
             { name: 'ProjectName', displayName: 'Project Name', width: "*", cellTooltip: true, filterCellFiltered: true }, 
             { name: 'MatName', displayName: 'Material Name', width: "*", cellTooltip: true, filterCellFiltered: true }, 
-            { name: 'ReceivedQty', displayName: 'Received Qty', width: "250", cellTooltip: true, filterCellFiltered: true }, 
+            { name: 'ReceivedQty', displayName: 'Received Qty',CellClass:'cell-right', width: "250", cellTooltip: true, filterCellFiltered: true }, 
            
           ]
           this.gridOptions.columnDefs = columnDefs;

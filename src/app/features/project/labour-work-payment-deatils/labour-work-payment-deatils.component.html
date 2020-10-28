@@ -54,7 +54,7 @@
                       <label for="sel1">Select Labour <span class="errorMessage">*</span>
                       </label>
                       <select class="form-control" [(ngModel)]="Material.LabourId" name="LabourId"
-                       [disabled]="Material.index!=null" required >
+                       [disabled]="Material.index!=null" (change)="onSelectLabour()" required >
                         <option value="" selected hidden> Select Labour </option>
                         <option [value]="des.LabourId" *ngFor="let des of LabourData">{{des.LabourName}}
                         </option>
@@ -105,10 +105,10 @@
                       </div>
                       <div class="col-sm-1">
                         <div class="form-group">
-                          <label>Rate <span class="errorMessage">*</span>
+                          <label>Per Day Rate
                           </label>
                           <input type="text" class="form-control" placeholder=" Rate " [(ngModel)]="Material.URate"
-                            name="URate"  (ngModelChange)="GetCalculate()"  saCommonDir dirType="decimal" required />
+                            name="URate"  (ngModelChange)="GetCalculate()" disabled saCommonDir dirType="decimal" required />
                         </div>
                       </div>
                   <div class="col-sm-3">
@@ -162,7 +162,7 @@
                       <label>Payment Amount<span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="Material.UAmount"
-                        name="UAmount" saCommonDir dirType="alphanumeric" disabled required />
+                        name="UAmount" saCommonDir dirType="alphanumeric" (ngModelChange)="GetCalculate()" saCommonDir dirType="decimal" required />
                     </div>
                   </div>
                       <div class="col-sm-1 col-xs-4">

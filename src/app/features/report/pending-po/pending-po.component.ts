@@ -19,13 +19,13 @@ export class PendingPoComponent implements OnInit {
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public DeliveredOrderData: any = [];
 
-  public deliverFilter: any = {SiteId: '',ProjectId:'',Status:'' };
+  public deliverFilter: any = {SiteId: '',ProjectId:'',Status:'' ,PartyId:''};
   public gridOptions: IGridoption;
   public loaderbtn: boolean = true;
   public minDate: Date;
   public StartMindate: Date;
   public maxDate: Date = new Date();
-  public SiteData:any=[];ProjectData:any=[];
+  public SiteData:any=[];ProjectData:any=[];VendorData:any[];
          // public ProductArray: any = [];
          constructor(private reportService:ReportService,private appService: AppService, private masterService: MasterService,private projectService:ProjectService,private allmasterService:AllmasterService) {
           this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
@@ -43,6 +43,15 @@ export class PendingPoComponent implements OnInit {
             }
             else { this.SiteData = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
           });
+          this.projectService.getVendorContractor(102).subscribe((resVData: any) => {
+            if (resVData.StatusCode != 0) {
+              this.VendorData = resVData.Data;
+              let obj;
+              obj = this.projectService.filterData(this.VendorData, 102, 'CompanyTypeId');
+              this.VendorData = obj;
+            }
+            else { this.VendorData = []; AppComponent.SmartAlert.Errmsg(resVData.Message); }
+          });
         }
   
         public onSelectSite(id) {
@@ -57,7 +66,7 @@ export class PendingPoComponent implements OnInit {
             this.gridOptions = <IGridoption>{}
             this.gridOptions.exporterMenuPdf = false;
             this.gridOptions.selectionRowHeaderWidth = 0;
-            this.gridOptions.exporterExcelFilename = 'Customer Wise Transaction Details.xlsx';
+            this.gridOptions.exporterExcelFilename = 'Po Status.xlsx';
             let columnDefs = [];
             columnDefs = [
               // {
@@ -65,16 +74,17 @@ export class PendingPoComponent implements OnInit {
               //   , width: "71", exporterSuppressExport: true,
               //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
               // },
-              { name: 'DispPOTranNo', displayName: 'PO Tran No.', width: "220", cellTooltip: true, filterCellFiltered: true },
-              { name: 'POTranDate', displayName: 'PO Tran Date', width: "220", cellTooltip: true, filterCellFiltered: true }, 
               { name: 'SiteName', displayName: 'Site Name', width: "220", cellTooltip: true, filterCellFiltered: true }, 
               { name: 'ProjectName', displayName: 'Project Name', width: "220", cellTooltip: true, filterCellFiltered: true }, 
-              { name: 'TotAmount', displayName: 'Total Amount', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true }, 
+              
+              { name: 'DispPOTranNo', displayName: 'PO Tran No.', width: "150",cellClass:'cell-center', cellTooltip: true, filterCellFiltered: true },
+              { name: 'POTranDate', displayName: 'PO Tran Date', width: "150",cellClass:'cell-center', cellTooltip: true, filterCellFiltered: true }, 
+            { name: 'TotAmount', displayName: 'Total Amount', cellClass: 'cell-right', width: "130", cellTooltip: true, filterCellFiltered: true }, 
       
-              { name: 'IsPOClosed', displayName: 'Is PO Closed', width: "220", cellTooltip: true, filterCellFiltered: true }, 
-              { name: 'POClosedDate', displayName: 'PO Closed Date', width: "200", cellTooltip: true, filterCellFiltered: true },
-              { name: 'IsPOApproved', displayName: 'Is PO Approved', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
-              { name: 'POApprovedDate', displayName: 'PO Approved Date', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
+              { name: 'IsPOClosed', displayName: 'Is PO Closed', width: "150",cellClass:'cell-center', cellTooltip: true, filterCellFiltered: true }, 
+              { name: 'POClosedDate', displayName: 'PO Closed Date',cellClass:'cell-center', width: "150", cellTooltip: true, filterCellFiltered: true },
+              { name: 'IsPOApproved', displayName: 'Is PO Approved', cellClass: 'cell-center', width: "150", cellTooltip: true, filterCellFiltered: true },
+              { name: 'POApprovedDate', displayName: 'PO Approved Date', cellClass: 'cell-right', width: "160", cellTooltip: true, filterCellFiltered: true },
              
             ]
             this.gridOptions.columnDefs = columnDefs;

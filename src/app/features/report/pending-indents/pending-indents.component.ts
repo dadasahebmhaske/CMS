@@ -67,13 +67,18 @@ export class PendingIndentsComponent implements OnInit {
           //   , width: "71", exporterSuppressExport: true,
           //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
           // },
-          { name: 'DispIndentTranNo', displayName: 'Indent Tran No.',cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
-          { name: 'IndentTranDate', displayName: 'Indent Tran Date',cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true }, 
           { name: 'SiteName', displayName: 'Site Name', width: "*", cellTooltip: true, filterCellFiltered: true }, 
           { name: 'ProjectName', displayName: 'Project Name', width: "*", cellTooltip: true, filterCellFiltered: true }, 
+          { name: 'ProjectName', displayName: 'Project Name', width: "*", cellTooltip: true, filterCellFiltered: true }, 
+          { name: 'CreatedByName', displayName: 'Created By', width: "*", cellTooltip: true, filterCellFiltered: true }, 
+         
+          { name: 'DispIndentTranNo', displayName: 'Tran No.',cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
+          { name: 'IndentTranDate', displayName: 'Tran Date',cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true }, 
+         { name: 'ExpectedDate', displayName: 'Expected Date',cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true }, 
           { name: 'IsIndentClosed', displayName: 'Is Indent Closed', cellClass: 'cell-center', width: "150", cellTooltip: true, filterCellFiltered: true }, 
+          { name: 'IndentClosedDate', displayName: 'Closed Date', cellClass: 'cell-center', width: "150", cellTooltip: true, filterCellFiltered: true }, 
   
-        ]
+        ]   
         this.gridOptions.columnDefs = columnDefs;
         this.onLoad();
       }
@@ -88,7 +93,7 @@ export class PendingIndentsComponent implements OnInit {
           this.loaderbtn = true;
           if (resData.StatusCode != 0) {
             this.DeliveredOrderData = resData.Data.Table; 
-            console.log( this.DeliveredOrderData);
+            console.log(  resData.Data);
             AppComponent.SmartAlert.Success(resData.Message);
           }
           else { this.DeliveredOrderData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }

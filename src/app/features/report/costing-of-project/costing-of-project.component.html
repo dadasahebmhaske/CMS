@@ -65,6 +65,15 @@
                         </div>
                       </div>
                     </form>
+                    <div class="col-sm-12" *ngIf="project.ManagerName !=null">
+<p>
+  <strong>Manager : {{project.ManagerName}}</strong>
+  <strong style="margin-left: 20px;">Executive : {{project.ExecutiveName}}</strong>
+  <strong style="margin-left: 20px;">No. Of Unit : {{project.NoOfUnits}}</strong>
+  <strong style="margin-left: 20px;">Start Date : {{project.StartDate}}</strong>
+  <strong style="margin-left: 20px;">End Date : {{project.EndDate}}</strong>
+</p>
+                    </div>
                     <div class="col-sm-12 table-responsive">
                       <ui-grid [data]="DeliveredOrderData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
                     </div>

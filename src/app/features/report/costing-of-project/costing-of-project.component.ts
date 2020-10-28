@@ -25,6 +25,7 @@ export class CostingOfProjectComponent implements OnInit {
       public StartMindate: Date;
       public maxDate: Date = new Date();
       public SiteData:any=[];ProjectData:any=[];
+      public project:any={};
    // public ProductArray: any = [];
       constructor(private reportService:ReportService,private appService: AppService, private masterService: MasterService,private projectService:ProjectService,private allmasterService:AllmasterService) {
         this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
@@ -57,27 +58,22 @@ export class CostingOfProjectComponent implements OnInit {
       this.gridOptions = <IGridoption>{}
       this.gridOptions.exporterMenuPdf = false;
       this.gridOptions.selectionRowHeaderWidth = 0;
-      this.gridOptions.exporterExcelFilename = 'Customer Wise Transaction Details.xlsx';
+      this.gridOptions.exporterExcelFilename = 'Project Budget Status.xlsx';
       let columnDefs = [];
       columnDefs = [
-        // {
-        //   name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-warning btn-xs" ng-if="row.entity.ConsNo !=null" ng-click="grid.appScope.editEmployee(row.entity)"  data-toggle="modal" data-target="#productsModal">&nbsp;Product&nbsp;</button> '
-        //   , width: "71", exporterSuppressExport: true,
-        //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
-        // },
-        { name: 'CustType', displayName: 'Customer Type', width: "220", cellTooltip: true, filterCellFiltered: true },
-        { name: 'CustName', displayName: 'Customer Name', width: "220", cellTooltip: true, filterCellFiltered: true }, 
-        { name: 'AreaName', displayName: 'Area', width: "220", cellTooltip: true, filterCellFiltered: true }, 
-        { name: 'SubAreaName', displayName: 'Sub Area', width: "220", cellTooltip: true, filterCellFiltered: true }, 
-        { name: 'PinCode', displayName: 'Pincode', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true }, 
-
-      { name: 'ProdSeg', displayName: 'Product Segment', width: "220", cellTooltip: true, filterCellFiltered: true }, 
-        { name: 'Product', displayName: 'Product', width: "200", cellTooltip: true, filterCellFiltered: true },
-        { name: 'ProdQty', displayName: 'Qty of Product', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
-        { name: 'ProdValue', displayName: 'Value of Product', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
-        { name: 'ProdValuePaid', displayName: 'Value of Product Paid', cellClass: 'cell-right', width: "180", cellTooltip: true, filterCellFiltered: true },
-        { name: 'ProdValueOs', displayName: 'Value of Product O/S', cellClass: 'cell-right', width: "180", cellTooltip: true, filterCellFiltered: true },
-        //{ name: 'ProdValueUC', displayName: 'Value of Payments Under Clearing', cellClass: 'cell-right', width: "260", cellTooltip: true, filterCellFiltered: true },
+        { name: 'BudgetHeadTypeName', displayName: 'Material Type', width: "*", cellTooltip: true, filterCellFiltered: true },
+        { name: 'BudgetHeadName', displayName: 'Material', width: "*", cellTooltip: true, filterCellFiltered: true }, 
+         { name: 'BudgetQty', displayName: 'Budget Qty',cellClass: 'cell-right', width: "*", cellTooltip: true, filterCellFiltered: true }, 
+               { name: 'UtilizedQty', displayName: 'Utilized Qty',cellClass: 'cell-right', width: "*", cellTooltip: true, filterCellFiltered: true }, 
+         { name: 'RemainBudgetQty', displayName: 'Balance Qty',cellClass: 'cell-right', width: "*", cellTooltip: true, filterCellFiltered: true }, 
+         { name: 'Unit', displayName: 'Unit', cellClass: 'cell-center', width: "150", cellTooltip: true, filterCellFiltered: true }, 
+         { name: 'CurrentRate', displayName: 'Rate',cellClass: 'cell-right',  width: "*", cellTooltip: true, filterCellFiltered: true }, 
+        { name: 'PaidAmount', displayName: 'Paid Amount', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true }, 
+       
+         { name: 'ReqRemainAmount', displayName: 'Req Remain Amount ',cellClass: 'cell-right',  width: "*", cellTooltip: true, filterCellFiltered: true }, 
+        
+      
+   
       ]
       this.gridOptions.columnDefs = columnDefs;
       this.onLoad();
@@ -91,8 +87,9 @@ export class CostingOfProjectComponent implements OnInit {
       this.reportService.GetProjectBudgetStatus(this.deliverFilter).subscribe((resData: any) => {
         this.loaderbtn = true;
         if (resData.StatusCode != 0) {
-          this.DeliveredOrderData = resData.Data.Table; 
-          console.log( this.DeliveredOrderData);
+          this.project=resData.Data.Table[0];
+          this.DeliveredOrderData = resData.Data.Table1; 
+          console.log( resData.Data);
           AppComponent.SmartAlert.Success(resData.Message);
         }
         else { this.DeliveredOrderData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }

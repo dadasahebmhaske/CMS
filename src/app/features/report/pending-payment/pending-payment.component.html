@@ -6,7 +6,7 @@
         <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
           <header class="text-center">
             <h2>
-              <i class="fa fa-table"></i> Invoice And Pending Payment</h2>
+              <i class="fa fa-table"></i> Invoice & Pending Payment</h2>
           </header>
           <div>
             <div class="widget-body">
@@ -43,41 +43,57 @@
                             <select class="form-control" [(ngModel)]="deliverFilter.Type" name="ProjectId"
                               required>
                               <option value="" selected hidden>Select Type </option>
-                              <option value="1051">Material </option>
-                              <option value="1101">Work Contract</option>
-                              <option value="1131">Daily Wedges </option>
+                              <option value="10501">Material </option>
+                              <option value="11001">Work Contract</option>
+                              <option value="11301">Daily Wedges </option>
                             </select>
                           </div>
                         </div>
-                      <div class="col-sm-2 col-xs-8">
-                        <div class="form-group">
-                            <label for="sel1">Start Date <span class="errorMessage">*</span>
+                        <div class="col-sm-2">
+                          <div class="form-group">
+                            <label for="sel1">Party <span class="errorMessage">*</span>
                             </label>
-                          <label class="posticon">
-                            <i class="icon-append fa fa-calendar"></i>
-                            <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="deliverFilter.StartDate" name="Startdate" id="startDate"
-                              (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
-                          </label>
+                            <select class="form-control" [(ngModel)]="deliverFilter.PartyId" name="PartyId" required>
+                              <option value="" selected hidden> Select Party </option>
+                              <option [value]="des.CompanyId" *ngFor="let des of VendorData">{{des.CompanyName}}
+                              </option>
+                            </select>
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-sm-2 col-xs-8">
-                        <div class="form-group">
-                            <label for="sel1">End Date <span class="errorMessage">*</span>
-                            </label>
-                          <label class="posticon">
-                            <i class="icon-append fa fa-calendar"></i>
-                            <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="deliverFilter.EndDate" name="EndDate" onkeydown="return false"
-                              [minDate]="minDate" bsDatepicker [bsConfig]="datePickerConfig" />
-                          </label>
+                        <div class="col-sm-4">
+                          <div class="row">
+                            <div class="col-sm-4 col-xs-8">
+                              <div class="form-group">
+                                  <label for="sel1">Start Date <span class="errorMessage">*</span>
+                                  </label>
+                                <label class="posticon">
+                                  <i class="icon-append fa fa-calendar"></i>
+                                  <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="deliverFilter.StartDate" name="Startdate" id="startDate"
+                                    (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-8">
+                              <div class="form-group">
+                                  <label for="sel1">End Date <span class="errorMessage">*</span>
+                                  </label>
+                                <label class="posticon">
+                                  <i class="icon-append fa fa-calendar"></i>
+                                  <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="deliverFilter.EndDate" name="EndDate" onkeydown="return false"
+                                    [minDate]="minDate" bsDatepicker [bsConfig]="datePickerConfig" />
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-4" style="margin-top:22px;">
+                              <div class="form-group">
+                                <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                                  <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
+                              </div>
+                            </div>
+                          
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-sm-1 col-xs-4" style="margin-top:22px;">
-                        <div class="form-group">
-                          <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
-                            <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
-                        </div>
-                      </div>
-                    </form>
+                      </form>
                     <div class="col-sm-12 table-responsive">
                       <ui-grid [data]="DeliveredOrderData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
                     </div>

@@ -94,7 +94,7 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
                   public onSelectProject(TranNo,RefTranNo) {
                     if(this.project.TranNo==null){
                       this.MaterialArray=[];
-                      this.Material={};
+                      this.Material= {  LabourId: '', TypeId: '' ,WorkId:''};
                       this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
                     }
 
@@ -113,7 +113,11 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
                       else {  this.AMData = []; this.AMTypeData=[];AppComponent.SmartAlert.Errmsg(resData.Message); }
                     });
                   }
-                
+                  onSelectLabour(){
+                    let obj;
+                    obj = this.projectService.filterData(this.LabourData, this.Material.LabourId, 'LabourId');
+                    this.Material.URate = obj[0].PerDayRate;
+                  }
                   onSelectActivityMaterial() {
                     let obj;
                     obj = this.projectService.filterData(this.AMTypeData, this.Material.TypeId, 'TypeId');
@@ -131,10 +135,10 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
                       this.Material.UQty=null;
                     }
 
-                    if (this.Material.UQty != null && this.Material.URate != null) {
-                      this.Material.UAmount = parseFloat(this.Material.URate == undefined || this.Material.URate == '' ? 0 : this.Material.URate) * parseFloat(this.Material.UQty == undefined || this.Material.UQty == '' ? 0 : this.Material.UQty);
-                      this.Material.UAmount = this.Material.UAmount.toFixed(2);
-                    }
+                    // if (this.Material.UQty != null && this.Material.URate != null) {
+                    //   this.Material.UAmount = parseFloat(this.Material.URate == undefined || this.Material.URate == '' ? 0 : this.Material.URate) * parseFloat(this.Material.UQty == undefined || this.Material.UQty == '' ? 0 : this.Material.UQty);
+                    //   this.Material.UAmount = this.Material.UAmount.toFixed(2);
+                    // }
 
                     let obj;
                     obj = this.projectService.filterData(this.AMData, this.Material.WorkId, 'MatActExpId');
@@ -146,7 +150,7 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
                     this.Material.UQty = obj[0].Qty;
                     this.Material.URate = obj[0].Rate;
                     this.Material.RQty = obj[0].RemainBudgetQty;
-                    this.Material.UAmount = obj[0].Amount;
+                  //  this.Material.UAmount = obj[0].Amount;
                     this.Material.CGST = 0;
                     this.Material.IGST = 0;
                     this.Material.SGST = 0;
@@ -161,10 +165,10 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
                       AppComponent.SmartAlert.Errmsg(`Quantity exceeded the Raised qauntity`);
                       this.Material.UQty=null;
                     }
-                    if (this.Material.UQty != null && this.Material.URate != null) {
-                      this.Material.UAmount = parseFloat(this.Material.URate == undefined || this.Material.URate == '' ? 0 : this.Material.URate) * parseFloat(this.Material.UQty == undefined || this.Material.UQty == '' ? 0 : this.Material.UQty);
-                      this.Material.UAmount = this.Material.UAmount.toFixed(2);
-                    }
+                    // if (this.Material.UQty != null && this.Material.URate != null) {
+                    //   this.Material.UAmount = parseFloat(this.Material.URate == undefined || this.Material.URate == '' ? 0 : this.Material.URate) * parseFloat(this.Material.UQty == undefined || this.Material.UQty == '' ? 0 : this.Material.UQty);
+                    //   this.Material.UAmount = this.Material.UAmount.toFixed(2);
+                    // }
                   }
 
                   addMaterial() {
