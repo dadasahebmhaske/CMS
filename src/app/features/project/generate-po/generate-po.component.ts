@@ -276,7 +276,7 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
            }
       }
       }
-      else {this.IndentData=[]; this.ExecutiveData = []; this.AMData = []; this.AMTypeData=[];AppComponent.SmartAlert.Errmsg(resData.Message); }
+      else {this.IndentArray =[];this.IndentData=[]; this.ExecutiveData = []; this.AMData = []; this.AMTypeData=[];AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
 

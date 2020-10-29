@@ -83,7 +83,7 @@ export class MInvoiceDetailsComponent implements OnInit, OnDestroy {
           this.MaterialArray=tempArray;
         }
       }
-      else { RefTranNo == '' ? (this.VendorData = this.GRNData = []) : this.MaterialArray = []; AppComponent.SmartAlert.Errmsg(resData.Message); }
+      else { RefTranNo == '' ? (this.VendorData = this.GRNData = this.GRNArray=[]) : this.MaterialArray = []; AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
   public getTranData() {

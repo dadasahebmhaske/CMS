@@ -105,8 +105,18 @@ export class GrnComponent implements OnInit, OnDestroy {
               this.projectService.getProjectVendorPO(tranNo,this.project.ProjectId,RefTranNo).subscribe((resData: any) => {
                 if (resData.StatusCode != 0) {
                 if(RefTranNo==''){ 
-                  this.VendorData = resData.Data.Table1;
-                  this.POData=resData.Data.Table2;
+                  if(resData.Data.Table1.length==0){
+                    this.VendorData=[];
+                  }else
+                  {
+                    this.VendorData = resData.Data.Table1;
+                  }
+                  if(resData.Data.Table2.length==0){
+                    this.POArray=[];
+                  }else{
+                    this.POData=resData.Data.Table2;
+                  }
+                 
                   if(this.project.TranNo!=null){
                     this.onSelectVendor(); 
                   }
@@ -130,14 +140,9 @@ export class GrnComponent implements OnInit, OnDestroy {
                     tempArray.push(this.Material);
                     this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
                   }
-                 // this.Material.show = this.MaterialArray.some(obj => parseInt(obj.TypeId) === parseInt(this.Material.TypeId)) ? false : true;
-
-                  //this.AMData = resData.Data.Table1; 
-                  console.log(this.AMTypeData);
-                  console.log(this.AMData);
                 }
                 }
-                else { this.VendorData = []; this.AMData = []; this.AMTypeData=[];AppComponent.SmartAlert.Errmsg(resData.Message); }
+                else { this.POData=[];this.POArray=[];this.VendorData = []; this.AMData = []; this.AMTypeData=[];AppComponent.SmartAlert.Errmsg(resData.Message); }
               });
             }
 

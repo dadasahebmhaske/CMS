@@ -178,7 +178,7 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
           this.Material = { TypeId: '', MatId: '' }
         }
       }
-      else { this.ExecutiveData = []; this.AMData = []; this.AMTypeData = []; AppComponent.SmartAlert.Errmsg(resData.Message); }
+      else { this.VendorData=[]; this.AMData = []; this.GRNData=[];this.GRNArray=[];this.AMTypeData = []; AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
 

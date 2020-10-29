@@ -16,7 +16,7 @@ export class WcPaymentDetailsComponent implements OnInit, OnDestroy {
   public project: any = {};
   public loaderbtn: boolean = true;editflag;
   public InvoiceData: any = []; InvoiceArray: any[]; MaterialArray: any = []; ProjectData: any; SiteData: any = []; TranExists: any = [];
-  public VendorData: any = [];
+  public VendorData: any = [];invoiceamount:any;
   constructor(private appService: AppService, private datashare: DatashareService, private allmasterService: AllmasterService, private projectService: ProjectService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: new Date(), dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
@@ -113,8 +113,13 @@ export class WcPaymentDetailsComponent implements OnInit, OnDestroy {
     this.project.InvoiceDate=obj[0].InvoiceDate;
     this.project.VendorInvoiceNo=obj[0].VendorInvoiceNo;
     this.project.TotAmount=obj[0].TotAmount;
+    this.invoiceamount=this.project.TotAmount;
   }
   public onSubmit() {
+    if(parseInt(this.project.TotAmount) > parseInt(this.invoiceamount)){
+      AppComponent.SmartAlert.Errmsg("Payment Amount should be less than invoice amount");
+    }
+    else{
     this.loaderbtn = false;
     this.project.Flag = this.project.TranNo == null || this.project.TranNo == '' ? 'IN' : 'UP';
     this.project.UserCode = this.empInfo.EmpId;
@@ -135,6 +140,7 @@ export class WcPaymentDetailsComponent implements OnInit, OnDestroy {
       else { AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
+}
 
   ngOnDestroy() {
     this.datashare.updateShareData(null);

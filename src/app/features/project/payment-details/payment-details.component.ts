@@ -84,7 +84,7 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
           this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
           }
       }
-      else { RefTranNo == '' ? (this.VendorData = this.InvoiceData = []) : this.MaterialArray = []; AppComponent.SmartAlert.Errmsg(resData.Message); }
+      else { RefTranNo == '' ? (this.VendorData = this.InvoiceArray = []) : this.MaterialArray = []; AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
   public getTranData() {
