@@ -25,7 +25,7 @@ export class PendingPaymentComponent implements OnInit {
   public minDate: Date;
   public StartMindate: Date;
   public maxDate: Date = new Date();
-  public SiteData: any = []; ProjectData: any = []; VendorData: any = [];
+  public SiteData: any = []; ProjectData: any = []; VendorData: any = [];VendoArray:any=[];
   // public ProductArray: any = [];
   constructor(private reportService: ReportService, private appService: AppService, private masterService: MasterService, private projectService: ProjectService, private allmasterService: AllmasterService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
@@ -52,7 +52,15 @@ export class PendingPaymentComponent implements OnInit {
       else { this.VendorData = []; AppComponent.SmartAlert.Errmsg(resVData.Message); }
     });
   }
-
+  onSelectType(){
+    let obj;
+    let CompId=this.deliverFilter.Type==10501?102:101;
+    obj = this.projectService.filterData(this.VendorData, CompId, 'CompanyTypeId');
+    this.VendoArray = obj;
+    this.VendoArray.unshift({
+      PartyId : '',      CompanyId: '',     CompanyName: 'ALL'
+    });
+  }
   public onSelectSite(id) {
     this.projectService.getProject(id).subscribe((resSData: any) => {
       if (resSData.StatusCode != 0) {

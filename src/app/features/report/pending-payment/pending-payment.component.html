@@ -40,8 +40,8 @@
                           <div class="form-group">
                             <label for="sel1">Type <span class="errorMessage">*</span>
                             </label>
-                            <select class="form-control" [(ngModel)]="deliverFilter.Type" name="ProjectId"
-                              required>
+                            <select class="form-control" [(ngModel)]="deliverFilter.Type" name="Type"
+                            (change)="onSelectType()"  required>
                               <option value="" selected hidden>Select Type </option>
                               <option value="10501">Material </option>
                               <option value="11001">Work Contract</option>
@@ -49,13 +49,13 @@
                             </select>
                           </div>
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-2" *ngIf="deliverFilter.Type!=11301">
                           <div class="form-group">
                             <label for="sel1">Party <span class="errorMessage">*</span>
                             </label>
                             <select class="form-control" [(ngModel)]="deliverFilter.PartyId" name="PartyId" required>
                               <option value="" selected hidden> Select Party </option>
-                              <option [value]="des.CompanyId" *ngFor="let des of VendorData">{{des.CompanyName}}
+                              <option [value]="des.CompanyId" *ngFor="let des of VendoArray">{{des.CompanyName}}
                               </option>
                             </select>
                           </div>

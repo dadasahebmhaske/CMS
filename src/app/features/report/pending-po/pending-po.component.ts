@@ -49,6 +49,9 @@ export class PendingPoComponent implements OnInit {
               let obj;
               obj = this.projectService.filterData(this.VendorData, 102, 'CompanyTypeId');
               this.VendorData = obj;
+              this.VendorData.unshift({
+                PartyId : '',      CompanyId: '',     CompanyName: 'ALL'
+              });
             }
             else { this.VendorData = []; AppComponent.SmartAlert.Errmsg(resVData.Message); }
           });

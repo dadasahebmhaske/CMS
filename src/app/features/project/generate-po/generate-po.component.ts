@@ -362,7 +362,7 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
     // this.project.RefTranNo = this.MaterialArray[0].RefTranNo;
     this.project.Data = this.MaterialArray;
     if(this.OtherExpenseArray.length==0){
-      this.project.Data1="";
+      this.project.Data1='';
     }
     else{
       this.project.Data1 = this.OtherExpenseArray;
