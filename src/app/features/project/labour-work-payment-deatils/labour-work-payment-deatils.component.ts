@@ -148,7 +148,7 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
                     this.Material.UOMId = obj[0].UOMId;
                     this.Material.UOM = obj[0].UOM;
                     this.Material.UQty = obj[0].Qty;
-                    this.Material.URate = obj[0].Rate;
+                   // this.Material.URate = obj[0].Rate;
                     this.Material.RQty = obj[0].RemainBudgetQty;
                   //  this.Material.UAmount = obj[0].Amount;
                     this.Material.CGST = 0;

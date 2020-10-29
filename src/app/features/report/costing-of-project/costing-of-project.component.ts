@@ -67,7 +67,7 @@ export class CostingOfProjectComponent implements OnInit {
                { name: 'UtilizedQty', displayName: 'Utilized Qty',cellClass: 'cell-right', width: "*", cellTooltip: true, filterCellFiltered: true }, 
          { name: 'RemainBudgetQty', displayName: 'Balance Qty',cellClass: 'cell-right', width: "*", cellTooltip: true, filterCellFiltered: true }, 
          { name: 'Unit', displayName: 'Unit', cellClass: 'cell-center', width: "150", cellTooltip: true, filterCellFiltered: true }, 
-         { name: 'CurrentRate', displayName: 'Rate',cellClass: 'cell-right',  width: "*", cellTooltip: true, filterCellFiltered: true }, 
+         { name: 'CurrentRate', displayName: 'Budget Rate',cellClass: 'cell-right',  width: "*", cellTooltip: true, filterCellFiltered: true }, 
         { name: 'PaidAmount', displayName: 'Paid Amount', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true }, 
        
          { name: 'ReqRemainAmount', displayName: 'Req Remain Amount ',cellClass: 'cell-right',  width: "*", cellTooltip: true, filterCellFiltered: true }, 
