@@ -15,8 +15,6 @@ import { ReportService } from '../../report/report.service';
   styleUrls: ['./pending-indents.component.css']
 })
 export class PendingIndentsComponent implements OnInit {
-
-  
       public empInfo: any = {};
       public datePickerConfig: Partial<BsDatepickerConfig>;
       public DeliveredOrderData: any = [];

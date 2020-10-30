@@ -1,0 +1,66 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+    <sa-widgets-grid>
+      <div class="row">
+        <article class="col-sm-12">
+          <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+            <header class="text-center">
+              <h2>
+                <i class="fa fa-table"></i> Menu Allocation</h2>
+            </header>
+            <div>
+              <div class="widget-body">
+                <div class="row ">
+                    <form name="orderDeliveredForm" #orderDeliveredForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
+                        <!-- <div class="col-sm-2">
+                          <div class="form-group">
+                            <label for="sel1">Department <span class="errorMessage">*</span>
+                            </label>
+                            <select class="form-control" [(ngModel)]="menuallocation.SiteId" name="SiteId" (change)="onSelectSite(deliverFilter.SiteId)"
+                              required>
+                              <option value="" selected hidden> Select Department </option>
+                              <option [value]="des.SiteId" *ngFor="let des of SiteData">{{des.SiteName}}
+                              </option>
+                            </select>
+                          </div>
+                        </div> -->
+                        <div class="col-sm-2">
+                          <div class="form-group">
+                            <label for="sel1">Degignation <span class="errorMessage">*</span>
+                            </label>
+                            <select class="form-control" [(ngModel)]="menuallocation.ProjectId" name="ProjectId"
+                              required>
+                              <option value="" selected hidden> Select Degignation </option>
+                              <option [value]="des.ProjectId" *ngFor="let des of ProjectData">{{des.ProjectName}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        
+                        <div class="col-sm-1 col-xs-4" style="margin-top:22px;">
+                          <div class="form-group">
+                            <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                              <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
+                          </div>
+                        </div>
+                        <div class="col-sm-9" style="margin-top:20px;">
+                            <div class="form-group  pull-right">
+                                <a routerLink="/setting/menu-allocation-details" class="btn btn-block btn-warning ">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    Add
+                                </a>
+                            </div>
+                        </div>
+                      </form>
+                      <div class="col-sm-12 table-responsive">
+                        <ui-grid [data]="menuallocationData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                      </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </sa-widgets-grid>
+  </div>
+  

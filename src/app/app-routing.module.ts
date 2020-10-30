@@ -129,6 +129,12 @@ const routes: Routes = [
        // canActivate: [AuthenticationGuard],
         data: { pageTitle: "report" }
       },
+      {
+        path: "setting",
+        loadChildren: "./features/setting/setting.module#SettingModule",
+       // canActivate: [AuthenticationGuard],
+        data: { pageTitle: "setting" }
+      },
     ]
   },
 
