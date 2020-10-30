@@ -56,6 +56,8 @@ export class WcPaymentDetailsComponent implements OnInit, OnDestroy {
         if (RefTranNo == '') {
           this.VendorData = resData.Data.Table1;
           this.InvoiceData = resData.Data.Table2;
+          this.project.VendorId='';
+          this.InvoiceData.length==0?this.InvoiceArray=[]:this.onSelectVendor();
           if(this.project.TranNo!=null){
             this.onSelectVendor();  
         //this.onSelectInvoice(); 

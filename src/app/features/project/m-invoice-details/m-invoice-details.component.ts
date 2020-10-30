@@ -56,6 +56,8 @@ export class MInvoiceDetailsComponent implements OnInit, OnDestroy {
         if (RefTranNo == '') {
           this.VendorData = resData.Data.Table1;
           this.GRNData = resData.Data.Table2;
+          this.project.VendorId='';
+          this.GRNData.length==0?this.GRNArray=[]:this.onSelectVendor();
           if(this.project.TranNo!=null){
             this.onSelectVendor(); 
           }

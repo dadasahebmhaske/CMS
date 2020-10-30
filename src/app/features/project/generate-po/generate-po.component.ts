@@ -251,6 +251,8 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
       if(RefTranNo==''){ 
         this.ExecutiveData = resData.Data.Table;
         this.IndentData=resData.Data.Table1;
+        this.project.ProjectExecutiveId='';
+        this.IndentData.length==0?this.IndentArray=[]:this.onSelectProjectExecutive();
         if (this.project.TranNo != null) {
           this.onSelectProjectExecutive();
         }

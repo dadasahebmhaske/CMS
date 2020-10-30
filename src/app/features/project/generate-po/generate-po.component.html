@@ -14,7 +14,7 @@
               <form name="transportForm" #transportForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
                 ngNativeValidate>
                 <div class="row" >
-                    <div class="col-sm-6" *ngIf="project.TranNo!=null" style="font-size:14px;margin-top: 11px;">
+                    <div class="col-sm-6" *ngIf="project.TranNo!=null && project.TranNo!=''" style="font-size:14px;margin-top: 11px;">
                         <label style="margin-right:20px;"><strong>Trans No. : <span class="text-primary">{{project.DispTranNo}}</span></strong></label>
                         <label><strong>Trans Date : <span class="text-primary">{{project.TranDate}}</span></strong></label>
                         </div>
