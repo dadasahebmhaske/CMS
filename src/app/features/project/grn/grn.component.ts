@@ -107,6 +107,7 @@ export class GrnComponent implements OnInit, OnDestroy {
         if (RefTranNo == '') {
           this.VendorData = resData.Data.Table1;
           this.POData = resData.Data.Table2;
+          if (this.project.TranNo == null || this.project.TranNo == '')
           this.project.VendorId='';
         this.POData.length==0?this.POArray=[]:this.onSelectVendor();
            if (this.project.TranNo != null) {
