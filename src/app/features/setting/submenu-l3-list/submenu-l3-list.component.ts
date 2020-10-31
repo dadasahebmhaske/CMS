@@ -39,7 +39,7 @@ export class SubmenuL3ListComponent implements OnInit {
       },
       { name: 'MenuName', displayName: 'Menu Name', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'SubMenuName', displayName: 'SubMenu Name', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'SubMenuLThreeName', displayName: 'SubMenu Level 3', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'SubMenuLThreeName', displayName: 'SubMenu L3 Name', width: "*", cellTooltip: true, filterCellFiltered: true },
      
        { name: 'SubMenuLThreeFlag', displayName: 'SubMenu Level 3 Flag', width: "200", cellTooltip: true, filterCellFiltered: true },
       { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "200", cellTooltip: true, filterCellFiltered: true },

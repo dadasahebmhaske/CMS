@@ -28,6 +28,7 @@ export class SubmenuL3Component implements OnInit {
       }
       else { this.MainMenuData = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
     });
+    this.OnSelectMainMenu(this.submenu.MenuId);
   }
 
   OnSelectMainMenu(MenuId){

@@ -37,7 +37,7 @@ export class MainmenuL2ListComponent implements OnInit {
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
       { name: 'MenuName', displayName: 'Menu Name', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'SubMenuName', displayName: 'SubMenu Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'SubMenuName', displayName: 'SubMenu L2 Name', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'SubMenuFlag', displayName: 'SubMenu Flag', width: "200", cellTooltip: true, filterCellFiltered: true },
       { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "200", cellTooltip: true, filterCellFiltered: true },
    
