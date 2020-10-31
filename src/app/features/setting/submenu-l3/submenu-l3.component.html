@@ -29,7 +29,7 @@
                                             </label>
                                             <select class="form-control" [(ngModel)]="submenu.SubMenuId" name="SubMenuId" required>
                                               <option value="" selected hidden> Select Sub Menu </option>
-                                              <option [value]="des.EmpId" *ngFor="let des of submenul2Data">{{des.EmpName}}
+                                              <option [value]="des.SubMenuId" *ngFor="let des of submenul2Data">{{des.SubMenuName}}
                                               </option>
                                             </select>
                                           </div>

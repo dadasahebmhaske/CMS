@@ -11,12 +11,12 @@ import { SettingService } from '../setting.service';
   styleUrls: ['./submenu-l3.component.css']
 })
 export class SubmenuL3Component implements OnInit {
-  public submenu:any={};empInfo:any={};MainMenuData:any=[];submenul2Data:any=[];
+  public submenu:any={MenuId:'',SubMenuId:''};empInfo:any={};MainMenuData:any=[];submenul2Data:any=[];
   public loaderbtn: boolean = true;
 
   constructor(private settingService:SettingService,private appService: AppService, private datashare: DatashareService) { }
   ngOnInit() {
-    this.datashare.GetSharedData.subscribe(data => this.submenu = data == null ? { IsActive: 'Y' } : data);
+    this.datashare.GetSharedData.subscribe(data => this.submenu = data == null ? { IsActive: 'Y',MenuId:'',SubMenuId:''} : data);
     this.appService.getAppData().subscribe(data => { this.empInfo = data });
     this.getAllonload();
   }
@@ -28,19 +28,19 @@ export class SubmenuL3Component implements OnInit {
       }
       else { this.MainMenuData = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
     });
-
-    this.settingService.getSubMenuL2('Y').subscribe((resSData: any) => {
-      if (resSData.StatusCode != 0) {
-        this.submenul2Data = resSData.Data;
-      }
-      else { this.submenul2Data = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
-    });
   }
 
   OnSelectMainMenu(MenuId){
-    let obj;
-    obj = this.settingService.filterData(this.submenul2Data, this.submenu.MenuId, 'MenuId');
-    this.submenul2Data = obj;
+    this.settingService.getSubMenuL2('Y').subscribe((resSData: any) => {
+      if (resSData.StatusCode != 0) {
+        this.submenul2Data = resSData.Data;
+        let obj;
+        obj = this.settingService.filterData(this.submenul2Data, this.submenu.MenuId, 'MenuId');
+        this.submenul2Data = obj;
+      }
+      else { this.submenul2Data = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
+    });
+   
   }
 
   public onSubmit() {
