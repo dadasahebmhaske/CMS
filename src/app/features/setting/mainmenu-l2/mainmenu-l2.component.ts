@@ -11,12 +11,12 @@ import { SettingService } from '../setting.service';
   styleUrls: ['./mainmenu-l2.component.css']
 })
 export class MainmenuL2Component implements OnInit {
-  public submenu:any={MenuId:""};empInfo:any={};MainMenuData:any=[];
+  public submenu:any={MenuId:''};empInfo:any={};MainMenuData:any=[];
   public loaderbtn: boolean = true;
 
   constructor(private settingService:SettingService,private appService: AppService, private datashare: DatashareService) { }
   ngOnInit() {
-    this.datashare.GetSharedData.subscribe(data => this.submenu = data == null ? { IsActive: 'Y' } : data);
+    this.datashare.GetSharedData.subscribe(data => this.submenu = data == null ? { IsActive: 'Y',MenuId:'' } : data);
     this.appService.getAppData().subscribe(data => { this.empInfo = data });
     this.getAllonload();
   }
