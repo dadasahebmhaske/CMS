@@ -36,27 +36,26 @@ export class MainmenuL2ListComponent implements OnInit {
         , width: "48",
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
-     // { name: 'DesigId', displayName: 'Designation Id', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'DesigName', displayName: 'Designation', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'MenuName', displayName: 'Menu Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'SubMenuName', displayName: 'SubMenu Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'SubMenuFlag', displayName: 'SubMenu Flag', width: "200", cellTooltip: true, filterCellFiltered: true },
+      { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "200", cellTooltip: true, filterCellFiltered: true },
+   
     ]
     this.gridOptions.columnDefs = columnDefs;
-   // this.onLoad();
+    this.onLoad();
   }
   onEditFunction = ($event) => {
     this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/setting/submenuL2']);
-  // }
-  // onLoad() {
-  //   this.settingService.getMainMenuL1('').subscribe((resData: any) => {
-  //     if (resData.StatusCode != 0) {
-  //       this.SubMenuData = resData.Data; console.log(resData.Data);
-  //       AppComponent.SmartAlert.Success(resData.Message);
-  //     }
-  //     else { this.SubMenuData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
-  //   });
-
-  // }
-
+}
+onLoad() {
+  this.settingService.getSubMenuL2('').subscribe((resData: any) => {
+    if (resData.StatusCode != 0) {
+      this.SubMenuData = resData.Data; console.log(resData.Data);
+      AppComponent.SmartAlert.Success(resData.Message);
+    }
+    else { this.SubMenuData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
+  });
 }
 }

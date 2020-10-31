@@ -27,7 +27,7 @@ export class MainmenuListComponent implements OnInit {
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
-    this.gridOptions.exporterExcelFilename = 'Designation Master list.xlsx';
+    this.gridOptions.exporterExcelFilename = 'Main Menu list.xlsx';
     this.gridOptions.selectionRowHeaderWidth = 0;
     let columnDefs = [];
     columnDefs = [
@@ -37,26 +37,26 @@ export class MainmenuListComponent implements OnInit {
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
      // { name: 'DesigId', displayName: 'Designation Id', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'DesigName', displayName: 'Designation', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'MenuName', displayName: 'Menu Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'MenuFlag', displayName: 'Menu Flag', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;
-   // this.onLoad();
+    this.onLoad();
   }
   onEditFunction = ($event) => {
     this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/setting/mainmenu']);
-  // }
-  // onLoad() {
-  //   this.settingService.getMainMenuL1('').subscribe((resData: any) => {
-  //     if (resData.StatusCode != 0) {
-  //       this.MainmenuData = resData.Data; console.log(resData.Data);
-  //       AppComponent.SmartAlert.Success(resData.Message);
-  //     }
-  //     else { this.MainmenuData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
-  //   });
-
-  // }
+   }
+  onLoad() {
+    this.settingService.getMainMenuL1('').subscribe((resData: any) => {
+      if (resData.StatusCode != 0) {
+        this.MainmenuData = resData.Data; console.log(resData.Data);
+        AppComponent.SmartAlert.Success(resData.Message);
+      }
+      else { this.MainmenuData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
+    });
+  }
 
 }
-}
+

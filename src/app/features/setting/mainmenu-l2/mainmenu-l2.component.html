@@ -16,9 +16,9 @@
                                       <div class="form-group">
                                         <label for="sel1">Main Menu <span class="errorMessage">*</span>
                                         </label>
-                                        <select class="form-control" [(ngModel)]="submenu.GeneralManagerId" name="GeneralManagerId" required>
+                                        <select class="form-control" [(ngModel)]="submenu.MenuId" name="MenuId" required>
                                           <option value="" selected hidden> Select Main Menu </option>
-                                          <option [value]="des.EmpId" *ngFor="let des of MainMenuData">{{des.EmpName}}
+                                          <option [value]="des.MenuId" *ngFor="let des of MainMenuData">{{des.MenuName}}
                                           </option>
                                         </select>
                                       </div>
@@ -27,7 +27,7 @@
                                       <div class="form-group">
                                           <label>Flag<span class="errorMessage">*</span>
                                           </label>
-                                          <input type="text" class="form-control" placeholder="Enter Flag " [(ngModel)]="submenu.SiteName" name="SiteName" saCommonDir
+                                          <input type="text" class="form-control" placeholder="Enter Flag " [(ngModel)]="submenu.SubMenuFlag" name="SubMenuFlag" saCommonDir
                                               dirType="alphanumeric" required />
                                       </div>
                                   </div>
@@ -35,7 +35,7 @@
                                   <div class="form-group">
                                     <label for="sel1">Sub Menu Name - Level 2<span class="errorMessage">*</span>
                                     </label>
-                                    <input type="text" class="form-control" placeholder="Enter Sub Menu Name - Level 2 " [(ngModel)]="submenu.SiteName" name="SiteName" saCommonDir
+                                    <input type="text" class="form-control" placeholder="Enter Sub Menu Name - Level 2 " [(ngModel)]="submenu.SubMenuName" name="SubMenuName" saCommonDir
                                               dirType="alphanumeric" required />
                                   </div>
                                 </div>

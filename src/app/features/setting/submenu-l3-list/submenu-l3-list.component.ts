@@ -42,23 +42,22 @@ export class SubmenuL3ListComponent implements OnInit {
       { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;
-   // this.onLoad();
+   this.onLoad();
   }
   onEditFunction = ($event) => {
     this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/setting/submenuL3']);
-  // }
-  // onLoad() {
-  //   this.settingService.getMainMenuL1('').subscribe((resData: any) => {
-  //     if (resData.StatusCode != 0) {
-  //       this.SubMenuData = resData.Data; console.log(resData.Data);
-  //       AppComponent.SmartAlert.Success(resData.Message);
-  //     }
-  //     else { this.SubMenuData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
-  //   });
-
-  // }
+  }
+    onLoad() {
+      this.settingService.getSubMenuL3('').subscribe((resData: any) => {
+        if (resData.StatusCode != 0) {
+          this.SubMenuData = resData.Data; console.log(resData.Data);
+          AppComponent.SmartAlert.Success(resData.Message);
+        }
+        else { this.SubMenuData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
+      });
+    }
 
 }
-}
+
 

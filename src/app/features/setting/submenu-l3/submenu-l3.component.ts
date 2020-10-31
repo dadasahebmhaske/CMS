@@ -18,32 +18,52 @@ export class SubmenuL3Component implements OnInit {
   ngOnInit() {
     this.datashare.GetSharedData.subscribe(data => this.submenu = data == null ? { IsActive: 'Y' } : data);
     this.appService.getAppData().subscribe(data => { this.empInfo = data });
+    this.getAllonload();
   }
 
   public getAllonload() {
-    // this.settingService.getMainMenu('Y').subscribe((resSData: any) => {
-    //   if (resSData.StatusCode != 0) {
-    //     this.MainMenuData = resSData.Data;
-    //   }
-    //   else { this.MainMenuData = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
-    // });
+    this.settingService.getMainMenuL1('Y').subscribe((resSData: any) => {
+      if (resSData.StatusCode != 0) {
+        this.MainMenuData = resSData.Data;
+      }
+      else { this.MainMenuData = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
+    });
+
+    this.settingService.getSubMenuL2('Y').subscribe((resSData: any) => {
+      if (resSData.StatusCode != 0) {
+        this.submenul2Data = resSData.Data;
+      }
+      else { this.submenul2Data = []; AppComponent.SmartAlert.Errmsg(resSData.Message); }
+    });
   }
 
-    // public onSubmit() {
-  //   this.loaderbtn = false;
-  //   this.Menu.Flag = this.Menu.DesigId == null ? 'IN' : 'UP';
-  //   this.Menu.UserCode = this.empInfo.EmpId;
-  //   this.Menu.DesigId = this.Menu.DesigId == null ? '' : this.Menu.DesigId;
-  //   let ciphertext = this.appService.getEncrypted(this.Menu);
-  //   this.allmasterService.post('ManageDesignation',ciphertext).subscribe((resData: any) => {
-  //     this.loaderbtn = true;
-  //     if (resData.StatusCode != 0) {
-  //       AppComponent.SmartAlert.Success(resData.Message);
-  //       AppComponent.Router.navigate(['/master/designation-master']);
-  //     }
-  //     else { AppComponent.SmartAlert.Errmsg(resData.Message); }
-  //   });
-  // }
+  OnSelectMainMenu(MenuId){
+    let obj;
+    obj = this.settingService.filterData(this.submenul2Data, this.submenu.MenuId, 'MenuId');
+    this.submenul2Data = obj;
+  }
 
+  public onSubmit() {
+    this.loaderbtn = false;
+    this.submenu.SubMenuLThreeId = this.submenu.SubMenuLThreeId == null ? '' : this.submenu.SubMenuLThreeId;
+    this.submenu.Flag = this.submenu.SubMenuLThreeId == null||this.submenu.SubMenuLThreeId == ''? 'IN' : 'UP';
+    this.submenu.UserCode = this.empInfo.EmpId;
+    this.submenu.AppId = 1001;
+   // this.submenu.IsActive = 'Y';
+   // this.Menu.MenuId = this.Menu.MenuId == null ? '' : this.Menu.MenuId;
+    let ciphertext = this.appService.getEncrypted(this.submenu);
+    this.settingService.post('/Settings/ManageSubMenuLvlThree',ciphertext).subscribe((resData: any) => {
+      this.loaderbtn = true;
+      if (resData.StatusCode != 0) {
+        AppComponent.SmartAlert.Success(resData.Message);
+        AppComponent.Router.navigate(['/setting/submenuL3-list']);
+      }
+      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+    });
+  }
+
+  ngOnDestroy() {
+    this.datashare.updateShareData(null);
+  }
 
 }

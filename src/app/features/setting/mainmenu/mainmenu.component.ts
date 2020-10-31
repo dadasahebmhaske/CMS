@@ -19,20 +19,27 @@ export class MainmenuComponent implements OnInit {
     this.datashare.GetSharedData.subscribe(data => this.Menu = data == null ? { IsActive: 'Y' } : data);
     this.appService.getAppData().subscribe(data => { this.empInfo = data });
   }
-  // public onSubmit() {
-  //   this.loaderbtn = false;
-  //   this.Menu.Flag = this.Menu.DesigId == null ? 'IN' : 'UP';
-  //   this.Menu.UserCode = this.empInfo.EmpId;
-  //   this.Menu.DesigId = this.Menu.DesigId == null ? '' : this.Menu.DesigId;
-  //   let ciphertext = this.appService.getEncrypted(this.Menu);
-  //   this.allmasterService.post('ManageDesignation',ciphertext).subscribe((resData: any) => {
-  //     this.loaderbtn = true;
-  //     if (resData.StatusCode != 0) {
-  //       AppComponent.SmartAlert.Success(resData.Message);
-  //       AppComponent.Router.navigate(['/master/designation-master']);
-  //     }
-  //     else { AppComponent.SmartAlert.Errmsg(resData.Message); }
-  //   });
-  // }
+  public onSubmit() {
+    this.loaderbtn = false;
+    this.Menu.MenuId = this.Menu.MenuId == null ? '' : this.Menu.MenuId;
+    this.Menu.Flag = this.Menu.MenuId == null||this.Menu.MenuId == ''? 'IN' : 'UP';
+    this.Menu.UserCode = this.empInfo.EmpId;
+    this.Menu.AppId = 1001;
+    //this.Menu.IsActive = 'Y';
+   // this.Menu.MenuId = this.Menu.MenuId == null ? '' : this.Menu.MenuId;
+    let ciphertext = this.appService.getEncrypted(this.Menu);
+    this.settingService.post('/Settings/ManageMainMenuLvlOne',ciphertext).subscribe((resData: any) => {
+      this.loaderbtn = true;
+      if (resData.StatusCode != 0) {
+        AppComponent.SmartAlert.Success(resData.Message);
+        AppComponent.Router.navigate(['/setting/mainmenu-list']);
+      }
+      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+    });
+  }
+
+  ngOnDestroy() {
+    this.datashare.updateShareData(null);
+  }
 
 }

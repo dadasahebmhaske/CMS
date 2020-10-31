@@ -9,10 +9,16 @@ export class SettingService {
       return object[para] == DocTypId;
     });
   }
-  
-//   public GetProjectBudgetStatus(deliverFilter) {
-//     return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/Reports/GetProjectBudgetStatus?SiteId=${deliverFilter.SiteId}&ProjectId=${deliverFilter.ProjectId}&IsActive=Y`);
-//   }
+
+  public post(uri, data: any) {
+    return this.httpClient.post<any>(`${AppComponent.BaseUrl}${uri}`, { data: data }, AppComponent.httpOptions);
+  }
+  public getmasterData(MasterCode,IsActive) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=${MasterCode}&StartDate=&EndDate=&UserCode=&IsActive=${IsActive}`);
+  }
+  public getMainMenuL1(IsActive) {    return this.getmasterData(116,IsActive);  }
+  public getSubMenuL2(IsActive) {    return this.getmasterData(117,IsActive); }
+  public getSubMenuL3(IsActive) {    return this.getmasterData(118,IsActive); }
  
 
  
