@@ -29,11 +29,13 @@ export const environment = {
 
 
   BaseUrl: 'http://cms.sipl.pw/api/api/',
-  BaseUrlDist: 'http://apk.sipl.pw/AegisDistributorApi/api1/',
-  ImageUrl: 'http://apk.sipl.pw/AEGISAdminApi/Documents/',
- // ImageUrlDist: 'http://apk.sipl.pw/AegisDistributorApi/Expenses/',
   authKey: 'CMSYS:CMSYS@12345?',
   secureKey: 'CMSYS11223344556',
   deptId: 1006
+
+  // BaseUrl: 'http://cms.pushpamgroup.co.in/api/api/',
+  // authKey: 'CMSYS:CMSYS@12345?',
+  // secureKey: 'CMSYS11223344556',
+  // deptId: 1006
 
 };

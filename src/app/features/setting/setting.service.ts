@@ -19,6 +19,9 @@ export class SettingService {
   public getMainMenuL1(IsActive) {    return this.getmasterData(116,IsActive);  }
   public getSubMenuL2(IsActive) {    return this.getmasterData(117,IsActive); }
   public getSubMenuL3(IsActive) {    return this.getmasterData(118,IsActive); }
+  public getMenuAllocation(IsActive) {    return this.getmasterData(119,IsActive); }
+  public getMenuAllMenu(IsActive) {    return this.getmasterData(120,IsActive); }
+
  
 
  

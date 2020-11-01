@@ -19,10 +19,8 @@ import { fromEvent, Observable, Subscription } from 'rxjs';
 export class AppComponent implements OnInit, OnDestroy {
   title = 'sa';
   static BaseUrl;
-  static BaseUrlDist;
   static headers: HttpHeaders;
   static httpOptions;
-  static ImageUrl;
   static Router: Router;
   static secureKey;
   static SmartAlert: NotificationService;
@@ -44,8 +42,8 @@ export class AppComponent implements OnInit, OnDestroy {
       'Accept': 'application/pdf'
     });
     AppComponent.BaseUrl = environment.BaseUrl;
-    AppComponent.BaseUrlDist = environment.BaseUrlDist;
-    AppComponent.ImageUrl = environment.ImageUrl;
+    // AppComponent.BaseUrlDist = environment.BaseUrlDist;
+    // AppComponent.ImageUrl = environment.ImageUrl;
   //  AppComponent.ImageUrlDist=environment.ImageUrlDist;
     AppComponent.Router = router;
     AppComponent.SmartAlert = SmartAlert;

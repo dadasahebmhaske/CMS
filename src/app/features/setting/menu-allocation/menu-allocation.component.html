@@ -12,38 +12,26 @@
               <div class="widget-body">
                 <div class="row ">
                     <form name="orderDeliveredForm" #orderDeliveredForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
-                        <!-- <div class="col-sm-2">
-                          <div class="form-group">
-                            <label for="sel1">Department <span class="errorMessage">*</span>
-                            </label>
-                            <select class="form-control" [(ngModel)]="menuallocation.SiteId" name="SiteId" (change)="onSelectSite(deliverFilter.SiteId)"
-                              required>
-                              <option value="" selected hidden> Select Department </option>
-                              <option [value]="des.SiteId" *ngFor="let des of SiteData">{{des.SiteName}}
-                              </option>
-                            </select>
-                          </div>
-                        </div> -->
+                    
                         <div class="col-sm-2">
                           <div class="form-group">
-                            <label for="sel1">Degignation <span class="errorMessage">*</span>
-                            </label>
-                            <select class="form-control" [(ngModel)]="menuallocation.ProjectId" name="ProjectId"
-                              required>
-                              <option value="" selected hidden> Select Degignation </option>
-                              <option [value]="des.ProjectId" *ngFor="let des of ProjectData">{{des.ProjectName}}
+                            <!-- <label for="sel1">Designation <span class="errorMessage">*</span>
+                            </label> -->
+                            <select class="form-control" [(ngModel)]="DesigId" name="DesigId" required>
+                              <option value="" selected hidden> Select Designation </option>
+                              <option [value]="des.DesigId" *ngFor="let des of designationData">{{des.DesigName}}
                               </option>
                             </select>
                           </div>
                         </div>
                         
-                        <div class="col-sm-1 col-xs-4" style="margin-top:22px;">
+                        <div class="col-sm-1 col-xs-4">
                           <div class="form-group">
                             <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
                               <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
                           </div>
                         </div>
-                        <div class="col-sm-9" style="margin-top:20px;">
+                        <div class="col-sm-9">
                             <div class="form-group  pull-right">
                                 <a routerLink="/setting/menu-allocation-details" class="btn btn-block btn-warning ">
                                     <i class="glyphicon glyphicon-plus"></i>
@@ -53,7 +41,7 @@
                         </div>
                       </form>
                       <div class="col-sm-12 table-responsive">
-                        <ui-grid [data]="menuallocationData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                        <ui-grid [data]="AllocationData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
                       </div>
                 </div>
               </div>

@@ -1,64 +1,54 @@
 <!-- MAIN CONTENT -->
 <div id="content">
-    <sa-widgets-grid>
-      <div class="row">
-        <article class="col-sm-8 col-sm-offset-2">
-          <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
-            <header class="text-center">
-              <h2>
-                <i class="fa fa-table"></i> Menu Allocation Details</h2>
-            </header>
-            <div>
-              <div class="widget-body">
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true"
+          minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2>
+              <i class="fa fa-table"></i> Menu Allocation Details</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <form name="orderDeliveredForm" #orderDeliveredForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off"
+                ngNativeValidate>
                 <div class="row ">
-                    <form name="orderDeliveredForm" #orderDeliveredForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
-                        <!-- <div class="col-sm-3">
-                          <div class="form-group">
-                            <label for="sel1">Department <span class="errorMessage">*</span>
-                            </label>
-                            <select class="form-control" [(ngModel)]="menuallocation.SiteId" name="SiteId" (change)="onSelectSite(deliverFilter.SiteId)"
-                              required>
-                              <option value="" selected hidden> Select Department </option>
-                              <option [value]="des.SiteId" *ngFor="let des of SiteData">{{des.SiteName}}
-                              </option>
-                            </select>
-                          </div>
-                        </div> -->
-                        <div class="col-sm-3">
-                          <div class="form-group">
-                            <label for="sel1">Degignation <span class="errorMessage">*</span>
-                            </label>
-                            <select class="form-control" [(ngModel)]="menuallocation.ProjectId" name="ProjectId"
-                              required>
-                              <option value="" selected hidden> Select Degignation </option>
-                              <option [value]="des.ProjectId" *ngFor="let des of ProjectData">{{des.ProjectName}}
-                              </option>
-                            </select>
-                          </div>
-                        </div>
-                      
-                   
-                      <div class="col-sm-12 table-responsive">
-                        <ui-grid [data]="DeliveredOrderData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
-                      </div>
-                      <footer>
-                          <div class="row">
-                              <div class="col-sm-12 ">
-                                  <hr />
-                                  <a class="pull-right btn btn-default" routerLink="/setting/menu-allocation">
-                                      <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
-                                  <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
-                                      <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Submit':'Loading'}}</button>
-                              </div>
-                          </div>
-                      </footer>
-                    </form>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <!-- <label for="sel1">Designation <span class="errorMessage">*</span>
+                          </label> -->
+                      <select class="form-control" [(ngModel)]="menu.DesigId" name="DesigId" required>
+                        <option value="" selected hidden> Select Designation </option>
+                        <option [value]="des.DesigId" *ngFor="let des of designationData">{{des.DesigName}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12 table-responsive">
+                    <ui-grid [data]="AllocationData" [gridOptions]="gridOptions" (onSelect)="onSelectFunction($event)" (onEdit)="onEditFunction($event)">
+                    </ui-grid>
+                  </div>
                 </div>
-              </div>
+                <footer>
+                  <div class="row">
+                    <div class="col-sm-12 ">
+                      <hr />
+                      <a class="pull-right btn btn-default" routerLink="/setting/menu-allocation">
+                        <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
+                        {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                    </div>
+                  </div>
+                </footer>
+              </form>
             </div>
+
           </div>
-        </article>
-      </div>
-    </sa-widgets-grid>
-  </div>
-  
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>

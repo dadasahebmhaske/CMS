@@ -62,37 +62,37 @@
                            
                             <div class="col-sm-3">
                               <div class="form-group">
-                                  <label>Aadhar No.<span class="errorMessage">*</span>
+                                  <label>Aadhar No.
                                   </label>
                                   <input type="text" class="form-control" placeholder="Enter Adhar No." [(ngModel)]="labour.AadhaarNo" name="AadhaarNo" saCommonDir
-                                      dirType="number"  minlength="12" maxlength="12" required />
+                                      dirType="number"  minlength="12" maxlength="12"  />
                               </div>
                             </div>
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                    <label>Bank Name <span class="errorMessage">*</span>
+                                    <label>Bank Name 
                                     </label>
                                     <input type="text" class="form-control" placeholder="Enter Bank Name" [(ngModel)]="labour.BankName" name="BankName" saCommonDir
-                                        dirType="alphanumeric" required />
+                                        dirType="alphanumeric"  />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                               <div class="form-group">
-                                  <label>Account No. <span class="errorMessage">*</span>
+                                  <label>Account No. 
                                   </label>
                                   <input type="text" class="form-control" placeholder="Enter Account No. " [(ngModel)]="labour.AccountNo" name="AccountNo" saCommonDir
-                                      dirType="number" required />
+                                      dirType="number"  />
                               </div>
                         
                           </div>
                    
                         <div class="col-sm-3">
                           <div class="form-group">
-                              <label>IFSC <span class="errorMessage">*</span>
+                              <label>IFSC 
                               </label>
                               <input type="text" class="form-control" placeholder="Enter IFSC"
                               pattern="[A-Z]{4}[0]{3}[0-9]{4}"   oninvalid="this.setCustomValidity('Enter valid IFSC Code ')" onchange=" setCustomValidity('')" oninput=" setCustomValidity(' ')" [(ngModel)]="labour.IFSCNo" name="IFSCNo" saCommonDir
-                                  dirType="alphanumericupper" required />
+                                  dirType="alphanumericupper"  />
                           </div>
                     
                       </div>
