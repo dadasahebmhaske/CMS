@@ -114,8 +114,8 @@
                     <div class="form-group">
                       <label>Qty <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="Enter Qty " [(ngModel)]="Material.UQty"
-                        name="UQty"  (ngModelChange)="GetCalculate()" saCommonDir dirType="number" required />
+                      <input type="text" class="form-control" placeholder="Enter Qty " [(ngModel)]="Material.Qty"
+                        name="Qty"  (ngModelChange)="GetCalculate()" saCommonDir dirType="number" required />
                     </div>
                   </div>
                   <div class="col-sm-1">
@@ -130,15 +130,15 @@
                     <div class="form-group">
                       <label>Rate <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder=" Rate " [(ngModel)]="Material.URate"
-                        name="URate"  (ngModelChange)="GetCalculate()" saCommonDir dirType="decimal" required />
+                      <input type="text" class="form-control" placeholder=" Rate " [(ngModel)]="Material.Rate"
+                        name="Rate"  (ngModelChange)="GetCalculate()" saCommonDir dirType="decimal" required />
                     </div>
                   </div>
                   <div class="col-sm-1">
                     <div class="form-group">
                       <label>Amount <span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder="UAmount" [(ngModel)]="Material.UAmount"
+                      <input type="text" class="form-control" placeholder="UAmount" [(ngModel)]="Material.Amount"
                         name="Amount" saCommonDir dirType="decimal" required disabled/>
                     </div>
                   </div>
@@ -195,8 +195,8 @@
                     <div class="form-group">
                       <label>Total Amt<span class="errorMessage">*</span>
                       </label>
-                      <input type="text" class="form-control" placeholder=" Amount " [(ngModel)]="Material.UTotalAmount"
-                        name="UTotalAmount" saCommonDir dirType="decimal" disabled required />
+                      <input type="text" class="form-control" placeholder=" Amount " [(ngModel)]="Material.TotalAmount"
+                        name="TotalAmount" saCommonDir dirType="decimal" disabled required />
                     </div>
                   </div>
                   <div class="col-sm-1">

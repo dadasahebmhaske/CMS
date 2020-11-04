@@ -145,14 +145,16 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
     this.Material.MatName = obj[0].MatName;
     this.Material.UOMId = obj[0].UOMId;
     this.Material.UOM = obj[0].UOM;
-    this.Material.UQty = obj[0].Qty;
-    this.Material.RQty = obj[0].RemainBudgetQty;
-    this.Material.URate = obj[0].Rate;
-    this.Material.URate = obj[0].Rate;
-    this.Material.UAmount = obj[0].Amount;
-    this.Material.UTotalAmount = obj[0].TotalAmount;
+    this.Material.Qty = obj[0].Qty;
+    this.Material.RemainBudgetQty = obj[0].RemainBudgetQty;
+    this.Material.Rate = obj[0].Rate;
+    this.Material.Amount = obj[0].Amount;
+    this.Material.TotalAmount = obj[0].TotalAmount;
     this.Material.RefTranNo = obj[0].RefTranNo;
     this.Material.RefSrNo = obj[0].RefSrNo;
+    this.Material.IGST = obj[0].IGST;
+    this.Material.CGST = obj[0].CGST;
+    this.Material.SGST = obj[0].SGST;
     // if(this.Material.index==null)
     // this.Material.RemainBudgetQty = obj[0].RemainBudgetQty;
     // this.Material.RefTranNo = obj[0].RefTranNo;
@@ -162,9 +164,9 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
     //     this.Material.UQty=null;
     //   }
     // }
-    if (this.Material.UQty != null && this.Material.URate != null) {
-      this.Material.UAmount = parseFloat(this.Material.URate == undefined || this.Material.URate == '' ? 0 : this.Material.URate) * parseFloat(this.Material.UQty == undefined || this.Material.UQty == '' ? 0 : this.Material.UQty);
-      this.Material.UAmount = this.Material.UAmount.toFixed(2);
+    if (this.Material.Qty != null && this.Material.Rate != null) {
+      this.Material.Amount = parseFloat(this.Material.Rate == undefined || this.Material.Rate == '' ? 0 : this.Material.Rate) * parseFloat(this.Material.Qty == undefined || this.Material.Qty == '' ? 0 : this.Material.Qty);
+      this.Material.Amount = this.Material.Amount.toFixed(2);
     }
 
     this.Material.CGSTAmount = this.Material.CGSTAmount == undefined || this.Material.CGSTAmount == '' || this.Material.CGSTAmount == null ? 0 : this.Material.CGSTAmount;
@@ -179,31 +181,32 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
       this.Material.CGSTAmount = 0;
       this.Material.SGSTAmount = 0;
       
-      this.Material.CGSTAmount = (parseFloat(this.Material.UAmount) * parseFloat(this.Material.CGST)) / 100;
+      this.Material.CGSTAmount = (parseFloat(this.Material.Amount) * parseFloat(this.Material.CGST)) / 100;
       this.Material.CGSTAmount = this.Material.CGSTAmount.toFixed(2);
-      this.Material.SGSTAmount = (parseFloat(this.Material.UAmount) * parseFloat(this.Material.SGST)) / 100;
+      this.Material.SGSTAmount = (parseFloat(this.Material.Amount) * parseFloat(this.Material.SGST)) / 100;
       this.Material.SGSTAmount = this.Material.SGSTAmount.toFixed(2);
       this.Material.IGSTAmount = 0;
-
-      this.Material.UTotalAmount = parseFloat(this.Material.UAmount) + parseFloat(this.Material.CGSTAmount) + parseFloat(this.Material.SGSTAmount);
+      this.Material.TotalAmount = parseFloat(this.Material.Amount) + parseFloat(this.Material.CGSTAmount) + parseFloat(this.Material.SGSTAmount);
+      this.Material.TotalAmount= this.Material.TotalAmount.toFixed(2);
     }
     else {
       this.Material.IGSTAmount = 0;
-      this.Material.IGSTAmount = (parseFloat(this.Material.UAmount) * parseFloat(this.Material.IGST)) / 100;
+      this.Material.IGSTAmount = (parseFloat(this.Material.Amount) * parseFloat(this.Material.IGST)) / 100;
       this.Material.IGSTAmount = this.Material.IGSTAmount.toFixed(2);
-      this.Material.UTotalAmount = parseFloat(this.Material.UAmount) + parseFloat(this.Material.IGSTAmount);
+      this.Material.TotalAmount = parseFloat(this.Material.Amount) + parseFloat(this.Material.IGSTAmount);
+      this.Material.TotalAmount= this.Material.TotalAmount.toFixed(2);
     }
 
   }
 
   GetCalculate() {
-    if(parseInt(this.Material.UQty)>parseInt(this.Material.RQty)){
+    if(parseInt(this.Material.Qty)>parseInt(this.Material.RemainBudgetQty)){
       AppComponent.SmartAlert.Errmsg(`Quantity exceeded the Raised qauntity`);
-      this.Material.UQty=null;
+      this.Material.Qty=null;
     }
-    if (this.Material.UQty != null && this.Material.URate != null) {
-      this.Material.UAmount = parseFloat(this.Material.URate == undefined || this.Material.URate == '' ? 0 : this.Material.URate) * parseFloat(this.Material.UQty == undefined || this.Material.UQty == '' ? 0 : this.Material.UQty);
-      this.Material.UAmount = this.Material.UAmount.toFixed(2);
+    if (this.Material.Qty != null && this.Material.Rate != null) {
+      this.Material.Amount = parseFloat(this.Material.Rate == undefined || this.Material.Rate == '' ? 0 : this.Material.Rate) * parseFloat(this.Material.Qty == undefined || this.Material.Qty == '' ? 0 : this.Material.Qty);
+      this.Material.Amount = this.Material.Amount.toFixed(2);
     }
 
     this.Material.CGSTAmount = this.Material.CGSTAmount == undefined || this.Material.CGSTAmount == '' || this.Material.CGSTAmount == null ? 0 : this.Material.CGSTAmount;
@@ -217,20 +220,22 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
     if (this.Material.IGST == 0 || this.Material.IGST == null) {
       this.Material.CGSTAmount = 0;
       this.Material.SGSTAmount = 0;
-      this.Material.CGSTAmount = (parseFloat(this.Material.UAmount) * parseFloat(this.Material.CGST)) / 100;
+      this.Material.CGSTAmount = (parseFloat(this.Material.Amount) * parseFloat(this.Material.CGST)) / 100;
       this.Material.CGSTAmount = this.Material.CGSTAmount.toFixed(2);
-      this.Material.SGSTAmount = (parseFloat(this.Material.UAmount) * parseFloat(this.Material.SGST)) / 100;
+      this.Material.SGSTAmount = (parseFloat(this.Material.Amount) * parseFloat(this.Material.SGST)) / 100;
       this.Material.SGSTAmount = this.Material.SGSTAmount.toFixed(2);
       this.Material.IGSTAmount = 0;
-      this.Material.UTotalAmount = parseFloat(this.Material.UAmount) + parseFloat(this.Material.CGSTAmount) + parseFloat(this.Material.SGSTAmount);
+      this.Material.TotalAmount = parseFloat(this.Material.Amount) + parseFloat(this.Material.CGSTAmount) + parseFloat(this.Material.SGSTAmount);
+      this.Material.TotalAmount= this.Material.TotalAmount.toFixed(2);
     }
     else {
       this.Material.IGSTAmount = 0;
-      this.Material.IGSTAmount = (parseFloat(this.Material.UAmount) * parseFloat(this.Material.IGST)) / 100;
+      this.Material.IGSTAmount = (parseFloat(this.Material.Amount) * parseFloat(this.Material.IGST)) / 100;
       this.Material.IGSTAmount = this.Material.IGSTAmount.toFixed(2);
       this.Material.SGSTAmount =0;
       this.Material.CGSTAmount=0;
-      this.Material.UTotalAmount = parseFloat(this.Material.UAmount) + parseFloat(this.Material.IGSTAmount);
+      this.Material.TotalAmount = parseFloat(this.Material.Amount) + parseFloat(this.Material.IGSTAmount);
+      this.Material.TotalAmount= this.Material.TotalAmount.toFixed(2);
     }
 
 
@@ -288,26 +293,27 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
   }
 
   addMaterial() {
+    this.GetCalculate();
     if (this.Material.index != null) {
-      this.MaterialArray[this.Material.index].Rate = this.Material.URate;
-      this.MaterialArray[this.Material.index].Qty = this.Material.UQty;
-      this.MaterialArray[this.Material.index].Amount = this.Material.UAmount;
+      this.MaterialArray[this.Material.index].Rate = this.Material.Rate;
+      this.MaterialArray[this.Material.index].Qty = this.Material.Qty;
+      this.MaterialArray[this.Material.index].Amount = this.Material.Amount;
       this.MaterialArray[this.Material.index].IGST = this.Material.IGST;
       this.MaterialArray[this.Material.index].CGST = this.Material.CGST;
       this.MaterialArray[this.Material.index].SGST = this.Material.SGST;
       this.MaterialArray[this.Material.index].IGSTAmount = this.Material.IGSTAmount;
       this.MaterialArray[this.Material.index].SGSTAmount = this.Material.SGSTAmount;
       this.MaterialArray[this.Material.index].SGSTAmount = this.Material.SGSTAmount;
-      this.MaterialArray[this.Material.index].TotalAmount = this.Material.UTotalAmount;
+      this.MaterialArray[this.Material.index].TotalAmount = this.Material.TotalAmount;
       this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
 
     } else if (this.MaterialArray.some(obj => (parseInt(obj.TypeId) === parseInt(this.Material.TypeId) && parseInt(obj.MatId) === parseInt(this.Material.MatId)))) {
       AppComponent.SmartAlert.Errmsg("Material already added in list.");
     } else {
-      this.Material.Qty = this.Material.UQty;
-      this.Material.Rate = this.Material.URate;
-      this.Material.Amount = this.Material.UAmount;
-      this.Material.TotalAmount = this.Material.UTotalAmount;
+      // this.Material.Qty = this.Material.Qty;
+      // this.Material.Rate = this.Material.Rate;
+      // this.Material.Amount = this.Material.Amount;
+      // this.Material.TotalAmount = this.Material.TotalAmount;
       this.Material.show = this.MaterialArray.some(obj => parseInt(obj.TypeId) === parseInt(this.Material.TypeId)) ? false : true;
       this.MaterialArray.push(this.Material);
       this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
@@ -342,12 +348,13 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
   }
   onEdit(mat, i) {
     mat.index = i;
-    this.Material = mat;
-    this.Material.URate = mat.Rate;
-    this.Material.UQty = mat.Qty;
-    this.Material.RQty = mat.RemainBudgetQty;
-    this.Material.UAmount = mat.Amount;
-    this.Material.UTotalAmount = mat.TotalAmount;
+   // mat.RQty = mat.RemainBudgetQty;
+    this.Material = Object.assign(this.Material,mat);
+    // this.Material.URate = mat.Rate;
+    // this.Material.UQty = mat.Qty;
+    // this.Material.RQty = mat.RemainBudgetQty;
+    // this.Material.UAmount = mat.Amount;
+    // this.Material.UTotalAmount = mat.TotalAmount;
     //this.Material.UAmount = mat.Amount;
     // if (this.Material.MainTypeId == 4) { this.Material.UAmount = mat.Rate }
     this.onSelectActivityMaterial();

@@ -84,14 +84,27 @@ export class MenuAllocationDetailsComponent implements OnInit {
   public onSubmit() {
     if (this.selectedRows.length > 0 && Object.keys(this.selectedRows[0]).length > 1) {
       this.loaderbtn = false;
-      this.menu.menuLThreeId = this.menu.menuLThreeId == null ? '' : this.menu.menuLThreeId;
-      this.menu.Flag = this.menu.menuLThreeId == null || this.menu.menuLThreeId == '' ? 'IN' : 'UP';
+      // this.menu.menuLThreeId = this.menu.menuLThreeId == null ? '' : this.menu.menuLThreeId;
+      let data = [];
+      for (let i = 0; i < this.selectedRows.length; i++) {
+        data.push({
+          "AllocationId": '',
+          "AppId": 1001,
+          "DesigId": this.menu.DesigId,
+          "MenuId": this.selectedRows[i].MenuId,
+          "SubMenuId": this.selectedRows[i].SubMenuId,
+          "SubMenuLThreeId": this.selectedRows[i].SubMenuLThreeId,
+          "IsActive": 'Y'
+        });
+      }
+
+      this.menu.data=data;
+      this.menu.Flag = 'IN';
       this.menu.UserCode = this.empInfo.EmpId;
-      this.menu.AppId = 1001;
-      // this.menu.IsActive = 'Y';
-      // this.Menu.MenuId = this.Menu.MenuId == null ? '' : this.Menu.MenuId;
+      // this.menu.AppId = 1001;
+
       let ciphertext = this.appService.getEncrypted(this.menu);
-      this.settingService.post('/Settings/ManagemenuAloaction', ciphertext).subscribe((resData: any) => {
+      this.settingService.post('/Settings/ManageMenuAllocation', ciphertext).subscribe((resData: any) => {
         this.loaderbtn = true;
         if (resData.StatusCode != 0) {
           AppComponent.SmartAlert.Success(resData.Message);
@@ -101,7 +114,7 @@ export class MenuAllocationDetailsComponent implements OnInit {
       });
 
     } else {
-      AppComponent.SmartAlert.Errmsg(`Please select atleast one customer`);
+      AppComponent.SmartAlert.Errmsg(`Please select atleast one menu`);
     }
   }
 }
