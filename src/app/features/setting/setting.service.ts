@@ -20,13 +20,13 @@ export class SettingService {
   public getSubMenuL2(IsActive) { return this.getmasterData(117, IsActive); }
   public getSubMenuL3(IsActive) { return this.getmasterData(118, IsActive); }
   public getMenuAllocation(DesigId) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/Settings/GetMenuAssignedRoles?AppId=1001&DesigId=${DesigId}&IsActive=Y`);
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Settings/GetMenuAssignedRoles?AppId=1001&DesigId=${DesigId}&IsActive=Y`);
   }
   public getDesignationForMenu() {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/Settings/GetDesigForMenuAllocation?DesigId=&IsActive=Y`);
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Settings/GetDesigForMenuAllocation?DesigId=&IsActive=Y`);
   }
   public getMenuAllMenu(DesigId) { 
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/Settings/GetAllocatedMenus?AppId=1001&DesigId=${DesigId}&IsActive=Y`);
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Settings/GetAllocatedMenus?AppId=1001&DesigId=${DesigId}&IsActive=Y`);
   }
 
 }

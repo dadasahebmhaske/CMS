@@ -33,7 +33,7 @@ export class MenuAllocationDetailsComponent implements OnInit {
   allOnloadMethods() {
     this.settingService.getDesignationForMenu().subscribe((resD: any) => {
       if (resD.StatusCode != 0) {
-        this.designationData = resD.Data;
+        this.designationData = resD.Data.Table;
       }
       else { this.designationData = []; AppComponent.SmartAlert.Errmsg(resD.Message); }
     });
@@ -54,28 +54,29 @@ export class MenuAllocationDetailsComponent implements OnInit {
       //   , width: "48",
       //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       // },
-      { name: 'MenuName', displayName: 'Menu Name', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'menuName', displayName: 'menu L2 Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'LevelOneMenu', displayName: 'Level One Menu', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'LevelTwoMenu', displayName: 'Level Two Menu', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'menuLThreeName', displayName: 'menu L3 Name', width: "*", cellTooltip: true, filterCellFiltered: true },
-
-      { name: 'menuLThreeFlag', displayName: 'menu L3 Flag', width: "200", cellTooltip: true, filterCellFiltered: true },
+      { name: 'IsAllocated', displayName: 'Is Allocated', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'MenuFlag', displayName: 'Menu Flag', width: "200", cellTooltip: true, filterCellFiltered: true },
       { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "200", cellTooltip: true, filterCellFiltered: true },
 
     ]
     this.gridOptions.columnDefs = columnDefs;
-    this.onLoad();
+   // this.onLoad(this.menu.DesigId);
   }
   onEditFunction = ($event) => {
     this.datashare.updateShareData($event.row);
   }
   onSelectFunction = ($event) => {
     this.selectedRows = $event.row;
+    console.log($event.row);
   }
 
-  onLoad() {
+  onLoad(DesigId) {
     this.settingService.getMenuAllMenu(2).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
-        this.AllocationData = resData.Data; console.log(resData.Data);
+        this.AllocationData = resData.Data.Table; console.log(resData.Data);
         AppComponent.SmartAlert.Success(resData.Message);
       }
       else { this.AllocationData = []; AppComponent.SmartAlert.Errmsg(resData.Message); }
