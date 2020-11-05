@@ -31,7 +31,7 @@ export class MenuAllocationDetailsComponent implements OnInit {
     this.allOnloadMethods();
   }
   allOnloadMethods() {
-    this.allmasterService.getDesignation('Y').subscribe((resD: any) => {
+    this.settingService.getDesignationForMenu().subscribe((resD: any) => {
       if (resD.StatusCode != 0) {
         this.designationData = resD.Data;
       }
@@ -73,7 +73,7 @@ export class MenuAllocationDetailsComponent implements OnInit {
   }
 
   onLoad() {
-    this.settingService.getMenuAllMenu('Y').subscribe((resData: any) => {
+    this.settingService.getMenuAllMenu(2).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         this.AllocationData = resData.Data; console.log(resData.Data);
         AppComponent.SmartAlert.Success(resData.Message);

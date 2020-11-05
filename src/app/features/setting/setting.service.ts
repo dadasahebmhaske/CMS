@@ -13,18 +13,21 @@ export class SettingService {
   public post(uri, data: any) {
     return this.httpClient.post<any>(`${AppComponent.BaseUrl}${uri}`, { data: data }, AppComponent.httpOptions);
   }
-  public getmasterData(MasterCode,IsActive) {
+  public getmasterData(MasterCode, IsActive) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=${MasterCode}&StartDate=&EndDate=&UserCode=&IsActive=${IsActive}`);
   }
-  public getMainMenuL1(IsActive) {    return this.getmasterData(116,IsActive);  }
-  public getSubMenuL2(IsActive) {    return this.getmasterData(117,IsActive); }
-  public getSubMenuL3(IsActive) {    return this.getmasterData(118,IsActive); }
-  public getMenuAllocation(IsActive) {    return this.getmasterData(119,IsActive); }
-  public getMenuAllMenu(IsActive) {    return this.getmasterData(120,IsActive); }
-
- 
-
- 
+  public getMainMenuL1(IsActive) { return this.getmasterData(116, IsActive); }
+  public getSubMenuL2(IsActive) { return this.getmasterData(117, IsActive); }
+  public getSubMenuL3(IsActive) { return this.getmasterData(118, IsActive); }
+  public getMenuAllocation(DesigId) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/Settings/GetMenuAssignedRoles?AppId=1001&DesigId=${DesigId}&IsActive=Y`);
+  }
+  public getDesignationForMenu() {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/Settings/GetDesigForMenuAllocation?DesigId=&IsActive=Y`);
+  }
+  public getMenuAllMenu(DesigId) { 
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}CMS/Settings/GetAllocatedMenus?AppId=1001&DesigId=${DesigId}&IsActive=Y`);
+  }
 
 }
 

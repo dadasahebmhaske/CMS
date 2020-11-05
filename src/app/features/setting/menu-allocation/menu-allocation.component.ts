@@ -56,14 +56,14 @@ export class MenuAllocationComponent implements OnInit {
    
     ]
     this.gridOptions.columnDefs = columnDefs;
-   this.onLoad();
+   this.onLoad('');
   }
   onEditFunction = ($event) => {
     this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/setting/menu-allocation-details']);
   }
-    onLoad() {
-      this.settingService.getMenuAllocation('').subscribe((resData: any) => {
+    onLoad(DesigId) {
+      this.settingService.getMenuAllocation(DesigId).subscribe((resData: any) => {
         if (resData.StatusCode != 0) {
           this.AllocationData = resData.Data; console.log(resData.Data);
           AppComponent.SmartAlert.Success(resData.Message);
