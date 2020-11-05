@@ -54,12 +54,12 @@ export class MenuAllocationDetailsComponent implements OnInit {
       //   , width: "48",
       //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       // },
-      { name: 'LevelOneMenu', displayName: 'Level One Menu', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'LevelTwoMenu', displayName: 'Level Two Menu', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'menuLThreeName', displayName: 'menu L3 Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'LevelOneMenu', displayName: 'Main Menu L1', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'LevelTwoMenu', displayName: 'Sub Menu L2', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'menuLThreeName', displayName: 'Sub MenuL3', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'IsAllocated', displayName: 'Is Allocated', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'MenuFlag', displayName: 'Menu Flag', width: "200", cellTooltip: true, filterCellFiltered: true },
-      { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "200", cellTooltip: true, filterCellFiltered: true },
+     // { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "200", cellTooltip: true, filterCellFiltered: true },
 
     ]
     this.gridOptions.columnDefs = columnDefs;

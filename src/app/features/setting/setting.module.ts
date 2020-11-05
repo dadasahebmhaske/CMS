@@ -17,7 +17,7 @@ import { UigridsettingDirective } from '../../core/directive/uigridsetting.direc
     routing,
     BsDatepickerModule.forRoot(),
   ],
-  exports:[],
-  providers:[RoleAccessGuard,ProjectService,AllmasterService,UigridsettingDirective,SettingService]
+  exports:[UigridsettingDirective],
+  providers:[RoleAccessGuard,ProjectService,AllmasterService,SettingService]
 })
 export class SettingModule { }

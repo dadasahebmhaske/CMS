@@ -15,7 +15,7 @@ import {
     @Input() gridOptions: {};
     @Output() onEdit: EventEmitter<{}>;
     @Output() onDelete: EventEmitter<{}>;
-    @Output() onSelected: EventEmitter<{}>;
+    @Output() onSelect: EventEmitter<{}>;
   
     constructor(elementRef: ElementRef, injector: Injector) {
       console.log('thus');
