@@ -19,6 +19,7 @@ export class MenuAllocationDetailsComponent implements OnInit {
   public AllocationData: any;
   public designationData: any = [];
   public selectedRows: any = [];
+  public Emenu:any={};
 
   constructor(private appService: AppService, private datashare: DatashareService, private allmasterService: AllmasterService, private settingService: SettingService) {
   }
@@ -26,18 +27,28 @@ export class MenuAllocationDetailsComponent implements OnInit {
   ngOnInit() {
     this.AllocationData = [{}];
     this.datashare.GetSharedData.subscribe(data => this.menu = data == null ? { DesigId: '' } : data);
-    if(this.menu.DesigId!=""){
-      this.onLoad(this.menu.DesigId);
-    }
+    this.allOnloadMethods();
+   if(this.menu.DesigId!="" && this.menu.DesigId!=null){
+    
+    this.onLoad(this.menu.DesigId);
+   }
     this.appService.getAppData().subscribe(data => { this.empInfo = data });
     this.configureGrid();
     //this.onLoad(this.menu.DesigId);
-    this.allOnloadMethods();
+    //this.allOnloadMethods();
   }
   allOnloadMethods() {
-    this.settingService.getDesignationForMenu().subscribe((resD: any) => {
+    this.settingService.getDesignationForMenu(this.menu.DesigId).subscribe((resD: any) => {
       if (resD.StatusCode != 0) {
         this.designationData = resD.Data.Table;
+      //   if(this.menu.DesigId!=""){
+      //   this.designationData.push({
+      //     "DesigId": this.menu.DesigId,
+      //     "DesigName":this.menu.DesigName,
+      //     "IsActive":'Y',
+      //   });
+      // }
+        console.log( this.designationData);
       }
       else { this.designationData = []; AppComponent.SmartAlert.Errmsg(resD.Message); }
     });
@@ -95,21 +106,24 @@ export class MenuAllocationDetailsComponent implements OnInit {
     });
   }
   public onSubmit() {
-    if (this.selectedRows.length > 0 && Object.keys(this.selectedRows[0]).length > 1) {
+    if (this.AllocationData.some(obj=>obj.IsAllocated==='Y')) {
       this.loaderbtn = false;
-      // this.menu.menuLThreeId = this.menu.menuLThreeId == null ? '' : this.menu.menuLThreeId;
+     
       let data = [];
-      for (let i = 0; i < this.selectedRows.length; i++) {
+      for (let i = 0; i < this.AllocationData.length; i++) {
+        if(this.AllocationData[i].IsAllocated=='Y'){
         data.push({
           "AllocationId": '',
+          "IsAllocated":'Y',
           "AppId": 1001,
           "DesigId": this.menu.DesigId,
-          "MenuId": this.selectedRows[i].MenuId,
-          "SubMenuId": this.selectedRows[i].SubMenuId,
-          "SubMenuLThreeId": this.selectedRows[i].SubMenuLThreeId,
+          "MenuId": this.AllocationData[i].MenuId,
+          "SubMenuId": this.AllocationData[i].SubMenuId,
+          "SubMenuLThreeId": this.AllocationData[i].SubMenuLThreeId,
           "IsActive": 'Y'
         });
       }
+    }
 
       this.menu.data=data;
       this.menu.Flag = 'IN';

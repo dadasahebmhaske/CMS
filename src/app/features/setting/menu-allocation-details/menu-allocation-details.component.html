@@ -18,7 +18,7 @@
                     <div class="form-group">
                       <!-- <label for="sel1">Designation <span class="errorMessage">*</span>
                           </label> -->
-                      <select class="form-control" [(ngModel)]="menu.DesigId" name="DesigId" (change)="onLoad(menu.DesigId)" required>
+                      <select class="form-control" [(ngModel)]="menu.DesigId" name="DesigId" (change)="onLoad(menu.DesigId)" [disabled]="this.menu.AppId!=null" required>
                         <option value="" selected hidden> Select Designation </option>
                         <option [value]="des.DesigId" *ngFor="let des of designationData">{{des.DesigName}}
                         </option>

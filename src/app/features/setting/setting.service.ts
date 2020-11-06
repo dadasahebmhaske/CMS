@@ -22,8 +22,8 @@ export class SettingService {
   public getMenuAllocation(DesigId) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Settings/GetMenuAssignedRoles?AppId=1001&DesigId=${DesigId}&IsActive=Y`);
   }
-  public getDesignationForMenu() {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Settings/GetDesigForMenuAllocation?DesigId=&IsActive=Y`);
+  public getDesignationForMenu(DesigId) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Settings/GetDesigForMenuAllocation?DesigId=${DesigId}&IsActive=Y`);
   }
   public getMenuAllMenu(DesigId) { 
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Settings/GetAllocatedMenus?AppId=1001&DesigId=${DesigId}&IsActive=Y`);
