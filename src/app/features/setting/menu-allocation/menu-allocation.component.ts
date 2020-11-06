@@ -47,12 +47,10 @@ export class MenuAllocationComponent implements OnInit {
         , width: "48",
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
-      { name: 'MenuName', displayName: 'Menu Name', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'SubMenuName', displayName: 'SubMenu L2 Name', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'SubMenuLThreeName', displayName: 'SubMenu L3 Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'AppName', displayName: 'App Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'DesigName', displayName: 'Designation Name', width: "*", cellTooltip: true, filterCellFiltered: true },
      
-       { name: 'SubMenuLThreeFlag', displayName: 'SubMenu L3 Flag', width: "200", cellTooltip: true, filterCellFiltered: true },
-      { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "200", cellTooltip: true, filterCellFiltered: true },
+       { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "200", cellTooltip: true, filterCellFiltered: true },
    
     ]
     this.gridOptions.columnDefs = columnDefs;
@@ -65,7 +63,7 @@ export class MenuAllocationComponent implements OnInit {
     onLoad(DesigId) {
       this.settingService.getMenuAllocation(DesigId).subscribe((resData: any) => {
         if (resData.StatusCode != 0) {
-          this.AllocationData = resData.Data; console.log(resData.Data);
+          this.AllocationData = resData.Data.Table; console.log(resData.Data.Table);
           AppComponent.SmartAlert.Success(resData.Message);
         }
         else { this.AllocationData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }

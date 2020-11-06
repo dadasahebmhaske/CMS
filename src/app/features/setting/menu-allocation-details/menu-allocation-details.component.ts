@@ -26,8 +26,12 @@ export class MenuAllocationDetailsComponent implements OnInit {
   ngOnInit() {
     this.AllocationData = [{}];
     this.datashare.GetSharedData.subscribe(data => this.menu = data == null ? { DesigId: '' } : data);
+    if(this.menu.DesigId!=""){
+      this.onLoad(this.menu.DesigId);
+    }
     this.appService.getAppData().subscribe(data => { this.empInfo = data });
     this.configureGrid();
+    //this.onLoad(this.menu.DesigId);
     this.allOnloadMethods();
   }
   allOnloadMethods() {
@@ -42,11 +46,11 @@ export class MenuAllocationDetailsComponent implements OnInit {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
     this.gridOptions.exporterExcelFilename = 'Menu Allocation list.xlsx';
-    this.gridOptions.multiSelect = true;
-    this.gridOptions.enableRowSelection = true;
-    this.gridOptions.enableSelectAll = true;
-    this.gridOptions.enableRowHeaderSelection = true;
-    this.gridOptions.selectionRowHeaderWidth = 35;
+    this.gridOptions.multiSelect = false;
+    this.gridOptions.enableRowSelection = false;
+    this.gridOptions.enableSelectAll = false;
+    this.gridOptions.enableRowHeaderSelection = false;
+    this.gridOptions.selectionRowHeaderWidth = 0;
     let columnDefs = [];
     columnDefs = [
       // {
@@ -54,6 +58,11 @@ export class MenuAllocationDetailsComponent implements OnInit {
       //   , width: "48",
       //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       // },
+      {
+        name: 'Select', displayName: 'Details', cellTemplate: `<input type="checkbox" ng-click="grid.appScope.editEmployee(row.entity)" value="" trueValue="Y" falseValue="N" name="IsAllocated" [(ngModel)]='IsAllocated'> `
+        , width: "48",
+        headerCellTemplate: '<div style="text-align: center;margin-top: 0;">Edit</div>', enableFiltering: false
+      },
       { name: 'LevelOneMenu', displayName: 'Main Menu L1', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'LevelTwoMenu', displayName: 'Sub Menu L2', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'menuLThreeName', displayName: 'Sub MenuL3', width: "*", cellTooltip: true, filterCellFiltered: true },
@@ -66,7 +75,9 @@ export class MenuAllocationDetailsComponent implements OnInit {
    // this.onLoad(this.menu.DesigId);
   }
   onEditFunction = ($event) => {
-    this.datashare.updateShareData($event.row);
+   // this.datashare.updateShareData($event.row);
+   this.selectedRows = $event.row;
+   console.log($event.row);
   }
   onSelectFunction = ($event) => {
     this.selectedRows = $event.row;
@@ -74,7 +85,7 @@ export class MenuAllocationDetailsComponent implements OnInit {
   }
 
   onLoad(DesigId) {
-    this.settingService.getMenuAllMenu(2).subscribe((resData: any) => {
+    this.settingService.getMenuAllMenu(this.menu.DesigId).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         this.AllocationData = resData.Data.Table; console.log(resData.Data);
         AppComponent.SmartAlert.Success(resData.Message);
@@ -117,6 +128,9 @@ export class MenuAllocationDetailsComponent implements OnInit {
     } else {
       AppComponent.SmartAlert.Errmsg(`Please select atleast one menu`);
     }
+  }
+  ngOnDestroy() {
+    this.datashare.updateShareData(null);
   }
 }
 
