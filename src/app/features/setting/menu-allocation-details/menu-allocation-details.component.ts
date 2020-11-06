@@ -59,7 +59,7 @@ export class MenuAllocationDetailsComponent implements OnInit {
       //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       // },
       {
-        name: 'Select', displayName: 'Details', cellTemplate: `<input type="checkbox" ng-click="grid.appScope.editEmployee(row.entity)" value="" trueValue="Y" falseValue="N" name="IsAllocated" [(ngModel)]='IsAllocated'> `
+        name: 'Select', displayName: 'Details', cellTemplate: `<input type="checkbox" ng-click="grid.appScope.editEmployee(row.entity)" ng-true-value="'Y'" ng-false-value="'N'" name="IsAllocated" ng-model='row.entity.IsAllocated' ng-if="row.entity.IsAllocated!=null" > `
         , width: "48",
         headerCellTemplate: '<div style="text-align: center;margin-top: 0;">Edit</div>', enableFiltering: false
       },
@@ -78,10 +78,11 @@ export class MenuAllocationDetailsComponent implements OnInit {
    // this.datashare.updateShareData($event.row);
    this.selectedRows = $event.row;
    console.log($event.row);
+   console.log(this.AllocationData);
   }
   onSelectFunction = ($event) => {
-    this.selectedRows = $event.row;
-    console.log($event.row);
+    //this.selectedRows = $event.row;
+    // console.log($event.row);
   }
 
   onLoad(DesigId) {
