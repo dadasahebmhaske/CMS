@@ -45,5 +45,7 @@ export class MasterService {
   public getNavMenu(RoleCode, RoleId, UserCode) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Settings/GetMenuAllocated?AllocationId=&AppId=&DeptId=&RoleCode=${RoleCode}&RoleId=${RoleId}&UserCode=${UserCode}&IsActive=Y&Status=&AFlag=DI`, AppComponent.httpOptions);
   }
-
+  public getMenuAllMenu(DesigId) { 
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Settings/GetAllocatedMenus?AppId=1001&DesigId=${DesigId}&IsActive=Y`);
+  }
 }

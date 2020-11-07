@@ -5,7 +5,6 @@ import { DatashareService } from '../../../core/custom-services/datashare.servic
 import { MasterService } from '../../../core/custom-services/master.service';
 import { AppService } from '@app/core/custom-services/app.service';
 import { SettingService } from '../setting.service';
-import { AllmasterService } from '@app/features/master/allmaster.service';
 @Component({
   selector: 'sa-menu-allocation-details',
   templateUrl: './menu-allocation-details.component.html',
@@ -21,7 +20,7 @@ export class MenuAllocationDetailsComponent implements OnInit {
   public selectedRows: any = [];
   public Emenu:any={};
 
-  constructor(private appService: AppService, private datashare: DatashareService, private allmasterService: AllmasterService, private settingService: SettingService) {
+  constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService, private settingService: SettingService) {
   }
 
   ngOnInit() {
@@ -97,7 +96,7 @@ export class MenuAllocationDetailsComponent implements OnInit {
   }
 
   onLoad(DesigId) {
-    this.settingService.getMenuAllMenu(this.menu.DesigId).subscribe((resData: any) => {
+    this.masterService.getMenuAllMenu(this.menu.DesigId).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         this.AllocationData = resData.Data.Table; console.log(resData.Data);
         AppComponent.SmartAlert.Success(resData.Message);

@@ -7,7 +7,7 @@
     Please note that these links work a bit different than
     traditional href="" links. See documentation for details.
     -->
-    <ul saSmartMenu>
+    <ul class="hidemenu"  saSmartMenu>
       <!-- <li >
         <a title="Dashboard" routerLink="/dashboard/analytics">
           <i class="fa fa-lg fa-fw fa-home"></i>
@@ -15,13 +15,13 @@
         </a>
       
       </li> -->
-      <li>
+      <li formflag="MASTR" style="display: none;">
         <a title="Master">
           <i class="fa fa-lg fa-fw fa-database"></i>
           <span class="menu-item-parent">Master</span>
         </a>
         <ul>
-          <li routerLinkActive="active">
+          <li formflag="MSIMA" routerLinkActive="active">
             <a routerLink="/master/site-master">Site Master</a>
           </li>
           <li routerLinkActive="active">
@@ -94,7 +94,7 @@
         
         </ul>
       </li>
-      <li>
+      <li >
         <a title="Project">
           <i class="fa fa-lg fa-fw fa-building"></i>
           <span class="menu-item-parent">Project</span>
@@ -192,23 +192,23 @@
         </ul>
       </li>  
 
-      <li>
+      <li formflag="SETTG" style="display: none;">
         <a title="Report">
           <i class="fa fa-lg fa-fw fa-cogs"></i>
           <span class="menu-item-parent">Setting</span>
         </a>
         <ul>
-          <li  routerLinkActive="active">
+          <li formflag="SMML1" routerLinkActive="active">
             <!-- <a routerLink="/report/costing-of-project">Costing of the Project</a> -->
             <a routerLink="/setting/mainmenu-list">Main Menu - Level 1</a>
           </li>
-          <li  routerLinkActive="active">
+          <li formflag="SSML2" routerLinkActive="active">
             <a routerLink="/setting/submenuL2-list">Sub Menu - Level 2 </a>
           </li>
-          <li  routerLinkActive="active">
+          <li formflag="SSML3" routerLinkActive="active">
             <a routerLink="/setting/submenuL3-list">Sub Menu - Level 3</a>
           </li>
-          <li  routerLinkActive="active">
+          <li formflag="SMALL" routerLinkActive="active">
             <a routerLink="/setting/menu-allocation">Menu Allocation</a>
           </li>
         

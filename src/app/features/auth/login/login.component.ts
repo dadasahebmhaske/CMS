@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
       this.loaderbtn=true;
     if(resData.StatusCode==1) {     
       this.EmpInfo= resData.Data[0];
-      //this.getNavMenu();
+     this.getNavMenu();
       this.appService.doEncryptionOf(resData.Data[0]);
          console.log(resData); 
         AppComponent.SmartAlert.bigBox({
@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
           number: "1",
           timeout: 6000
         });
-       this.router.navigate(['/dashboard']); 
+     //  this.router.navigate(['/dashboard']); 
         }
          else{
            AppComponent.SmartAlert.Errmsg(resData.Message);
@@ -82,10 +82,10 @@ export class LoginComponent implements OnInit {
   }
   getNavMenu(){
     let menu=[];
-    this.masterService.getNavMenu(this.EmpInfo.RoleCode,this.EmpInfo.RoleId,this.EmpInfo.EmpId).subscribe((resMData: any) => {
-      if (resMData.StatusCode != 0) {
-        for(let i=0;i<resMData.Data.length;i++){
-          menu[i] = resMData.Data[i].AllowdedMenu;
+    this.masterService.getMenuAllMenu(this.EmpInfo.DesigId).subscribe((resMData: any) => {
+      if (resMData.StatusCode != 0) { 
+        for(let i=0;i<resMData.Data.Table.length;i++){
+          menu[i] = resMData.Data.Table[i].MenuFlag;
         }
         this.EmpInfo.Menu=menu;
         this.appService.doEncryptionOf(this.EmpInfo);
@@ -94,5 +94,6 @@ export class LoginComponent implements OnInit {
     });
    
   }
+
 
 }

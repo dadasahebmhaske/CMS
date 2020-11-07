@@ -11,14 +11,14 @@ import { MenuAllocationComponent } from "./menu-allocation/menu-allocation.compo
 import { MenuAllocationDetailsComponent } from "./menu-allocation-details/menu-allocation-details.component";
 
 const routes: Routes = [
-  { path: 'mainmenu-list', component: MainmenuListComponent },
-  { path: 'mainmenu', component: MainmenuComponent },
-  { path: 'submenuL2-list', component: MainmenuL2ListComponent },
-  { path: 'submenuL2', component: MainmenuL2Component },
-  { path: 'submenuL3-list', component: SubmenuL3ListComponent },
-  { path: 'submenuL3', component: SubmenuL3Component },
-  { path: 'menu-allocation', component: MenuAllocationComponent },
-  { path: 'menu-allocation-details', component: MenuAllocationDetailsComponent },
+  { path: 'mainmenu-list', component: MainmenuListComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SMML1']} },
+  { path: 'mainmenu', component: MainmenuComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SMML1']}},
+  { path: 'submenuL2-list', component: MainmenuL2ListComponent , canActivate: [RoleAccessGuard],data: {formFlag: ['SSML2']}},
+  { path: 'submenuL2', component: MainmenuL2Component, canActivate: [RoleAccessGuard],data: {formFlag: ['SSML2']} },
+  { path: 'submenuL3-list', component: SubmenuL3ListComponent , canActivate: [RoleAccessGuard],data: {formFlag: ['SSML3']}  },
+  { path: 'submenuL3', component: SubmenuL3Component , canActivate: [RoleAccessGuard],data: {formFlag: ['SSML3']} },
+  { path: 'menu-allocation', component: MenuAllocationComponent , canActivate: [RoleAccessGuard],data: {formFlag: ['SMALL']}},
+  { path: 'menu-allocation-details', component: MenuAllocationDetailsComponent , canActivate: [RoleAccessGuard],data: {formFlag: ['SMALL']}}, 
  
 ];
 
