@@ -85,6 +85,7 @@ export class LoginComponent implements OnInit {
     this.masterService.getMenuAllMenu(this.EmpInfo.DesigId).subscribe((resMData: any) => {
       if (resMData.StatusCode != 0) { 
         for(let i=0;i<resMData.Data.Table.length;i++){
+          if(resMData.Data.Table[i].IsAllocated=='Y')
           menu[i] = resMData.Data.Table[i].MenuFlag;
         }
         this.EmpInfo.Menu=menu;

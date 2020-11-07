@@ -19,9 +19,6 @@ export class NavigationComponent implements OnInit {
     this.appService.getAppData().subscribe(data => {
       this.CPSD = data; 
       this.getNavMenu();
-      setTimeout(()=>{this.stockShow=(this.CPSD.ChannelTypeFlag=='DI'|| this.CPSD.ChannelTypeFlag=='DE') ?true:false;
-      console.log(this.stockShow);},5000);
-      
     });
   }
 getNavMenu(){

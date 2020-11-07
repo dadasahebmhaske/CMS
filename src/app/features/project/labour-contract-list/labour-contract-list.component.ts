@@ -43,6 +43,11 @@ export class LabourContractListComponent implements OnInit {
                       headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
                     },
                     {
+                      name: 'Select1', displayName: 'Details', cellTemplate: `<button  style="margin:3px;" class="btn-warning btn-xs"  ng-click="grid.appScope.closeEmployee(row.entity)"  ng-if="row.entity.IsClosed!='Y'&& row.entity.IsActive!=null"">&nbsp;Close&nbsp;</button><button  style="margin:3px;" class="btn-default btn-xs"  ng-if="row.entity.IsClosed=='Y'">&nbsp;Closed&nbsp;</button> `
+                      , width: "55",
+                      headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Close</div>', enableFiltering: false
+                    },
+                    {
                       name: 'Select11', displayName: 'Delete', cellTemplate: '<button  style="margin:3px;" class="btn-danger btn-xs"  ng-click="grid.appScope.deleteEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">Delete</button> '
                       , width: "57",
                       headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Delete</div>', enableFiltering: false
@@ -78,6 +83,10 @@ export class LabourContractListComponent implements OnInit {
                   this.LabourContractAction('Approve', $event.row.TranNo);
                 }
 
+                onCloseFunction = ($event) => {
+                  this.LabourContractAction('Close', $event.row.TranNo);
+                }
+
                 LabourContractAction(action, TranNo) {
                   let text = `Do You want to ${action} this order!`
                   Swal.fire({
@@ -99,15 +108,15 @@ export class LabourContractListComponent implements OnInit {
                             else { AppComponent.SmartAlert.Errmsg(resData.Message); }
                           });
                           break;
-                        // case 'Close':
-                        //   this.projectService.getClose(TranNo, 109, this.cpInfo.EmpId).subscribe((resData: any) => {
-                        //     if (resData.StatusCode != 0) {
-                        //       this.onLoad();
-                        //       AppComponent.SmartAlert.Success(resData.Message);
-                        //     }
-                        //     else { AppComponent.SmartAlert.Errmsg(resData.Message); }
-                        //   });
-                        //   break;
+                        case 'Close':
+                          this.projectService.getClose(TranNo, 109, this.cpInfo.EmpId).subscribe((resData: any) => {
+                            if (resData.StatusCode != 0) {
+                              this.onLoad();
+                              AppComponent.SmartAlert.Success(resData.Message);
+                            }
+                            else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+                          });
+                          break;
                         case 'Approve':
                           this.projectService.getApprove(TranNo, 109, this.cpInfo.EmpId).subscribe((resData: any) => {
                             if (resData.StatusCode != 0) {

@@ -9,11 +9,11 @@ import { PendingPaymentComponent } from './pending-payment/pending-payment.compo
 import { PendingMaterialComponent } from './pending-material/pending-material.component';
 
 const routes: Routes = [
-  { path: 'costing-of-project', component: CostingOfProjectComponent },
-  { path: 'pending-indents', component: PendingIndentsComponent },
-  { path: 'pending-po', component: PendingPoComponent },
-  { path: 'pending-payment', component: PendingPaymentComponent },
-  { path: 'pending-material', component: PendingMaterialComponent },
+  { path: 'costing-of-project', component: CostingOfProjectComponent , canActivate: [RoleAccessGuard],data: {formFlag: ['RPPBS']}},
+  { path: 'pending-indents', component: PendingIndentsComponent , canActivate: [RoleAccessGuard],data: {formFlag: ['RPINS']}},
+  { path: 'pending-po', component: PendingPoComponent , canActivate: [RoleAccessGuard],data: {formFlag: ['RPPOS']}},
+  { path: 'pending-payment', component: PendingPaymentComponent , canActivate: [RoleAccessGuard],data: {formFlag: ['RPIPS']}},
+  { path: 'pending-material', component: PendingMaterialComponent , canActivate: [RoleAccessGuard],data: {formFlag: ['RPMTS']}},
 ];
 
 
