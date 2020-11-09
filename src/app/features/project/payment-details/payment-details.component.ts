@@ -126,7 +126,7 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
     this.project.TranDate = new Date();
     //this.project.ChallanDate= this.appService.DateToString(this.project.ChallanDate);
     //this.project.Remark = '';
-    //this.project.Data = this.MaterialArray;
+    this.project.Data = '';
     let ciphertext = this.appService.getEncrypted(this.project);
     this.projectService.post('ManagePayment', ciphertext).subscribe((resData: any) => {
       this.loaderbtn = true;
