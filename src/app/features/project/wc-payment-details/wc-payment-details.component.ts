@@ -121,12 +121,14 @@ export class WcPaymentDetailsComponent implements OnInit, OnDestroy {
   }
 
   onSelectInvoice(){
+    if(this.project.TranNo==null || this.project.TranNo==''){
     let obj;
     obj = this.projectService.filterData(this.InvoiceArray, this.project.RefTranNo, 'TranNo');
     this.project.InvoiceDate=obj[0].InvoiceDate;
     this.project.VendorInvoiceNo=obj[0].VendorInvoiceNo;
     this.project.TotAmount=obj[0].TotAmount;
     this.invoiceamount=this.project.TotAmount;
+  }
   }
   public onSubmit() {
     if(parseInt(this.project.TotAmount)!=parseInt(this.project.TotalDeuAmount)){
