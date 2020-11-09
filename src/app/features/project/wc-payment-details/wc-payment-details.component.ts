@@ -109,6 +109,17 @@ export class WcPaymentDetailsComponent implements OnInit, OnDestroy {
   onSelectVendor() {
     this.InvoiceArray = this.projectService.filterData(this.InvoiceData, this.project.VendorId, 'VendorId');
   }
+
+  onQtyDueAmount(mat,index) {
+    if (parseInt(this.MaterialArray[index].DueAmount) > parseInt(this.MaterialArray[index].RemainAmount)) {
+      AppComponent.SmartAlert.Errmsg(`Pending amount should not be greater than ${this.MaterialArray[index].RemainAmount}`);
+      this.MaterialArray[index].DueAmount = null;
+    }
+    this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
+
+   
+  }
+
   onSelectInvoice(){
     let obj;
     obj = this.projectService.filterData(this.InvoiceArray, this.project.RefTranNo, 'TranNo');
@@ -118,6 +129,10 @@ export class WcPaymentDetailsComponent implements OnInit, OnDestroy {
     this.invoiceamount=this.project.TotAmount;
   }
   public onSubmit() {
+    if(parseInt(this.project.TotAmount)!=parseInt(this.project.TotalDeuAmount)){
+      AppComponent.SmartAlert.Errmsg("Payment amount should be equal to pending amount");
+    }
+    else{
     if(parseInt(this.project.TotAmount) > parseInt(this.invoiceamount)){
       AppComponent.SmartAlert.Errmsg("Payment Amount should be less than invoice amount");
     }
@@ -131,7 +146,27 @@ export class WcPaymentDetailsComponent implements OnInit, OnDestroy {
     this.project.TranDate = new Date();
     //this.project.ChallanDate= this.appService.DateToString(this.project.ChallanDate);
     //this.project.Remark = '';
-    //this.project.Data = this.MaterialArray;
+    let Data=[];
+    for(let i=0;i<this.MaterialArray.length;i++){
+     if(parseInt(this.MaterialArray[i].DueAmount)>0){
+       Data.push({
+        
+      TypeId:this.MaterialArray[i].TypeId,
+      MatActExpId:this.MaterialArray[i].WorkId,
+      UOMId:this.MaterialArray[i].UOMId,
+      Qty:this.MaterialArray[i].Qty,
+      Rate:this.MaterialArray[i].Rate,
+      Amount:this.MaterialArray[i].DueAmount,
+      CGST:this.MaterialArray[i].CGST,
+      SGST:this.MaterialArray[i].SGST,
+      IGST:this.MaterialArray[i].IGST,
+      RefTranNo:this.MaterialArray[i].RefTranNo,
+      RefSrNo:this.MaterialArray[i].RefSrNo,
+
+       })
+     }
+    }
+    this.project.Data = Data;
     let ciphertext = this.appService.getEncrypted(this.project);
     this.projectService.post('ManageWorkContractPayment', ciphertext).subscribe((resData: any) => {
       this.loaderbtn = true;
@@ -143,7 +178,7 @@ export class WcPaymentDetailsComponent implements OnInit, OnDestroy {
     });
   }
 }
-
+}
   ngOnDestroy() {
     this.datashare.updateShareData(null);
   }

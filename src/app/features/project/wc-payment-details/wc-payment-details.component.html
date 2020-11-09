@@ -157,6 +157,7 @@
                             <th class="text-center">SGST Amount</th>
                             <th class="text-center">CGST Amount</th>
                             <th class="text-center">Total Amount </th>
+                            <th class="text-center">Pending Amount </th>
                           </tr>
 
                         </thead>
@@ -177,6 +178,9 @@
                             <td class="text-center">{{mat.SGSTAmount}}</td>
                             <td class="text-center">{{mat.CGSTAmount}}</td>
                             <td class="text-center">{{mat.TotalAmount}}</td>
+                            <td> <input type="text" class="form-control" style="width: 80px;" placeholder=" Qty "
+                              [(ngModel)]="mat.DueAmount" #nameControl="ngModel" name="DueAmount_{{i}}" (ngModelChange)="onQtyDueAmount(mat,i)"
+                              required /> </td>
                      
                           </tr>
                           
@@ -188,6 +192,7 @@
                             <td class="text-center"><strong>{{project.TotSGSTCost}}</strong>  </td>
                             <td class="text-center"><strong>{{project.TotCGSTCost}}</strong>  </td>
                             <td class="text-center"><strong>{{project.TotProjectCost}}</strong>  </td>
+                            <td class="text-center"><strong>{{project.TotalDeuAmount}}</strong>  </td>
                           </tr>
                         </tbody>
                       </table>
