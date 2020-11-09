@@ -99,7 +99,7 @@ export class ProjectService {
 
   public calculatePOTotal(project, MaterialArray) {
     project.TotalAmtCost=0
-    project.TotProjectCost = 0;project.TotIGSTCost=0;project.TotCGSTCost=0;project.TotSGSTCost=0;
+    project.TotProjectCost = 0;project.TotIGSTCost=0;project.TotCGSTCost=0;project.TotSGSTCost=0;project.TotalDeuAmount=0;
     if (MaterialArray.length != 0)
       for (let i = 0; i < MaterialArray.length; i++) {
         project.TotalAmtCost = parseFloat(project.TotalAmtCost) + parseFloat(MaterialArray[i].Amount);
@@ -107,6 +107,8 @@ export class ProjectService {
         project.TotCGSTCost = parseFloat(project.TotCGSTCost) + parseFloat(MaterialArray[i].CGSTAmount);
         project.TotSGSTCost = parseFloat(project.TotSGSTCost) + parseFloat(MaterialArray[i].SGSTAmount);
         project.TotProjectCost = parseFloat(project.TotProjectCost) + parseFloat(MaterialArray[i].TotalAmount);
+        if(MaterialArray[i].DueAmount!=null)
+        project.TotalDeuAmount = parseFloat(project.TotalDeuAmount) + parseFloat(MaterialArray[i].DueAmount);
       }
     return project;
   }
