@@ -32,7 +32,7 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.datashare.GetSharedData.subscribe(data => {
-      this.project = data == null ? { IsActive: 'Y', SiteId: '', ProjectId: '', IssueProjectId: '', IssueSiteId: '', VendorId: '', RefTranNo: '' } : data;
+      this.project = data == null ? { IsActive: 'Y', SiteId: '', ProjectId: '', IssueProjectId: '', IssueSiteId: '', VendorId: '',CarryingDate:new Date(), RefTranNo: '', } : data;
 
       if (this.project.TranNo != null)
         this.getTranData();

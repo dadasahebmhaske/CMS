@@ -88,7 +88,7 @@ export class LabourContractListComponent implements OnInit {
                 }
 
                 LabourContractAction(action, TranNo) {
-                  let text = `Do You want to ${action} this order!`
+                  let text = `Do you want to ${action} this Work Contract!`
                   Swal.fire({
                     title: 'Are you sure?',
                     text: `${text}`,

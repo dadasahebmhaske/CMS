@@ -155,16 +155,17 @@ export class GrnComponent implements OnInit, OnDestroy {
   }
 
   CompareQTY(index) {
+if(this.MaterialArray[index].RejectedQty!='' && this.MaterialArray[index].RejectedQty!=null && this.MaterialArray[index].ReceivedQty!=''&& this.MaterialArray[index].ReceivedQty!=null){
+    this.CompQTY = parseInt(this.MaterialArray[index].ReceivedQty==''||this.MaterialArray[index].ReceivedQty==null?0:this.MaterialArray[index].ReceivedQty) 
+    + parseInt(this.MaterialArray[index].RejectedQty==''|| this.MaterialArray[index].RejectedQty==null?0:this.MaterialArray[index].RejectedQty);
 
-    this.CompQTY = parseInt(this.MaterialArray[index].ReceivedQty) + parseInt(this.MaterialArray[index].RejectedQty);
-
-    if (parseInt(this.MaterialArray[index].Qty) <= parseInt(this.CompQTY)) {
-      AppComponent.SmartAlert.Errmsg(`Recevied Qty + Rejected Qty exceeded the PO qauntity`);
+    if (parseInt(this.MaterialArray[index].Qty) != parseInt(this.CompQTY) ) {
+      AppComponent.SmartAlert.Errmsg(`Recevied Qty + Rejected Qty = PO Qauntity`);
       this.MaterialArray[index].RejectedQty = null;
       this.MaterialArray[index].ReceivedQty = null;
 
     }
-
+  }
   }
 
   onRemoveMaterial(data, index) {

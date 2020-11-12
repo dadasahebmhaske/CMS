@@ -100,7 +100,7 @@
                       <label>Challan / Invoice Amount <span class="errorMessage">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder="Enter Challan Amount "
-                        [(ngModel)]="project.ChallanAmount" name="ChallanAmount" saCommonDir dirType="alphanumeric"
+                        [(ngModel)]="project.ChallanAmount" name="ChallanAmount" saCommonDir dirType="decimal"
                         required />
                     </div>
                   </div>
@@ -110,7 +110,7 @@
                       </label>
                       <input type="text" class="form-control" placeholder="Enter GST Amount "
                         [(ngModel)]="project.ChallanGSTAmount" name="ChallanGSTAmount" saCommonDir
-                        dirType="alphanumeric" required />
+                        dirType="decimal" required />
                     </div>
                   </div>
 
@@ -189,9 +189,9 @@
                             <th class="text-center">SGST Amount</th>
                             <th class="text-center">CGST Amount</th>
                             <th class="text-center">Total Amount </th>
-                            <th class="text-center">Received Qty </th>
-                            <th class="text-center">Quality Ok </th>
-                            <th class="text-center">Rejected Qty </th>
+                            <th class="text-center">Received Qty<span class="errorMessage">*</span> </th>
+                            <th class="text-center">Quality Ok<span class="errorMessage">*</span> </th>
+                            <th class="text-center">Rejected Qty<span class="errorMessage">*</span> </th>
                             <th class="text-center">Remark</th>
                             <th class="text-center">Action</th>
                           </tr>
@@ -216,7 +216,7 @@
 
                             <td> <input type="text" class="form-control" style="width: 60px;" placeholder=" Qty "
                                 [(ngModel)]="mat.ReceivedQty" #nameControl="ngModel" name="ReceivedQty_{{i}}"
-                                (ngModelChange)="CompareQTY(i)" required /> </td>
+                                (blur)="CompareQTY(i)" required /> </td>
                             <td>
                               <div class="form-group" >
                                 <select class="form-control" style="width: 70px;" [(ngModel)]="mat.IsQualityOk" name="IsQualityOk_{{i}}"
@@ -229,9 +229,9 @@
                             </td>
                             <td> <input type="text" class="form-control" style="width: 60px;" placeholder="Qty "
                               #nameControl="ngModel" [(ngModel)]="mat.RejectedQty" name="RejectedQty_{{i}}" saCommonDir dirType="alphanumeric"
-                                required (ngModelChange)="CompareQTY(i)"/> </td>
+                                required (blur)="CompareQTY(i)"/> </td>
                             <td> <input type="text" class="form-control" style="width: 100px;" placeholder="Remark "
-                              #nameControl="ngModel" [(ngModel)]="mat.Remark" name="Remark_{{i}}" saCommonDir dirType="alphanumeric"  />
+                              #nameControl="ngModel" [(ngModel)]="mat.Remark" name="Remark_{{i}}"  />
                             </td>
                             <td class="text-center">
                               <a class="btn btn-xs btn-danger action-btn" (click)=onRemoveMaterial(mat,i)>Remove</a>
@@ -277,7 +277,8 @@
                             <td class="text-center"><strong>{{project.TotIGSTCost}}</strong> </td>
                             <td class="text-center"><strong>{{project.TotSGSTCost}}</strong> </td>
                             <td class="text-center"><strong>{{project.TotCGSTCost}}</strong> </td>
-                            <td colspan="2" class="text-center"><strong>{{project.TotProjectCost}}</strong> </td>
+                            <td  class="text-center"><strong>{{project.TotProjectCost}}</strong> </td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>

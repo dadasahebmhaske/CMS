@@ -21,7 +21,7 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
                    public loaderbtn: boolean = true;
                   public SiteData: any = [];
                   public mytime: Date = new Date();
-                  public Material: any = { LabourId: '', TypeId: '' ,WorkId:''};
+                  public Material: any = { StartDate:new Date(),EndDate:new Date(), LabourId: '', TypeId: '' ,WorkId:'',EndTime:`${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDay()} 06:00 PM`,StartTime:`${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDay()} 09:00 AM`};
                   public MaterialArray: any = [];LabourData:any=[];
                   public AMTypeData: any = []; project: any = {}; ProjectData: any = []; PayTData: any = []; DeliveryTData: any = []; TaxationData: any = [];
                   VendorData: any = []; ExecutiveData: any = []; AMData: any = []; filterMaterialArray: any = []; TranExists: any = [];
@@ -31,8 +31,8 @@ export class LabourWorkPaymentDeatilsComponent implements OnInit, OnDestroy {
                    }
                   ngOnInit() {
                     this.datashare.GetSharedData.subscribe(data => {
-                      this.project = data == null ? { IsActive: 'Y', SiteId: '', ProjectId: '', RefTranNo: '' } : data;
-                
+                      this.project = data == null ? {IsActive: 'Y', SiteId: '', ProjectId: '', RefTranNo: '' } : data;
+
                       if (this.project.TranNo != null)
                         this.getTranData();
                     });
