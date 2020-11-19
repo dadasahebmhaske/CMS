@@ -23,15 +23,16 @@ export class RaiseIndentComponent implements OnInit, OnDestroy {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', minDate:  new Date(), dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
+    this.appService.getAppData().subscribe(data => { this.empInfo = data });
     this.getAllonload();
     this.datashare.GetSharedData.subscribe(data => {
       this.project = data == null ? { IsActive: 'Y', SiteId: '', ProjectExecutiveId: '', ProjectManagerId: '', ProjectId: '' } : data;
       if (this.project.TranNo != null)
         this.getTranData();
-    }); this.appService.getAppData().subscribe(data => { this.empInfo = data });
+    });
   }
   public getAllonload() {
-    this.allmasterService.getSite('Y').subscribe((resSData: any) => {
+    this.allmasterService.getSiteData(this.empInfo.EmpId).subscribe((resSData: any) => {
       if (resSData.StatusCode != 0) {
         this.SiteData = resSData.Data;
       }
@@ -70,7 +71,7 @@ export class RaiseIndentComponent implements OnInit, OnDestroy {
     });
   }
   public onSelectSite() {
-    this.projectService.getProject(this.project.SiteId).subscribe((resSData: any) => {
+    this.allmasterService.getProjectData(this.project.SiteId,this.empInfo.EmpId).subscribe((resSData: any) => {
       if (resSData.StatusCode != 0) {
         this.ProjectData = resSData.Data;
       }

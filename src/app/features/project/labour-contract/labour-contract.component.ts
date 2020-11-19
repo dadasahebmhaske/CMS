@@ -41,7 +41,7 @@ export class LabourContractComponent implements OnInit, OnDestroy {
               }
 
               public getAllonload() {
-                this.allmasterService.getSite('Y').subscribe((resSData: any) => {
+                this.allmasterService.getSiteData(this.empInfo.EmpId).subscribe((resSData: any) => {
                   if (resSData.StatusCode != 0) {
                     this.SiteData = resSData.Data;
                   }
@@ -104,7 +104,7 @@ export class LabourContractComponent implements OnInit, OnDestroy {
   
 
               public onSelectSite(id,param) {
-                this.projectService.getProject(id).subscribe((resSData: any) => {
+                this.allmasterService.getProjectData(this.project.SiteId,this.empInfo.EmpId).subscribe((resSData: any) => {
                   if (resSData.StatusCode != 0) {
                       this.ProjectData = resSData.Data;
                   }
@@ -283,6 +283,14 @@ export class LabourContractComponent implements OnInit, OnDestroy {
                 //this.Material.UAmount = mat.Amount;
                 // if (this.Material.MainTypeId == 4) { this.Material.UAmount = mat.Rate }
                 this.onSelectActivityMaterial();
+              }
+              calculatedays(){
+               // this.project.ContractDate= this.appService.DateToString(this.project.ContractDate);
+                this.project.StartDate=this.project.StartDate==undefined?"": new Date(this.project.StartDate);
+                this.project.EndDate= this.project.EndDate==undefined?"":new Date(this.project.EndDate);
+                let differenceInTime = this.project.EndDate.getTime() - this.project.StartDate.getTime();
+                // To calculate the no. of days between two dates
+                this.project.ContarctPeriod = Math.floor(differenceInTime / (1000 * 3600 * 24)); 
               }
             
 

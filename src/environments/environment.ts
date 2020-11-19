@@ -28,14 +28,10 @@ export const environment = {
 
 
 
-  // BaseUrl: 'http://cms.sipl.pw/api/api/',
-  // authKey: 'CMSYS:CMSYS@12345?',
-  // secureKey: 'CMSYS11223344556',
-  // deptId: 1006
-
-  BaseUrl: 'http://cms.pushpamgroup.co.in/api/api/',
+  BaseUrl: 'http://cms.sipl.pw/api/api/',
   authKey: 'CMSYS:CMSYS@12345?',
   secureKey: 'CMSYS11223344556',
   deptId: 1006
+
 
 };

@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./project-budget-list.component.css']
 })
 export class ProjectBudgetListComponent implements OnInit {
-  public empInfo: any = {};
+  public cpInfo: any = {};
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public Filter: any = {};
   public gridOptions: IGridoption;
@@ -26,7 +26,8 @@ export class ProjectBudgetListComponent implements OnInit {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
-    this.appService.getAppData().subscribe(data => { this.empInfo = data });
+    //this.appService.getAppData().subscribe(data => { this.empInfo = data });
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     // this.Filter.StartDate =this.Filter.EndDate = new Date();
     this.configureGrid();
   }
@@ -41,6 +42,11 @@ export class ProjectBudgetListComponent implements OnInit {
         name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-primary btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">&nbsp;Edit&nbsp;</button> '
         , width: "48",
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
+      },
+      {
+        name: 'Select2', displayName: 'Details', cellTemplate: `<button  style="margin:3px;" class="btn-success btn-xs"  ng-click="grid.appScope.approveEmployee(row.entity)"  ng-if="row.entity.IsApproved!='Y'&&row.entity.IsActive!=null">&nbsp;Approve&nbsp;</button><button  style="margin:3px;" class="btn-default btn-xs"  ng-if="row.entity.IsApproved=='Y'">&nbsp;Approved&nbsp;</button>`
+        , width: "74",
+        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Approve</div>', enableFiltering: false
       },
       {
         name: 'Select1', displayName: 'Delete', cellTemplate: '<button  style="margin:3px;" class="btn-danger btn-xs"  ng-click="grid.appScope.deleteEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">Delete</button> '
@@ -99,6 +105,56 @@ export class ProjectBudgetListComponent implements OnInit {
     });
 
   }
+ 
+  onApproveFunction = ($event) => {
+    this.ProjectAction('Approve', $event.row.TranNo);
+  }
+
+  ProjectAction(action, TranNo) {
+    let text = `Do You want to ${action} this order!`
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `${text}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: `Yes, ${action} it!`,
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+        switch (action) {
+          // case 'Delete':
+          //   this.projectService.getDeleteTransaction(TranNo, 103).subscribe((resData: any) => {
+          //     if (resData.StatusCode != 0) {
+          //       this.onLoad();
+          //       AppComponent.SmartAlert.Success(resData.Message);
+          //     }
+          //     else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+          //   });
+          //   break;
+          // case 'Close':
+          //   this.projectService.getClose(TranNo, 103, this.cpInfo.EmpId).subscribe((resData: any) => {
+          //     if (resData.StatusCode != 0) {
+          //       this.onLoad();
+          //       AppComponent.SmartAlert.Success(resData.Message);
+          //     }
+          //     else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+          //   });
+          //   break;
+          case 'Approve':
+            this.projectService.getApprove(TranNo, 101, this.cpInfo.EmpId).subscribe((resData: any) => {
+              if (resData.StatusCode != 0) {
+                this.onLoad();
+                AppComponent.SmartAlert.Success(resData.Message);
+              }
+              else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+            });
+            break;
+        }
+      } else if (result.dismiss === Swal.DismissReason.cancel) { }
+    })
+  }
+
+
   resetEndDate(val) {
     this.minDate = val;
     if (val != undefined && val != null && this.Filter.EndDate != null) {

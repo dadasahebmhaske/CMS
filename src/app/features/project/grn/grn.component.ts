@@ -39,7 +39,7 @@ export class GrnComponent implements OnInit, OnDestroy {
   }
 
   public getAllonload() {
-    this.allmasterService.getSite('Y').subscribe((resSData: any) => {
+    this.allmasterService.getSiteData(this.empInfo.EmpId).subscribe((resSData: any) => {
       if (resSData.StatusCode != 0) {
         this.SiteData = resSData.Data;
 
@@ -140,7 +140,7 @@ export class GrnComponent implements OnInit, OnDestroy {
   }
 
   public onSelectSite(id, param) {
-    this.projectService.getProject(id).subscribe((resSData: any) => {
+    this.allmasterService.getProjectData(this.project.SiteId,this.empInfo.EmpId).subscribe((resSData: any) => {
       if (resSData.StatusCode != 0) {
         if (param == 'S') {
           this.ProjectData = resSData.Data;
@@ -183,6 +183,8 @@ if(this.MaterialArray[index].RejectedQty!='' && this.MaterialArray[index].Reject
     this.project.TranDate = new Date();
     this.project.ChallanDate = this.appService.DateToString(this.project.ChallanDate);
     this.project.Remark = '';
+    this.project.ChallanAmount = this.project.ChallanAmount==""||this.project.ChallanAmount==undefined?0:this.project.ChallanAmount;
+    this.project.ChallanGSTAmount = this.project.ChallanGSTAmount==""||this.project.ChallanGSTAmount==undefined?0:this.project.ChallanGSTAmount;
     // this.project.RefTranNo = this.MaterialArray[0].RefTranNo;
     this.project.Data = this.MaterialArray;
     let ciphertext = this.appService.getEncrypted(this.project);

@@ -37,7 +37,7 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
   }
 
   public getAllonload() {
-    this.allmasterService.getSite('Y').subscribe((resSData: any) => {
+    this.allmasterService.getSiteData(this.empInfo.EmpId).subscribe((resSData: any) => {
       if (resSData.StatusCode != 0) {
         this.SiteData = resSData.Data;
       }
@@ -120,7 +120,7 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
   }
 
   public onSelectSite() {
-    this.projectService.getProject(this.project.SiteId).subscribe((resSData: any) => {
+    this.allmasterService.getProjectData(this.project.SiteId,this.empInfo.EmpId).subscribe((resSData: any) => {
       if (resSData.StatusCode != 0) {
         this.ProjectData = resSData.Data;
       }

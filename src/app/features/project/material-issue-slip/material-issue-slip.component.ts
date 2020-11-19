@@ -43,7 +43,7 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
   }
 
   public getAllonload() {
-    this.allmasterService.getSite('Y').subscribe((resSData: any) => {
+    this.allmasterService.getSiteData(this.empInfo.EmpId).subscribe((resSData: any) => {
       if (resSData.StatusCode != 0) {
         this.SiteData = resSData.Data;
         this.IssueSiteData = resSData.Data;
@@ -105,7 +105,7 @@ export class MaterialIssueSlipComponent implements OnInit, OnDestroy {
   }
 
   public onSelectSite(id, param) {
-    this.projectService.getProject(id).subscribe((resSData: any) => {
+    this.allmasterService.getProjectData(this.project.SiteId,this.empInfo.EmpId).subscribe((resSData: any) => {
       if (resSData.StatusCode != 0) {
         if (param == 'S') {
           this.ProjectData = resSData.Data;

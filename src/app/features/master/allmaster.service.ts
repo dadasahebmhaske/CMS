@@ -30,6 +30,14 @@ export class AllmasterService {
   public getType(id) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=107&MainTypeId=${id}&StartDate=&EndDate=&UserCode=&IsActive`);
   }
+
+  public getSiteData(UserCode) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetSitesProjects?MasterCode=104&StartDate=&EndDate=&SiteId=&UserCode=${UserCode}&IsApproved=Y&IsActive=Y`);
+  }
+  public getProjectData(SiteId,UserCode) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetSitesProjects?MasterCode=105&StartDate=&EndDate=&SiteId=${SiteId}&UserCode=${UserCode}&IsApproved=Y&IsActive=Y`);
+  }
+
   public getCompanyType() {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=107&MainTypeId=1&StartDate=&EndDate=&UserCode=&IsActive=Y`);
   }
