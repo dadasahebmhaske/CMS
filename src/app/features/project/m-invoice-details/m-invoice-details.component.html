@@ -126,10 +126,13 @@
                             <!-- <td class="text-center">{{mat.Qty==0?'':mat.Qty}}</td> -->
                             <td> <input type="text" class="form-control" style="width: 60px;" placeholder=" Qty "
                               [(ngModel)]="mat.Qty" #nameControl="ngModel" name="Qty_{{i}}" (ngModelChange)="onQtyChange(mat,i)"
-                              required /> </td>
+                              required [disabled]="mat.TypeId=='108'"/> </td>
                             <td class="text-center">{{mat.UOM}}</td>
                             <td class="text-center">{{mat.Rate}}</td>
-                            <td class="text-center">{{mat.Amount}}</td>
+                            <!-- <td class="text-center">{{mat.Amount}}</td> -->
+                            <td> <input type="text" class="form-control" style="width: 80px;" placeholder=" Amount "
+                              [(ngModel)]="mat.Amount" #nameControl="ngModel" name="Amount_{{i}}" (ngModelChange)="onAmountChange(mat,i)"
+                              required [disabled]="mat.TypeId!='108'"/> </td>
                             <td class="text-center">{{mat.IGST}}</td>
                             <td class="text-center">{{mat.SGST}}</td>
                             <td class="text-center">{{mat.CGST}}</td>

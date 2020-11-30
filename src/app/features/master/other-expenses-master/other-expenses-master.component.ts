@@ -35,7 +35,10 @@ export class OtherExpensesMasterComponent implements OnInit {
           },
          // { name: 'OtherExpId', displayName: 'Other Expenses Id', width: "*", cellTooltip: true, filterCellFiltered: true },
           { name: 'OtherExpName', displayName: 'Other Expenses', width: "*", cellTooltip: true, filterCellFiltered: true },
-          { name: 'IsActive', displayName: 'Active',cellClass:'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
+          { name: 'CGST', displayName: 'CGST (%)', width: "150", cellClass: 'text-right',cellTooltip: true, filterCellFiltered: true },
+          { name: 'SGST', displayName: 'SGST (%)', width: "150",cellClass: 'text-right', cellTooltip: true, filterCellFiltered: true },
+          { name: 'IGST', displayName: 'IST (%)', width: "150",cellClass: 'text-right', cellTooltip: true, filterCellFiltered: true },
+          { name: 'IsActive', displayName: 'Active',cellClass:'text-center', width: "150", cellTooltip: true, filterCellFiltered: true },
         ]
         this.gridOptions.columnDefs = columnDefs;
         this.onLoad();
@@ -48,6 +51,7 @@ export class OtherExpensesMasterComponent implements OnInit {
         this.allmasterService.getOtherExp('').subscribe((resData: any) => {
           if (resData.StatusCode != 0) {
             this.otherExpData = resData.Data;
+            console.log(this.otherExpData);
             AppComponent.SmartAlert.Success(resData.Message);
           }
           else { this.otherExpData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }

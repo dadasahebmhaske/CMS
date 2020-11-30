@@ -241,6 +241,66 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
 
   }
 
+  onSelectOtherExp(){
+    let obj;
+    obj = this.projectService.filterData(this.OtherExpData, this.other.OtherExpId, 'Code');
+    this.other.Name = obj[0].Name;
+   // this.Material.Amount = obj[0].Amount;
+   // this.Material.TotalAmount = obj[0].TotalAmount;
+    //this.Material.RefTranNo = obj[0].RefTranNo;
+   // this.Material.RefSrNo = obj[0].RefSrNo;
+    this.other.IGST = obj[0].IGST;
+    this.other.CGST = obj[0].CGST;
+    this.other.SGST = obj[0].SGST;
+  }
+
+  GetCalculateGSTOtherExp() {
+
+    this.other.CGSTAmount = this.other.CGSTAmount == undefined || this.other.CGSTAmount == '' || this.other.CGSTAmount == null ? 0 : this.other.CGSTAmount;
+    this.other.SGSTAmount = this.other.SGSTAmount == undefined || this.other.SGSTAmount == '' || this.other.SGSTAmount == null ? 0 : this.other.SGSTAmount;
+    this.other.IGSTAmount = this.other.IGSTAmount == undefined || this.other.IGSTAmount == '' || this.other.IGSTAmount == null ? 0 : this.other.IGSTAmount;
+
+    this.other.IGST = this.other.IGST == undefined || this.other.IGST == '' || this.other.IGST == null ? 0 : this.other.IGST;
+    this.other.CGST = this.other.CGST == undefined || this.other.CGST == '' || this.other.CGST == null ? 0 : this.other.CGST;
+    this.other.SGST = this.other.SGST == undefined || this.other.SGST == '' || this.other.SGST == null ? 0 : this.other.SGST;
+
+    if (this.other.IGST == 0 || this.other.IGST == null) {
+      this.other.CGSTAmount = 0;
+      this.other.SGSTAmount = 0;
+      this.other.CGSTAmount = (parseFloat(this.other.Amount) * parseFloat(this.other.CGST)) / 100;
+      this.other.CGSTAmount = this.other.CGSTAmount.toFixed(2);
+      this.other.SGSTAmount = (parseFloat(this.other.Amount) * parseFloat(this.other.SGST)) / 100;
+      this.other.SGSTAmount = this.other.SGSTAmount.toFixed(2);
+      this.other.IGSTAmount = 0;
+      this.other.TotalAmount = parseFloat(this.other.Amount) + parseFloat(this.other.CGSTAmount) + parseFloat(this.other.SGSTAmount);
+      this.other.TotalAmount= this.other.TotalAmount.toFixed(2);
+    }
+    else {
+      this.other.IGSTAmount = 0;
+      this.other.IGSTAmount = (parseFloat(this.other.Amount) * parseFloat(this.other.IGST)) / 100;
+      this.other.IGSTAmount = this.other.IGSTAmount.toFixed(2);
+      this.other.SGSTAmount =0;
+      this.other.CGSTAmount=0;
+      this.other.TotalAmount = parseFloat(this.other.Amount) + parseFloat(this.other.IGSTAmount);
+      this.other.TotalAmount= this.other.TotalAmount.toFixed(2);
+    }
+
+  }
+
+  onEditotheexp(mat, i) {
+    mat.index = i;
+   // mat.RQty = mat.RemainBudgetQty;
+    this.other = Object.assign(this.other,mat);
+    // this.Material.URate = mat.Rate;
+    // this.Material.UQty = mat.Qty;
+    // this.Material.RQty = mat.RemainBudgetQty;
+    // this.Material.UAmount = mat.Amount;
+    // this.Material.UTotalAmount = mat.TotalAmount;
+    //this.Material.UAmount = mat.Amount;
+    // if (this.Material.MainTypeId == 4) { this.Material.UAmount = mat.Rate }
+   // this.onSelectActivityMaterial();
+  }
+
   public onSelectProject(TranNo,RefTranNo) {
     if(this.project.TranNo==null){
       this.MaterialArray=[];
@@ -325,7 +385,22 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
 
 
   addOtherExpenses() {
-    if (this.OtherExpenseArray.some(obj => (parseInt(obj.OtherExpId) === parseInt(this.Material.OtherExpId) && parseInt(obj.OtherExpId) === parseInt(this.Material.MatName)))) {
+    //this.GetCalculate();
+    if (this.other.index != null) {
+      //this.MaterialArray[this.other.index].Rate = this.Material.Rate;
+     // this.MaterialArray[this.other.index].Name = this.other.Name;
+      this.OtherExpenseArray[this.other.index].Amount = this.other.Amount;
+      this.OtherExpenseArray[this.other.index].IGST = this.other.IGST;
+      this.OtherExpenseArray[this.other.index].CGST = this.other.CGST;
+      this.OtherExpenseArray[this.other.index].SGST = this.other.SGST;
+      this.OtherExpenseArray[this.other.index].IGSTAmount = this.other.IGSTAmount;
+      this.OtherExpenseArray[this.other.index].SGSTAmount = this.other.SGSTAmount;
+      this.OtherExpenseArray[this.other.index].SGSTAmount = this.other.SGSTAmount;
+      this.OtherExpenseArray[this.other.index].TotalAmount = this.other.TotalAmount;
+      //this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
+
+    } else
+    if (this.OtherExpenseArray.some(obj => (parseInt(obj.OtherExpId) === parseInt(this.other.OtherExpId) && parseInt(obj.OtherExpId) === parseInt(this.other.Name)))) {
       AppComponent.SmartAlert.Errmsg("Expenses is already added in list.");
     } else {
 
@@ -338,6 +413,7 @@ export class GeneratePoComponent implements OnInit, OnDestroy {
     } this.other = { OtherExpId: '' }
     //this.OtherExp = false;
   }
+
   onRemoveExpense(data, index) {
     this.OtherExpenseArray.splice(index, 1);
   }

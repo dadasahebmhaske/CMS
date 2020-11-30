@@ -125,6 +125,7 @@ export class MInvoiceDetailsComponent implements OnInit, OnDestroy {
       this.MaterialArray[ind].Qty = 1;
     } else if (parseInt(mat.Qty) > parseInt(mat.RemainBudgetQty)) {
       AppComponent.SmartAlert.Errmsg(`Quantity exceeded the GRN quantity`);
+      //mat.Qty="";
       this.MaterialArray[ind].Qty = parseInt(mat.RemainBudgetQty);
     } 
       this.MaterialArray[ind].Qty = mat.Qty;
@@ -149,6 +150,34 @@ export class MInvoiceDetailsComponent implements OnInit, OnDestroy {
     
 
   }
+
+  onAmountChange(mat,ind) {
+  
+    if (parseInt(mat.Amount) > parseInt(mat.RemainBudgetAmount)) {
+      AppComponent.SmartAlert.Errmsg(`Amount exceeded the Remaining BudgetAmount`);
+      mat.Amount="";
+    }
+
+    
+    if (this.MaterialArray[ind].IGST == 0 || this.MaterialArray[ind].IGST == null) {
+      this.MaterialArray[ind].CGSTAmount = 0;
+      this.MaterialArray[ind].SGSTAmount = 0;
+      this.MaterialArray[ind].CGSTAmount = (parseFloat(this.MaterialArray[ind].Amount) * parseFloat(this.MaterialArray[ind].CGST)) / 100;
+      this.MaterialArray[ind].CGSTAmount = (this.MaterialArray[ind].CGSTAmount).toFixed(2);
+      this.MaterialArray[ind].SGSTAmount = (parseFloat(this.MaterialArray[ind].Amount) * parseFloat(this.MaterialArray[ind].SGST)) / 100;
+      this.MaterialArray[ind].SGSTAmount = (this.MaterialArray[ind].SGSTAmount).toFixed(2);
+      this.MaterialArray[ind].TotalAmount = parseFloat(this.MaterialArray[ind].Amount) + parseFloat(this.MaterialArray[ind].CGSTAmount) + parseFloat(this.MaterialArray[ind].SGSTAmount);
+    }
+    else {
+      this.MaterialArray[ind].IGSTAmount = 0;
+      this.MaterialArray[ind].IGSTAmount = (parseFloat(this.MaterialArray[ind].Amount) * parseFloat(this.MaterialArray[ind].IGST)) / 100;
+      this.MaterialArray[ind].IGSTAmount = (this.MaterialArray[ind].IGSTAmount).toFixed(2);
+      this.MaterialArray[ind].TotalAmount = parseFloat(this.MaterialArray[ind].Amount) + parseFloat(this.MaterialArray[ind].IGSTAmount);
+    }
+    //this.onQtyChange(mat,index);
+    this.project = this.projectService.calculatePOTotal(this.project, this.MaterialArray);
+      }
+
   public onSubmit() {
     this.loaderbtn = false;
     this.project.Flag = this.project.TranNo == null || this.project.TranNo == '' ? 'IN' : 'UP';
@@ -159,6 +188,14 @@ export class MInvoiceDetailsComponent implements OnInit, OnDestroy {
     this.project.TranDate = new Date();
     //this.project.ChallanDate= this.appService.DateToString(this.project.ChallanDate);
     //this.project.Remark = '';
+   for(let i=0;i<this.MaterialArray.length;i++){
+     if(this.MaterialArray[i].TypeId=='108'){
+       this.MaterialArray[i].Rate=this.MaterialArray[i].Amount;
+     }else{
+      this.MaterialArray[i].Amount=this.MaterialArray[i].Amount;
+     }
+   }
+
     this.project.Data = this.MaterialArray;
     let ciphertext = this.appService.getEncrypted(this.project);
     this.projectService.post('ManageInvoice', ciphertext).subscribe((resData: any) => {

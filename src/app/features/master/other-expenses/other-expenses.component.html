@@ -22,6 +22,32 @@
                                   </div>
                               </div>
                               <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>CGST (%) <span class="errorMessage">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" placeholder="Enter CGST " [(ngModel)]="expenses.CGST" name="CGST" saCommonDir
+                                            dirType="decimal" required />
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>SGST (%) <span class="errorMessage">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" placeholder="Enter SGST " [(ngModel)]="expenses.SGST" name="SGST" saCommonDir
+                                            dirType="decimal" required />
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>IGST (%) <span class="errorMessage">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" placeholder="Enter IGST " [(ngModel)]="expenses.IGST" name="IGST" saCommonDir
+                                            dirType="decimal" required />
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row">
                                   <div class="col-sm-6">
                                       <label>
                                           <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='expenses.IsActive' /> Is Active </label>

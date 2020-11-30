@@ -330,7 +330,8 @@
                     <div class="form-group">
                       <label for="sel1">Other Expenses 
                       </label>
-                      <select class="form-control" [(ngModel)]="other.OtherExpId" name="OtherExpId" required>
+                      <select class="form-control" [(ngModel)]="other.OtherExpId" name="OtherExpId" 
+                      (ngModelChange)="onSelectOtherExp()" required>
                         <option value="" selected hidden> Select Expenses </option>
                         <option [value]="des.Code" *ngFor="let des of OtherExpData">{{des.Name}}
                         </option>
@@ -343,7 +344,64 @@
                       <label>Amount
                       </label>
                       <input type="text" class="form-control" placeholder=" Amount " [(ngModel)]="other.Amount"
-                        name="Amount" saCommonDir dirType="alphanumeric" required />
+                        name="Amount" saCommonDir dirType="alphanumeric" (ngModelChange)="GetCalculateGSTOtherExp()" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-1">
+                    <div class="form-group">
+                      <label>IGST % <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder=" IGST % " [(ngModel)]="other.IGST"
+                        name="IGST"   (ngModelChange)="GetCalculateGSTOtherExp()" saCommonDir dirType="decimal"  required />
+                    </div>
+                  </div>
+                  <div class="col-sm-1">
+                    <div class="form-group">
+                      <label>SGST % <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder=" SGST % " [(ngModel)]="other.SGST"
+                        name="SGST" (ngModelChange)="GetCalculateGSTOtherExp()"  saCommonDir dirType="decimal"  required />
+                    </div>
+                  </div>
+                  <div class="col-sm-1">
+                    <div class="form-group">
+                      <label>CGST % <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder=" CGST % " [(ngModel)]="other.CGST"
+                        name="CGST" (ngModelChange)="GetCalculateGSTOtherExp()" saCommonDir dirType="decimal"  required />
+                    </div>
+                  </div>
+                  <div class="col-sm-1">
+                    <div class="form-group">
+                      <label>IGST Amt <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder=" Amount " [(ngModel)]="other.IGSTAmount"
+                        name="IGSTAmt" saCommonDir dirType="alphanumeric" required disabled />
+                    </div>
+                  </div>
+                  <div class="col-sm-1">
+                    <div class="form-group">
+                      <label>SGST Amt <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder=" Amount" [(ngModel)]="other.SGSTAmount"
+                        name="SGSTAmt" saCommonDir dirType="decimal" required disabled/>
+                    </div>
+                  </div>
+                  <div class="col-sm-1">
+                    <div class="form-group">
+                      <label>CGST Amt <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Amount" [(ngModel)]="other.CGSTAmount"
+                        name="CGSTAmt" saCommonDir dirType="decimal" required disabled/>
+                    </div>
+                  </div>
+                  
+                  <div class="col-sm-1" >
+                    <div class="form-group">
+                      <label>Total Amt<span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder=" Amount " [(ngModel)]="other.TotalAmount"
+                        name="TotalAmount" saCommonDir dirType="decimal" disabled required />
                     </div>
                   </div>
 
@@ -362,8 +420,14 @@
                                   <th  class="text-center">#</th>
                                   <th  class="text-center">Expenses Details</th>
                                   <th  class="text-center">Amount</th>
-                                
-                                  <th class="text-center">Remove</th>
+                                  <th class="text-center">IGST(%)</th>
+                                  <th class="text-center">SGST(%)</th>
+                                  <th class="text-center">CGST(%)</th>
+                                  <th class="text-center">IGST Amount	</th>
+                                  <th class="text-center">SGST Amount	</th>
+                                  <th class="text-center">CGST Amount	</th>
+                                  <th class="text-center">Total Amount</th>
+                                  <th class="text-center">Action</th>
                               </tr>
                          
                           </thead>
@@ -372,9 +436,16 @@
                                 <td><span (onload)="check(i)">{{i+1}}.</span></td>
                                 <td >{{mat.Name}}</td>                         
                                 <td>{{mat.Amount}}</td>
-                               
-                                <td class="text-center">
-                                  <a class="btn btn-xs btn-danger" (click)=onRemoveExpense(mat,i)>Remove</a>
+                                <td class="text-center">{{mat.IGST}}</td>
+                                <td class="text-center">{{mat.SGST}}</td>
+                                <td class="text-center">{{mat.CGST}}</td>
+                                <td class="text-center">{{mat.IGSTAmount}}</td>
+                                <td class="text-center">{{mat.SGSTAmount}}</td>
+                                <td class="text-center">{{mat.CGSTAmount}}</td>
+                                <td class="text-center">{{mat.TotalAmount}}</td>
+                                <td class="text-center action-col" >
+                                  <a class="btn btn-xs btn-danger action-btn" (click)=onRemoveExpense(mat,i)>Remove</a>
+                                  <a class="btn btn-xs btn-primary action-btn" (click)=onEditotheexp(mat,i)>Edit</a>
                                 </td>
                               </tr> 
                                
